@@ -31,6 +31,8 @@
 </template>
 
 <script>
+// import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 export default {
   name: 'HelloWorld',
   props: {
