@@ -1,15 +1,19 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+  <AddAppointment/>
+  <AppointmentTable/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+import AppointmentTable from '@/components/AppointmentTable.vue'
+import AddAppointment from '@/components/AddAppointment.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    AppointmentTable,
+    AddAppointment
   }
 }
 </script>
