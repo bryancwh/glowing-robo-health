@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
+// import { onMounted } from "vue";
 import "smart-webcomponents/source/styles/smart.default.css";
 import "smart-webcomponents/source/modules/smart.scheduler.js";
 import firebaseApp from "../../firebase.js";
@@ -16,33 +16,29 @@ const db = getFirestore(firebaseApp);
 
 export default {
   name: "Calendar",
-  setup() {
-    let data = [
-      {
-        label: "Informing patients of risks associated with anesthesia",
-        doctorId: 1,
-        dateStart: new Date(2021, 10, 24 + 3, 7),
-        dateEnd: new Date(2021, 10, 24 + 3, 8, 15),
-      },
-    ];
-    console.log("in created");
-    getData();
-    async function getData() {
+  data() {
+    return {
+      events: [],
+    };
+  },
+  methods: {
+    async getEvents() {
+      console.log(this.events);
       console.log("in getData");
       let z = await getDocs(collection(db, "schedules"));
       console.log("done getting data");
+      console.log("before retrieval", this.events);
 
       z.forEach((doc) => {
         console.log(doc.data());
         let schedule = doc.data();
         let doctor_id = schedule.doctor_id;
         //   let patient_id = schedule.patient_id;
-        let start_time = new Date(2021, 10, 24 + 3, 7);
-        //   let end_time = schedule.appointment_end_time;
-        let end_time = new Date(2021, 10, 24 + 3, 8, 15);
+        let start_time = schedule.appointment_start_time.toDate();
+        let end_time = schedule.appointment_end_time.toDate();
         let description = schedule.label;
 
-        data.push({
+        this.events.push({
           label: description,
           doctorId: doctor_id,
           // patientId: patient_id,
@@ -50,88 +46,88 @@ export default {
           dateEnd: end_time,
         });
       });
-      console.log(data);
-    }
-
-    console.log("after getData");
-    onMounted(() => {
-      console.log("in on mounted");
-      window.Smart(
-        "#scheduler",
-        class {
-          get properties() {
-            return {
-              //Properties
-              view: "month",
-              dataSource: data,
-              views: ["week", "month", "day"],
-              hideAllDay: true,
-              hourStart: 3,
-              hourEnd: 18,
-              nonworkingDays: [0, 6],
-              nonworkingHours: [
-                [0, 5],
-                [14, 18],
-              ],
-              hideNonworkingWeekdays: false,
-              firstDayOfWeek: 1,
-              viewSelectorType: "auto",
-              // groups: ["doctorId"],
-              timelineDayScale: "halfHour",
-              timelineHeaderFormatFunction: (
-                date,
-                orientation,
-                isHeaderDetails,
-                dateValue
-              ) => {
-                if (orientation === "horizontal") {
-                  console.log("hello");
-                  const segments = dateValue.split(" ");
-                  if (segments.length === 2) {
-                    return `<div>${segments[1]}</div><div class="header-day-number">${segments[0]}</div>`;
-                  }
+      console.log("all events", this.events);
+    },
+  },
+  async mounted() {
+    await this.getEvents();
+    let events = this.events;
+    console.log("in on mounted");
+    window.Smart(
+      "#scheduler",
+      class {
+        get properties() {
+          return {
+            //Properties
+            view: "month",
+            dataSource: events,
+            views: ["week", "month", "day"],
+            hideAllDay: true,
+            hourStart: 3,
+            hourEnd: 18,
+            nonworkingDays: [0, 6],
+            nonworkingHours: [
+              [0, 5],
+              [14, 18],
+            ],
+            hideNonworkingWeekdays: false,
+            firstDayOfWeek: 1,
+            viewSelectorType: "auto",
+            // groups: ["doctorId"],
+            timelineDayScale: "halfHour",
+            timelineHeaderFormatFunction: (
+              date,
+              orientation,
+              isHeaderDetails,
+              dateValue
+            ) => {
+              if (orientation === "horizontal") {
+                const segments = dateValue.split(" ");
+                if (segments.length === 2) {
+                  return `<div>${segments[1]}</div><div class="header-day-number">${segments[0]}</div>`;
                 }
-                return dateValue;
+              }
+              return dateValue;
+            },
+            resources: [
+              {
+                label: "Doctors",
+                value: "doctorId",
+                dataSource: [
+                  {
+                    label: "Andrew Johnson",
+                    id: 1,
+                    speciality: "Anesthesiology",
+                    image: "./../../../demos/images/phonebook/andrew.png",
+                    backgroundColor: "#28a745",
+                  },
+                  {
+                    label: "Steven Mcilroy",
+                    id: 2,
+                    speciality: "Dermatology",
+                    image: "./../../../demos/images/phonebook/steven.png",
+                    backgroundColor: "#8f73af",
+                  },
+                  {
+                    label: "Michael Dawson",
+                    id: 3,
+                    speciality: "Neurology",
+                    image: "./../../../demos/images/phonebook/michael.png",
+                    backgroundColor: "#BF8F00",
+                  },
+                ],
               },
-              resources: [
-                {
-                  label: "Doctors",
-                  value: "doctorId",
-                  dataSource: [
-                    {
-                      label: "Andrew Johnson",
-                      id: 1,
-                      speciality: "Anesthesiology",
-                      image: "./../../../demos/images/phonebook/andrew.png",
-                      backgroundColor: "#28a745",
-                    },
-                    {
-                      label: "Steven Mcilroy",
-                      id: 2,
-                      speciality: "Dermatology",
-                      image: "./../../../demos/images/phonebook/steven.png",
-                      backgroundColor: "#8f73af",
-                    },
-                    {
-                      label: "Michael Dawson",
-                      id: 3,
-                      speciality: "Neurology",
-                      image: "./../../../demos/images/phonebook/michael.png",
-                      backgroundColor: "#BF8F00",
-                    },
-                  ],
-                },
-              ],
-            };
-          }
+            ],
+          };
         }
-      );
+      }
+    );
 
-      window.onload = function() {
-        const template = document.createElement("template");
+    window.onload = function() {
+      const template = document.createElement("template");
 
-        template.id = "groupTemplate";
-        template.innerHTML = `
+      template.id = "groupTemplate";
+      template.innerHTML = `
           <div class="custom-group-content">
             <img src="{{image}}"></img>
             <div class="details">
@@ -141,11 +137,10 @@ export default {
           </div>
           `;
 
-        document.body.appendChild(template);
-        document.querySelector("smart-scheduler").groupTemplate = template.id;
-      };
-    });
-  }
+      document.body.appendChild(template);
+      document.querySelector("smart-scheduler").groupTemplate = template.id;
+    };
+  },
 };
 </script>
 
