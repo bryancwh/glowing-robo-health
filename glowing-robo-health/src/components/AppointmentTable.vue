@@ -113,31 +113,51 @@ h1,h2 {
   font-weight: bold;
 }
 
-table {
+/* table {
 
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
+} */
+table {
+  border-radius: 10px;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    /* min-width: 400px; */
+    width: 100%;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
 }
 
 tr:nth-child(even) {
-  background-color: #e3edee;
+  background-color: #ddf4ff;
 }
 
-th,td {
+th , td {
   border: 1px solid #dddddd;
   text-align: center;
   padding: 8px;
+  /* color: blue; */
+}
+
+th {
+  background-color: rgb(188, 188, 255);
+  font-size: 1.2em;
 }
 
 .bwt{
     color:rgb(243, 236, 236);
     background-color: rgb(255, 94, 0);
+    border-radius: 8px;
+    font-size: 0.9em;
 }
 
 .edt{
     color:rgb(243, 236, 236);
     background-color: rgb(0, 68, 255);
+    border-radius: 8px;
+    font-size: 0.9em;
 }
 
 </style>

@@ -2,18 +2,20 @@
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   <AddAppointment/>
   <AppointmentTable/>
+  <!-- <AppointmentTable2/> -->
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
 import AppointmentTable from '@/components/AppointmentTable.vue'
+// import AppointmentTable2 from '@/components/AppointmentTable2.vue'
 import AddAppointment from '@/components/AddAppointment.vue'
 
 export default {
   name: 'App',
   components: {
     AppointmentTable,
-    AddAppointment
+    AddAppointment,
   }
 }
 </script>
