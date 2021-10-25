@@ -1,11 +1,15 @@
 <template>
-  <div class="vue-root">
-    <smart-scheduler id="scheduler"></smart-scheduler>
+  <div class="outer">
+    <h1>Calendar</h1>
+    <div class="container">
+      <div class="vue-root">
+        <smart-scheduler id="scheduler"></smart-scheduler>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// import { onMounted } from "vue";
 import "smart-webcomponents/source/styles/smart.default.css";
 import "smart-webcomponents/source/modules/smart.scheduler.js";
 import firebaseApp from "../../firebase.js";
@@ -19,6 +23,7 @@ export default {
   data() {
     return {
       events: [],
+      // doctors: [],
     };
   },
   methods: {
@@ -51,8 +56,8 @@ export default {
   },
   async mounted() {
     await this.getEvents();
-    let events = this.events;
     console.log("in on mounted");
+    const data = this.events;
     window.Smart(
       "#scheduler",
       class {
@@ -60,7 +65,7 @@ export default {
           return {
             //Properties
             view: "month",
-            dataSource: events,
+            dataSource: data,
             views: ["week", "month", "day"],
             hideAllDay: true,
             hourStart: 3,
@@ -145,6 +150,38 @@ export default {
 </script>
 
 <style>
+h1 {
+  display: block;
+  font-size: 40px;
+  font-weight: initial;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  position: relative;
+  left: 320px;
+  top: 130px;
+}
+
+.outer {
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  width: 75%;
+  height: 67%;
+  /* border: 5px outset white; */
+  border-radius: 25px;
+  border: 2px solid white;
+  padding: 20px;
+  background: white;
+  position: relative;
+  left: 320px;
+  top: 150px;
+}
+
 html,
 body {
   width: 100%;
@@ -154,16 +191,26 @@ body {
 
 #app,
 .vue-root {
-  width: 80%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
+  background-color: #dbe9f1;
 }
 
 .smart-scheduler {
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   --smart-scheduler-timeline-header-horizontal-group-size: 100px;
   --smart-scheduler-timeline-header-horizontal-cells-size: 50px;
   --smart-scheduler-timeline-cell-height: 40px;
+  --smart-primary: black;
+  --smart-surface: white;
+  --smart-ui-state-hover: rgb(236, 236, 236);
+  --smart-ui-state-active: rgb(248, 202, 202);
+  --smart-font-size: 11;
+  --smart-font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+    sans-serif;
+  --smart-scheduler-timeline-weekend-color: rgb(228, 228, 228);
+  --smart-scheduler-event-label-font-weight: 5;
 }
 
 .smart-scheduler .custom-group-content {
@@ -186,5 +233,6 @@ body {
 
 .smart-scheduler .header-day-number {
   font-size: 18px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 </style>
