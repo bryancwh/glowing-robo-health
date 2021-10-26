@@ -1,15 +1,17 @@
 <template> 
-
+  <ResourceTable/>
 <router-view/>
 
 </template>
 
 <script>
-console.log("in App")
+import ResourceTable from '@/components/resource_table.vue'
 
 export default {
   name: 'App',
-
+  components: {
+    ResourceTable,
+  }
 }
 </script>
 

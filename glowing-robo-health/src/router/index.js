@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Dashboard from '@/views/Dashboard.vue'
 // import About from '@/views/About.vue'
 // import OnlyProfit from '@/views/OnlyProfit.vue'
 // import Profile from '@/views/Profile.vue'
@@ -12,11 +11,7 @@ import Dashboard from '@/views/Dashboard.vue'
 
 
 const routes = [
-  {
-      path: "/",
-      name: "Dashobard",
-      component: Dashboard,
-    },
+
   // {
 
   //   path: '/home',
