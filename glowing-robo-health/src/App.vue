@@ -1,24 +1,26 @@
 <template>
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <AddAppointment/>
-  <AppointmentTable/>
-  <!-- <AppointmentTable2/> -->
-  <router-view></router-view>
+  <div>
+    <!-- <AddAppointment />
+    <AppointmentTable /> -->
+    <!-- <AppointmentTable2/> -->
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import AppointmentTable from '@/components/AppointmentTable.vue'
+// import AppointmentTable from "@/components/AppointmentTable.vue";
 // import AppointmentTable2 from '@/components/AppointmentTable2.vue'
-import AddAppointment from '@/components/AddAppointment.vue'
+// import AddAppointment from "@/components/AddAppointment.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    AppointmentTable,
-    AddAppointment,
-  }
-}
+    // AppointmentTable,
+    // AddAppointment,
+  },
+};
 </script>
 
 <style>
