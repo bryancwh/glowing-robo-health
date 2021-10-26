@@ -1,5 +1,6 @@
 <template>
     <h1 id = "Current"> <b> Resource table </b> </h1>
+    <h1 id = "doctors"> <b> Doctors </b> </h1>
     <table id = "table" class = "auto-index" :key="count">
         <tr>
             <th>Type</th>
@@ -8,7 +9,7 @@
             <th>Position</th>       
             <th>Email</th>
             <th>Status </th>
-            <th> button here </th>
+            <th>  </th>
         </tr>
         <tr v-for="person in employees" :key="person.firstName">
             <td>{{ person.firstName + " " + person.lastName }}</td>
@@ -23,6 +24,23 @@
         </tr>
     </table><br><br>
 
+    <h1 id = "Rooms"> <b> Rooms </b> </h1>
+    <table id = "room" class = "auto-index" :key="count">
+        <tr>
+            <th>Room</th>
+            <th>Location</th>       
+            <th>Status </th>
+            <th>  </th>
+        </tr>
+        <tr v-for="room in rooms" :key="room.firstName">
+            <td>{{ room.Room }}</td>
+            <td>{{ room.Location }}</td>
+            <td v-bind:style="[room.Status == 'Available' ? {'color': 'green'} : { 'color': 'red'}]">{{ room.Status }}</td>
+            <td>
+                <button class="edt" id="room.firstName">Update</button>
+            </td>
+        </tr>
+    </table><br><br>
   
 </template>
 
@@ -38,16 +56,23 @@ export default {
     },
     data () {
         return {
-            employees: []
+            employees: [],
+            rooms: []
         }
     },
     methods:{
         async display(){    
             let employees = await getDocs(collection(db,"Employees"))
+            let rooms = await getDocs(collection(db, "Rooms"))
             employees.forEach(employee => {
                 console.log("huehudehud", employee.data())
                 this.employees.push(employee.data());
             })
+
+            rooms.forEach(rooms => {
+                this.rooms.push(rooms.data());
+            })
+
             console.log('this eMPLOYEES' , this.employees)
 
         },                
@@ -57,9 +82,13 @@ export default {
 </script>
 
 <style>
+
+
     h1,h2 {
-    text-align: center;
-    background-color: rgb(129, 184, 99);
+    text-align: left;
+    padding-left: 30px;
+    background-color: #A9C1FD;
+    color: #ffffff;
     font: 700;
     display: block;
     font-size: 2em;
@@ -68,6 +97,24 @@ export default {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
+    }
+
+    #Current {
+        background-color: #1F58E7;
+        color: #ffffff;
+        
+    }
+
+    #doctors {
+        background-color: #A9C1FD;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    #Rooms {
+        background-color: #A9C1FD;
+        color: #ffffff;
+        text-align: center;
     }
     
     table {
