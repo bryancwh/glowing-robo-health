@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ResourceTable from '@/components/resource_table.vue'
+import ResourceTable from '@/components/ResourceTable.vue'
 
 export default {
   name: 'App',

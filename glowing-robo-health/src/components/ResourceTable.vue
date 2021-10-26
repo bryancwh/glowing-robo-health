@@ -1,4 +1,5 @@
 <template>
+<div>
     <h1 id = "Current"> <b> Resource table </b> </h1>
     <h1 id = "doctors"> <b> Doctors </b> </h1>
     <table id = "table" class = "auto-index" :key="count">
@@ -40,8 +41,8 @@
                 <button class="edt" id="room.firstName">Update</button>
             </td>
         </tr>
-    </table><br><br>
-  
+    </table>
+  </div>
 </template>
 
 <script>

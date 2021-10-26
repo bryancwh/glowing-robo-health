@@ -1,7 +1,7 @@
 import DashboardLayout from "@/views/Layout/DashboardLayout.vue";
 import Appointment from "@/views/Appointment.vue";
 import Dashboard from "@/views/Dashboard.vue";
-import Resource from "@/resourceView.vue";
+import Resource from "@/views/ResourceView.vue";
 
 const routes = [
   // {
