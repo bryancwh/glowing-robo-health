@@ -10,7 +10,6 @@ import {
   //   ScheduleComponent,
   Day,
   Week,
-  WorkWeek,
   Month,
   DragAndDrop,
   Resize,
@@ -20,7 +19,7 @@ import {
 export default {
   name: 'App',
   provide: {
-    schedule: [Day, Week, WorkWeek, Month, DragAndDrop, Resize],
+    schedule: [Day, Week, Month, DragAndDrop, Resize],
   },
 
 }
