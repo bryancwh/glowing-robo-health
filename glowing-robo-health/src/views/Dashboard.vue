@@ -1,251 +1,189 @@
 <template>
-  <div>
-
-    <div class="row">
-      <div class="col-12">
-        <card type="chart">
-          <template v-slot:header>
-            <div class="row">
-              <div class="col-sm-6" :class="isRTL ? 'text-right' : 'text-left'">
-                <h5 class="card-category">{{$t('dashboard.totalShipments')}}</h5>
-                <h2 class="card-title">{{$t('dashboard.performance')}}</h2>
-              </div>
-              <div class="col-sm-6">
-                <div class="btn-group btn-group-toggle"
-                     :class="isRTL ? 'float-left' : 'float-right'"
-                     data-toggle="buttons">
-                  <label v-for="(option, index) in bigLineChartCategories"
-                         :key="option"
-                         class="btn btn-sm btn-primary btn-simple"
-                         :class="{active: bigLineChart.activeIndex === index}"
-                         :id="index">
-                    <input type="radio"
-                           @click="initBigChart(index)"
-                           name="options" autocomplete="off"
-                           :checked="bigLineChart.activeIndex === index">
-                    {{option}}
-                  </label>
-                </div>
-              </div>
-            </div>
+  <div class="content">
+    <div class="md-layout">
+      <div
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
+      >
+        <stats-card data-background-color="blue">
+          <template slot="content">
+            <p class="category">Appointments</p>
+            <h3 class="title">53</h3>
           </template>
-          <div class="chart-area">
-            <line-chart style="height: 100%"
-                        ref="bigChart"
-                        chart-id="big-line-chart"
-                        :chart-data="bigLineChart.chartData"
-                        :gradient-colors="bigLineChart.gradientColors"
-                        :gradient-stops="bigLineChart.gradientStops"
-                        :extra-options="bigLineChart.extraOptions">
-            </line-chart>
-          </div>
-        </card>
+        </stats-card>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4" :class="{'text-right': isRTL}">
-        <card type="chart">
-          <template v-slot:header>
-            <h5 class="card-category">{{$t('dashboard.totalShipments')}}</h5>
-            <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary "></i> 763,215</h3>
+      <div
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
+      >
+        <stats-card data-background-color="blue">
+          <template slot="content">
+            <p class="category">Patients</p>
+            <h3 class="title">22</h3>
           </template>
-          <div class="chart-area">
-            <line-chart style="height: 100%"
-                        chart-id="purple-line-chart"
-                        :chart-data="purpleLineChart.chartData"
-                        :gradient-colors="purpleLineChart.gradientColors"
-                        :gradient-stops="purpleLineChart.gradientStops"
-                        :extra-options="purpleLineChart.extraOptions">
-            </line-chart>
-          </div>
-        </card>
+        </stats-card>
       </div>
-      <div class="col-lg-4" :class="{'text-right': isRTL}">
-        <card type="chart">
-          <template v-slot:header>
-            <h5 class="card-category">{{$t('dashboard.dailySales')}}</h5>
-            <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info "></i> 3,500€</h3>
+      <div
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
+      >
+        <stats-card data-background-color="blue">
+          <template slot="content">
+            <p class="category">Operations</p>
+            <h3 class="title">10</h3>
           </template>
-          <div class="chart-area">
-            <bar-chart style="height: 100%"
-                       chart-id="blue-bar-chart"
-                       :chart-data="blueBarChart.chartData"
-                       :gradient-stops="blueBarChart.gradientStops"
-                       :extra-options="blueBarChart.extraOptions">
-            </bar-chart>
-          </div>
-        </card>
+        </stats-card>
       </div>
-      <div class="col-lg-4" :class="{'text-right': isRTL}">
-        <card type="chart">
-          <template v-slot:header>
-            <h5 class="card-category">{{$t('dashboard.completedTasks')}}</h5>
-            <h3 class="card-title"><i class="tim-icons icon-send text-success "></i> 12,100K</h3>
+      <div
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
+      >
+        <chart-card
+          :chart-data="dailySalesChart.data"
+          :chart-options="dailySalesChart.options"
+          :chart-type="'Line'"
+          data-background-color="blue"
+        >
+          <template slot="content">
+            <h4 class="title">Hourly Visit Volume</h4>
+            <p class="category">
+              <span class="text-success"
+                ><i class="fas fa-long-arrow-alt-up"></i> 55%
+              </span>
+              increase in volume.
+            </p>
           </template>
-          <div class="chart-area">
-            <line-chart style="height: 100%"
-                        chart-id="green-line-chart"
-                        :chart-data="greenLineChart.chartData"
-                        :gradient-stops="greenLineChart.gradientStops"
-                        :extra-options="greenLineChart.extraOptions">
-            </line-chart>
-          </div>
-        </card>
+        </chart-card>
+      </div>
+      <div
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
+      >
+        <chart-card
+          :chart-data="emailsSubscriptionChart.data"
+          :chart-options="emailsSubscriptionChart.options"
+          :chart-responsive-options="emailsSubscriptionChart.responsiveOptions"
+          :chart-type="'Bar'"
+          data-background-color="red"
+        >
+          <template slot="content">
+            <h4 class="title">432 Patients</h4>
+            <p class="category">visited in the last hour</p>
+          </template>
+        </chart-card>
+      </div>
+      <div
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
+      >
+        <chart-card
+          :chart-data="dataCompletedTasksChart.data"
+          :chart-options="dataCompletedTasksChart.options"
+          :chart-type="'Line'"
+          data-background-color="green"
+        >
+          <template slot="content">
+            <h4 class="title">20 Minutes</h4>
+            <p class="category">average waiting time</p>
+          </template>
+        </chart-card>
       </div>
     </div>
   </div>
 </template>
-<script>
-  import LineChart from '@/components/Charts/LineChart';
-  import BarChart from '@/components/Charts/BarChart';
-  import * as chartConfigs from '@/components/Charts/config';
-  // import TaskList from './Dashboard/TaskList';
-  // import UserTable from './Dashboard/UserTable';
-  import config from '@/config';
 
-  export default {
-    components: {
-      LineChart,
-      BarChart
-      // TaskList,
-      // UserTable
-    },
-    data() {
-      return {
-        bigLineChart: {
-          allData: [
-            [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100],
-            [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120],
-            [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130]
+<script>
+import ChartCard from "@/components/Chart.vue";
+import StatsCard from "@/components/Stats.vue";
+
+export default {
+  components: {
+    StatsCard,
+    ChartCard,
+  },
+  data() {
+    return {
+      dailySalesChart: {
+        data: {
+          labels: ["M", "T", "W", "T", "F", "S", "S"],
+          series: [[12, 17, 7, 17, 23, 18, 38]],
+        },
+        options: {
+          lineSmooth: this.$Chartist.Interpolation.cardinal({
+            tension: 0,
+          }),
+          low: 0,
+          high: 50, 
+          chartPadding: {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+          },
+        },
+      },
+      dataCompletedTasksChart: {
+        data: {
+          labels: ["12am", "3pm", "6pm", "9pm", "12pm", "3am", "6am", "9am"],
+          series: [[230, 750, 450, 300, 280, 240, 200, 190]],
+        },
+
+        options: {
+          lineSmooth: this.$Chartist.Interpolation.cardinal({
+            tension: 0,
+          }),
+          low: 0,
+          high: 1000, 
+          chartPadding: {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+          },
+        },
+      },
+      emailsSubscriptionChart: {
+        data: {
+          labels: [
+            "Ja",
+            "Fe",
+            "Ma",
+            "Ap",
+            "Mai",
+            "Ju",
+            "Jul",
+            "Au",
+            "Se",
+            "Oc",
+            "No",
+            "De",
           ],
-          activeIndex: 0,
-          chartData: {
-            datasets: [{ }],
-            labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-          },
-          extraOptions: chartConfigs.purpleChartOptions,
-          gradientColors: config.colors.primaryGradient,
-          gradientStops: [1, 0.4, 0],
-          categories: []
+          series: [
+            [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
+          ],
         },
-        purpleLineChart: {
-          extraOptions: chartConfigs.purpleChartOptions,
-          chartData: {
-            labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-            datasets: [{
-              label: "Data",
-              fill: true,
-              borderColor: config.colors.primary,
-              borderWidth: 2,
-              borderDash: [],
-              borderDashOffset: 0.0,
-              pointBackgroundColor: config.colors.primary,
-              pointBorderColor: 'rgba(255,255,255,0)',
-              pointHoverBackgroundColor: config.colors.primary,
-              pointBorderWidth: 20,
-              pointHoverRadius: 4,
-              pointHoverBorderWidth: 15,
-              pointRadius: 4,
-              data: [80, 100, 70, 80, 120, 80],
-            }]
+        options: {
+          axisX: {
+            showGrid: false,
           },
-          gradientColors: config.colors.primaryGradient,
-          gradientStops: [1, 0.2, 0],
+          low: 0,
+          high: 1000,
+          chartPadding: {
+            top: 0,
+            right: 5,
+            bottom: 0,
+            left: 0,
+          },
         },
-        greenLineChart: {
-          extraOptions: chartConfigs.greenChartOptions,
-          chartData: {
-            labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV'],
-            datasets: [{
-              label: "My First dataset",
-              fill: true,
-              borderColor: config.colors.danger,
-              borderWidth: 2,
-              borderDash: [],
-              borderDashOffset: 0.0,
-              pointBackgroundColor: config.colors.danger,
-              pointBorderColor: 'rgba(255,255,255,0)',
-              pointHoverBackgroundColor: config.colors.danger,
-              pointBorderWidth: 20,
-              pointHoverRadius: 4,
-              pointHoverBorderWidth: 15,
-              pointRadius: 4,
-              data: [90, 27, 60, 12, 80],
-            }]
-          },
-          gradientColors: ['rgba(66,134,121,0.15)', 'rgba(66,134,121,0.0)', 'rgba(66,134,121,0)'],
-          gradientStops: [1, 0.4, 0],
-        },
-        blueBarChart: {
-          extraOptions: chartConfigs.barChartOptions,
-          chartData: {
-            labels: ['USA', 'GER', 'AUS', 'UK', 'RO', 'BR'],
-            datasets: [{
-              label: "Countries",
-              fill: true,
-              borderColor: config.colors.info,
-              borderWidth: 2,
-              borderDash: [],
-              borderDashOffset: 0.0,
-              data: [53, 20, 10, 80, 100, 45],
-            }]
-          },
-          gradientColors: config.colors.primaryGradient,
-          gradientStops: [1, 0.4, 0],
-        }
-      }
-    },
-    computed: {
-      enableRTL() {
-        return this.$route.query.enableRTL;
+        responsiveOptions: [
+          [
+            "screen and (max-width: 640px)",
+            {
+              seriesBarDistance: 5,
+              axisX: {
+                labelInterpolationFnc: function (value) {
+                  return value[0];
+                },
+              },
+            },
+          ],
+        ],
       },
-      isRTL() {
-        return this.$rtl.isRTL;
-      },
-      bigLineChartCategories() {
-        return this.$t('dashboard.chartCategories');
-      }
-    },
-    methods: {
-      initBigChart(index) {
-        let chartData = {
-          datasets: [{
-            fill: true,
-            borderColor: config.colors.primary,
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: config.colors.primary,
-            pointBorderColor: 'rgba(255,255,255,0)',
-            pointHoverBackgroundColor: config.colors.primary,
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: this.bigLineChart.allData[index]
-          }],
-          labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-        }
-        this.$refs.bigChart.updateGradients(chartData);
-        this.bigLineChart.chartData = chartData;
-        this.bigLineChart.activeIndex = index;
-      }
-    },
-    mounted() {
-      this.i18n = this.$i18n;
-      if (this.enableRTL) {
-        this.i18n.locale = 'ar';
-        this.$rtl.enableRTL();
-      }
-      this.initBigChart(0);
-    },
-    beforeUnmount() {
-      if (this.$rtl.isRTL) {
-        this.i18n.locale = 'en';
-        this.$rtl.disableRTL();
-      }
-    }
-  };
+    };
+  },
+};
 </script>
-<style>
-</style>
