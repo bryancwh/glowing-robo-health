@@ -5,12 +5,24 @@
 </template>
 
 <script>
+console.log("in App")
+import {
+  //   ScheduleComponent,
+  Day,
+  Week,
+  Month,
+  DragAndDrop,
+  Resize,
+} from "@syncfusion/ej2-vue-schedule";
+
 
 export default {
-  name: "App",
-  components: {
+  name: 'App',
+  provide: {
+    schedule: [Day, Week, Month, DragAndDrop, Resize],
   },
-};
+
+}
 </script>
 
 <style>
