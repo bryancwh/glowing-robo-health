@@ -6,9 +6,22 @@
 
 <script>
 console.log("in App")
+import {
+  //   ScheduleComponent,
+  Day,
+  Week,
+  WorkWeek,
+  Month,
+  DragAndDrop,
+  Resize,
+} from "@syncfusion/ej2-vue-schedule";
+
 
 export default {
   name: 'App',
+  provide: {
+    schedule: [Day, Week, WorkWeek, Month, DragAndDrop, Resize],
+  },
 
 }
 </script>
