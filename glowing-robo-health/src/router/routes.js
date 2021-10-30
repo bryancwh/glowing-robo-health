@@ -1,6 +1,7 @@
 import Appointment from "@/views/Appointment.vue";
+import { createRouter, createWebHistory } from 'vue-router'
 
-import Resource from "@/views/ResourceView.vue";
+
 
 const routes = [
   // {
@@ -21,12 +22,12 @@ const routes = [
     name: "Appointment",
     component: Appointment,
   },
-  {
-    path: "/resource",
-    name: "Resource",
-    component: Resource,
-  },
 
 ];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+})
 
 export default routes;
