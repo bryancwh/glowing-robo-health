@@ -1,6 +1,5 @@
 <template>
 <div>
-    <h1 id = "Current"> <b> Medical Stocks </b> </h1>
     <table id = "table" class = "auto-index" :key="count">
         <tr>
             <th>Name</th>

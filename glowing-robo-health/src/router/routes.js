@@ -1,27 +1,21 @@
 import Appointment from "@/views/Appointment.vue";
+import ClinicStockpile from "@/views/ClinicStockpile.vue";
 import { createRouter, createWebHistory } from 'vue-router'
 
 
 
 const routes = [
-  // {
-  //   path: "/",
-  //   component: DashboardLayout,
-  //   redirect: "/dashboard",
-  //   children: [
-  //     {
-  //       path: "dashboard",
-  //       name: "Dashboard",
-  //       component: Dashboard,
-  //     },
-  //   ],
-  // },
 
   {
     path: "/",
     name: "Appointment",
     component: Appointment,
   },
+  {
+    path: "/ClinicStockpile",
+    name: "ClinicStockpile",
+    component: "ClinicStockpile",
+  }
 
 ];
 
