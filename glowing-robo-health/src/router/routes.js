@@ -1,20 +1,10 @@
 import Appointment from "@/views/Appointment.vue";
+import ClinicStockpile from "@/views/ClinicStockpile.vue";
+import { createRouter, createWebHistory } from 'vue-router'
 
-import Resource from "@/views/ResourceView.vue";
+
 
 const routes = [
-  // {
-  //   path: "/",
-  //   component: DashboardLayout,
-  //   redirect: "/dashboard",
-  //   children: [
-  //     {
-  //       path: "dashboard",
-  //       name: "Dashboard",
-  //       component: Dashboard,
-  //     },
-  //   ],
-  // },
 
   {
     path: "/",
@@ -22,11 +12,16 @@ const routes = [
     component: Appointment,
   },
   {
-    path: "/resource",
-    name: "Resource",
-    component: Resource,
-  },
+    path: "/ClinicStockpile",
+    name: "ClinicStockpile",
+    component: "ClinicStockpile",
+  }
 
 ];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+})
 
 export default routes;
