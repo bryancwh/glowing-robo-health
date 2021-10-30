@@ -1,22 +1,21 @@
 <template>
-  <ClinicStockpile/>
+  <!-- <ClinicStockpile/> -->
   <!-- <ClinicStock></ClinicStock> -->
+  <router-view></router-view>
 </template>
 
 <script>
-import ClinicStockpile from "./views/ClinicStockpile.vue";
-console.log("in App")
+// import ClinicStockpile from "./views/ClinicStockpile.vue";
+console.log("in App");
 // import ClinicStock from "./components/ClinicStock.vue";
-
 
 export default {
   components: {
     // ClinicStock
-    ClinicStockpile
+    // ClinicStockpile,
   },
-  name: 'App',
-  
-}
+  name: "App",
+};
 </script>
 
 <style>
