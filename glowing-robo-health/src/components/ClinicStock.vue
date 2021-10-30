@@ -7,7 +7,7 @@
             <th>Product ID</th>
             <th>Stock Level</th>       
             <th>Stock Availability</th>
-            <th> Update Stock </th>
+            <th>  </th>
         </tr>
         <tr v-for="medicine in stocks" :key="medicine.firstName">
             <td>{{ medicine.name }}</td>
@@ -18,11 +18,17 @@
             <td v-else:> Out of Stock</td>
             <!-- <td v-bind:style="[medicine.stock_level > 0 ? {'color': 'red'} : { 'color': 'green'}]">{{ medicine.Status }}</td> -->
             <td>
-                <button class="edt" id="medicine.firstName">Update</button>
+                <button @click="deleteProduct()">Delete</button>
             </td>
         </tr>
     </table>
-
+    <button class="update">
+        Update Stock
+    </button >
+        
+    <button class="add">
+        Add Stock
+    </button>
   </div>
 </template>
 
@@ -30,6 +36,7 @@
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore"
 import { collection, getDocs, query} from "firebase/firestore";
+import UpdateStock from "../components/UpdateStock.vue";
 
 const db = getFirestore(firebaseApp);
 const path = query(collection(db, "stock/clinic/clinic_1"));
@@ -55,14 +62,26 @@ export default {
 
             console.log('this eMPLOYEES' , this.doc)
 
-        },                
+        },
+        // updateProduct() {
+
+        // }                
     }
   }
 
 </script>
 
 <style>
-
+    .update {
+        background-color: rgb(34, 191, 34);
+        margin-right: 10px;
+        width: 100px;
+    }
+    .add {
+        background-color: rgb(34, 191, 34);
+        margin-left: 10px;
+        width: 100px;
+    }
 
     h1,h2 {
     text-align: left;

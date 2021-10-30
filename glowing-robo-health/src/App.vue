@@ -1,10 +1,12 @@
 <template>
-  <ClinicStockpile/>
+  <!-- <ClinicStockpile/> -->
   <!-- <ClinicStock></ClinicStock> -->
+  <UpdateStock/>
 </template>
 
 <script>
-import ClinicStockpile from "./views/ClinicStockpile.vue";
+// import ClinicStockpile from "./views/ClinicStockpile.vue";
+import UpdateStock from "./components/UpdateStock.vue";
 console.log("in App")
 // import ClinicStock from "./components/ClinicStock.vue";
 
@@ -12,7 +14,8 @@ console.log("in App")
 export default {
   components: {
     // ClinicStock
-    ClinicStockpile
+    // ClinicStockpile
+    UpdateStock
   },
   name: 'App',
   
@@ -27,5 +30,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+body {
+  margin: 0px;
+  background: #eee;
 }
 </style>
