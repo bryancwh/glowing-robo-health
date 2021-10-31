@@ -3,6 +3,7 @@ import ClinicStockpile from "@/views/ClinicStockpile.vue";
 import SupplierStockpile from "@/views/SupplierStockpile.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import SupplierOrders from "@/views/SupplierOrders.vue";
+import OrderFormTemp from "@/views/OrderFormTemp.vue";
 
 const routes = [
   // {
@@ -24,6 +25,11 @@ const routes = [
     path: "/SupplierStockpile",
     name: "SupplierStockpile",
     component: SupplierStockpile,
+  },
+  {
+    path: "/OrderFormTemp",
+    name: "OrderFormTemp",
+    component: OrderFormTemp,
   },
 ];
 
