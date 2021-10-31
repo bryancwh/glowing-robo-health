@@ -26,7 +26,13 @@
             </td>
         </tr>
     </table>
-
+    <button class="update">
+        Update Stock
+    </button >
+        
+    <button class="add">
+        Add Stock
+    </button>
   </div>
 </template>
 
@@ -34,7 +40,7 @@
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore"
 import { collection, getDocs, setDoc, query} from "firebase/firestore";
-// import UpdateStock from "../components/UpdateStock.vue";
+
 
 const db = getFirestore(firebaseApp);
 
@@ -60,6 +66,7 @@ export default {
         // updateProduct() {
 
         // }
+        }            
     }
   }
 
