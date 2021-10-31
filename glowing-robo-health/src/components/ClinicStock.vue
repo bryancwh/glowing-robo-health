@@ -8,6 +8,7 @@
             <th>Stock Level</th>       
             <th>Stock Availability</th>
             <th>  </th>
+            <th>  </th>
         </tr>
         <tr v-for="medicine in stocks" :key="medicine.firstName">
             <td>{{ medicine.name }}</td>
@@ -19,6 +20,9 @@
             <!-- <td v-bind:style="[medicine.stock_level > 0 ? {'color': 'red'} : { 'color': 'green'}]">{{ medicine.Status }}</td> -->
             <td>
                 <button @click="deleteProduct()">Delete</button>
+            </td>
+            <td>
+                <button>Update</button>
             </td>
         </tr>
     </table>
@@ -35,11 +39,11 @@
 <script>
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore"
-import { collection, getDocs, query} from "firebase/firestore";
-import UpdateStock from "../components/UpdateStock.vue";
+import { collection, getDocs, setDoc, query} from "firebase/firestore";
+
 
 const db = getFirestore(firebaseApp);
-const path = query(collection(db, "stock/clinic/clinic_1"));
+
 export default {
     mounted() {
         this.display()
@@ -47,25 +51,22 @@ export default {
     data () {
         return {
             stocks: [],
-    
         }
     },
     methods:{
-        async display(){    
+        async display(){
+            const path = query(collection(db, "stock/clinic/clinic_1"));
             let stock = await getDocs(path);
-            
             stock.forEach((doc) => {
                 console.log("huehudehud", doc.data())
                 this.stocks.push(doc.data());
             })
-
-
             console.log('this eMPLOYEES' , this.doc)
-
         },
         // updateProduct() {
 
-        // }                
+        // }
+        }            
     }
   }
 

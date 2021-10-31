@@ -1,6 +1,5 @@
 <template>
 <div>
-    <h1>hello</h1>
     <table id = "table" class = "auto-index" :key="count">
         <tr>
             <th>Name</th>
@@ -8,7 +7,8 @@
             <th>Product ID</th>
             <th>Stock Level</th>       
             <th>Stock Availability</th>
-            <th> Update Stock </th>
+            <th>  </th>
+            <th>  </th>
         </tr>
         <tr v-for="medicine in stocks" :key="medicine.firstName">
             <td>{{ medicine.name }}</td>
@@ -19,7 +19,10 @@
             <td v-else:> Out of Stock</td>
             <!-- <td v-bind:style="[medicine.stock_level > 0 ? {'color': 'red'} : { 'color': 'green'}]">{{ medicine.Status }}</td> -->
             <td>
-                <button class="edt" id="medicine.firstName">Update</button>
+                <button @click="deleteProduct()">Delete</button>
+            </td>
+            <td>
+                <button>Update</button>
             </td>
         </tr>
     </table>
@@ -30,10 +33,11 @@
 <script>
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore"
-import { collection, getDocs, query} from "firebase/firestore";
+import { collection, getDocs, setDoc, query} from "firebase/firestore";
+// import UpdateStock from "../components/UpdateStock.vue";
 
 const db = getFirestore(firebaseApp);
-const path = query(collection(db, "stock/supplier/supplier_1"));
+
 export default {
     mounted() {
         this.display()
@@ -44,22 +48,35 @@ export default {
         }
     },
     methods:{
-        async display(){    
+        async display(){
+            const path = query(collection(db, "stock/supplier/supplier_1"));
             let stock = await getDocs(path);
-            
             stock.forEach((doc) => {
-                console.log("Display supplier data", doc.data())
+                console.log("huehudehud", doc.data())
                 this.stocks.push(doc.data());
             })
             console.log('this eMPLOYEES' , this.doc)
+        },
+        // updateProduct() {
 
-        },                
+        // }
     }
   }
 
 </script>
 
 <style>
+    .update {
+        background-color: rgb(34, 191, 34);
+        margin-right: 10px;
+        width: 100px;
+    }
+    .add {
+        background-color: rgb(34, 191, 34);
+        margin-left: 10px;
+        width: 100px;
+    }
+
     h1,h2 {
     text-align: left;
     padding-left: 30px;
