@@ -42,7 +42,7 @@
                 var stock_level = document.getElementById("stock_level").value
                 var manufacturer = document.getElementById("manufacturer").value
                 var product_id = document.getElementById("product_id").value
-                const path = "clinic/clinic_1/" + this.name;
+                const path = "supplier/supplier_1/" + this.name;
                 console.log(db)
                 console.log(path)
                 try {

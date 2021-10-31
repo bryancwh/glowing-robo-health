@@ -1,6 +1,6 @@
 import Appointment from "@/views/Appointment.vue";
 import ClinicStockpile from "@/views/ClinicStockpile.vue";
-import SupplierStock from "@/components/SupplierStock.vue"
+import SupplierStockpile from "@/views/SupplierStockpile.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import SupplierOrders from "@/views/SupplierOrders.vue";
 
@@ -21,9 +21,9 @@ const routes = [
     component: SupplierOrders,
   },
   {
-    path: "/SupplierStock",
-    name: "SupplierStock",
-    component: SupplierStock,
+    path: "/SupplierStockpile",
+    name: "SupplierStockpile",
+    component: SupplierStockpile,
   },
 ];
 

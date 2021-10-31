@@ -1,22 +1,22 @@
 <template>
     <div>    
-        <h1> Clinic Stockpile for clinic 1</h1>
-        <ClinicStock/> 
+        <h1> Supplier Stockpile for supplier 1</h1>
+        <SupplierStock/> 
         <!-- :key="refreshComp"/> -->
-        <ClinicAddStock/>
+        <SupplierAddStock/>
         <!-- @added="change()"/> -->
     </div>
 </template>
 
 <script>
-import ClinicStock from "../components/ClinicStock.vue";
-import ClinicAddStock from "../components/ClinicAddStock.vue"
+import SupplierStock from "../components/SupplierStock.vue";
+import SupplierAddStock from "../components/SupplierAddStock.vue"
 
 export default {
     name: "Appointment",
     components: {
-        ClinicStock,
-        ClinicAddStock
+        SupplierStock,
+        SupplierAddStock
     },
     // data() {
     //     return {
