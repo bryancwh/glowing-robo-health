@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Supplier orders for all clinics</h1>
+    <h1>Orders for all clinics</h1>
     <SupplierOrders />
   </div>
 </template>

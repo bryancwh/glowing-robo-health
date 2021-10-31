@@ -9,6 +9,7 @@
         <th>Quantity Ordered</th>
         <th>Purchase Date</th>
         <th>Status</th>
+        <th>Update Status</th>
       </tr>
       <tr v-for="order in orders" :key="order.name">
         <td>{{ order.clinic }}</td>
@@ -17,22 +18,43 @@
         <td>{{ order.product_id }}</td>
         <td>{{ order.quantity_ordered }}</td>
         <td>{{ order.purchase_date.toDate() }}</td>
+        <td>{{ order.status }}</td>
 
-        <!-- <td v-if="order.stock_level > 0"> Available </td>
-            <td v-else:> Out of Stock</td> -->
-        <!-- <td v-bind:style="[medicine.stock_level > 0 ? {'color': 'red'} : { 'color': 'green'}]">{{ medicine.Status }}</td> -->
         <td>
-          <!-- <button class="edt" id="order.name" >Update</button> -->
-          <form>
+          <button
+            class="edt"
+            id="order.id"
+            @click="handleStatusChange(order.id)"
+          >
+            Update
+          </button>
+          <!-- <button
+            class="edt"
+            id="order.id"
+            @click="handleStatusChange(order.id)"
+            v-if="(order.status = 'pending')"
+          >
+            Delivered
+          </button>
+          <button
+            class="edt"
+            id="order.id"
+            @click="handleStatusChange(order.id)"
+            v-if="(order.status = 'delivered')"
+          >
+            Pending
+          </button> -->
+          <!-- <form>
             <select
               name="status"
-              id="{{order.id}}"
-              @change="handleStatusChange()"
+              id="form-select"
+              @change="handleStatusChange(order.id)"
             >
+              >
               <option value="pending">Pending</option>
               <option value="delivered">Delivered</option>
             </select>
-          </form>
+          </form> -->
         </td>
       </tr>
     </table>
@@ -41,8 +63,15 @@
 
 <script>
 import firebaseApp from "../firebase.js";
-import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { getDoc, doc, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 const db = getFirestore(firebaseApp);
 
@@ -53,10 +82,17 @@ export default {
   data() {
     return {
       orders: [],
+      emits: ["changeData"],
       //   clinic: "clinic_1",
     };
   },
   methods: {
+    handlePendingSelected(pending) {
+      return pending == "pending";
+    },
+    handleDeliveredSelected(delivered) {
+      return delivered == "delivered";
+    },
     async display() {
       const path = query(
         collection(db, "orders/")
@@ -67,19 +103,59 @@ export default {
       orders.forEach((doc) => {
         console.log(doc.data());
         let data = doc.data();
+
         this.orders.push({
-          id: data.id,
+          id: doc.id,
           clinic: data.clinic,
           name: data.name,
           manufacturer: data.manufacturer,
           product_id: data.product_id,
           quantity_ordered: data.quantity_ordered,
           purchase_date: data.purchase_date,
+          status: data.status,
         });
+
+        // console.log(this.orders);
       });
     },
-    handleStatusChange(input) {
+    async handleStatusChange(input) {
+      // this.$emit("changeData", "test");
+
       console.log("changed", input);
+
+      // var e = document.getElementById("form-select");
+      // console.log(e);
+      // var updated_status = e.value;
+      // var updated_status = "delivered";
+
+      let doc_ref = doc(db, "orders", input);
+
+      let x = await getDoc(doc_ref);
+
+      // const doc = await getDoc(dov_ref);
+      let updated_status = x.data().status;
+      if (updated_status == "pending") {
+        updated_status = "delivered";
+      } else {
+        updated_status = "pending";
+      }
+
+      console.log(updated_status);
+
+      try {
+        const docRef = await updateDoc(doc_ref, {
+          status: updated_status,
+        });
+        // console.log(docRef);
+      } catch (err) {
+        console.error("Error adding document : ", err);
+      }
+
+      let tb = document.getElementById("table");
+      while (tb.rows.length > 1) {
+        tb.deleteRow(1);
+      }
+      this.display();
     },
   },
 };
