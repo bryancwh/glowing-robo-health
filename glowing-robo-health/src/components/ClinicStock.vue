@@ -26,13 +26,13 @@
             </td>
         </tr>
     </table>
-    <button class="update">
+    <!-- <button class="update">
         Update Stock
     </button >
         
     <button class="add">
         Add Stock
-    </button>
+    </button> -->
   </div>
 </template>
 
@@ -66,9 +66,8 @@ export default {
         // updateProduct() {
 
         // }
-        }            
-    }
-  }
+    }            
+}
 
 </script>
 
