@@ -8,6 +8,7 @@
         <th>Product ID</th>
         <th>Quantity Ordered</th>
         <th>Purchase Date</th>
+        <th>Delivery Date</th>
         <th>Status</th>
         <th>Update Status</th>
       </tr>
@@ -17,7 +18,26 @@
         <td>{{ order.manufacturer }}</td>
         <td>{{ order.product_id }}</td>
         <td>{{ order.quantity_ordered }}</td>
-        <td>{{ order.purchase_date.toDate() }}</td>
+        <td>
+          {{
+            order.purchase_date
+              .toDate()
+              .toString()
+              .substring(3, 25)
+          }}
+        </td>
+        <td v-if="order.delivery_date === null">
+          Not delivered
+        </td>
+        <td v-else>
+          {{
+            order.delivery_date
+              .toDate()
+              .toString()
+              .substring(4, 24)
+          }}
+        </td>
+
         <td>{{ order.status }}</td>
 
         <td>
@@ -25,36 +45,18 @@
             class="edt"
             id="order.id"
             @click="handleStatusChange(order.id)"
+            v-if="order.status === 'pending'"
           >
-            Update
-          </button>
-          <!-- <button
-            class="edt"
-            id="order.id"
-            @click="handleStatusChange(order.id)"
-            v-if="(order.status = 'pending')"
-          >
-            Delivered
+            Deliver
           </button>
           <button
             class="edt"
             id="order.id"
             @click="handleStatusChange(order.id)"
-            v-if="(order.status = 'delivered')"
+            v-else
           >
-            Pending
-          </button> -->
-          <!-- <form>
-            <select
-              name="status"
-              id="form-select"
-              @change="handleStatusChange(order.id)"
-            >
-              >
-              <option value="pending">Pending</option>
-              <option value="delivered">Delivered</option>
-            </select>
-          </form> -->
+            Undo Delivery
+          </button>
         </td>
       </tr>
     </table>
@@ -103,41 +105,37 @@ export default {
       orders.forEach((doc) => {
         console.log(doc.data());
         let data = doc.data();
-
-        this.orders.push({
-          id: doc.id,
-          clinic: data.clinic,
-          name: data.name,
-          manufacturer: data.manufacturer,
-          product_id: data.product_id,
-          quantity_ordered: data.quantity_ordered,
-          purchase_date: data.purchase_date,
-          status: data.status,
-        });
-
+        if (data.supplier === "supplier_1") {
+          this.orders.push({
+            id: doc.id,
+            clinic: data.clinic,
+            name: data.name,
+            manufacturer: data.manufacturer,
+            product_id: data.product_id,
+            quantity_ordered: data.quantity_ordered,
+            purchase_date: data.purchase_date,
+            status: data.status,
+            delivery_date: data.delivery_date,
+          });
+        }
         // console.log(this.orders);
       });
     },
     async handleStatusChange(input) {
-      // this.$emit("changeData", "test");
-
       console.log("changed", input);
-
-      // var e = document.getElementById("form-select");
-      // console.log(e);
-      // var updated_status = e.value;
-      // var updated_status = "delivered";
 
       let doc_ref = doc(db, "orders", input);
 
       let x = await getDoc(doc_ref);
 
-      // const doc = await getDoc(dov_ref);
       let updated_status = x.data().status;
+      let delivery_date = x.data().delivery_date;
       if (updated_status == "pending") {
         updated_status = "delivered";
+        delivery_date = new Date();
       } else {
         updated_status = "pending";
+        delivery_date = null;
       }
 
       console.log(updated_status);
@@ -145,8 +143,8 @@ export default {
       try {
         const docRef = await updateDoc(doc_ref, {
           status: updated_status,
+          delivery_date: delivery_date,
         });
-        // console.log(docRef);
       } catch (err) {
         console.error("Error adding document : ", err);
       }
