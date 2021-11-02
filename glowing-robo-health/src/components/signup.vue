@@ -1,0 +1,181 @@
+<template>
+    <div style="text-align:center;">    
+        <h1  id = "mainHead"> SIGN UP PAGE </h1>
+        <div id ="formlogin"> 
+            <form id="login" method='post'>
+
+                <div id = "credential">
+                    <label class="white-text" for="email" id = "label"> Email Address</label>
+                    <input type="email" id="inputfield" v-model= "email">
+                </div>
+
+
+                <div id= "credential">
+                    <label class="white-text" for="password" id = "label"> password</label>
+                    <input type="password" id="inputfield" v-model= "password">
+                </div>
+
+                <div id= "credential">
+                    <label class="white-text" for="role" id = "role"> Select User Type </label>
+                    <select v-model = "selected_role" id="role-select">
+                        <option disabled value =""> User Type </option>
+                        <option> Clinic </option>
+                        <option> Supplier </option>
+                    </select>
+                </div>
+
+                <div id = "buttons">
+                    <button v-on:click="back()" class = "btn" id ="backbutton"> Back </button>
+                    <button v-on:click="signup" class = "btn" id ="signupbutton"> Sign Up </button>
+                </div>
+
+            </form>
+            
+            <div id="pagecontent">
+                Glowing Robo Health Systems™
+            </div>
+            
+        </div>
+        
+    </div>   
+</template>
+
+<script>
+import firebase from '@/uifire.js'
+import 'firebase/compat/auth';
+import * as firebaseui from 'firebaseui'
+import 'firebaseui/dist/firebaseui.css'
+import router from "../router/routes.js"
+import firebaseApp from '../firebase.js';
+import { getFirestore } from "firebase/firestore"
+import { doc, collection, getDocs, setDoc, query} from "firebase/firestore";
+
+const db = getFirestore(firebaseApp);
+
+export default {
+    name:"signup",
+    data: function() {
+        return {
+            email: '',
+            password: '',
+            selected_role: '',
+        };
+    },
+    methods: {
+        back() {
+            this.$router.push('/auth');
+        },
+        signup: function(e){
+            var roleSelected = this.selected_role
+            console.log(roleSelected)
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(this.email, this.password)
+                .then(function(user) {
+                    console.log('uid', user.user.uid)
+                    var uid = user.user.uid
+                    const docRef = setDoc(doc(db, "users", uid), {
+                    UID: uid, role: roleSelected })
+                })
+                .then(() => {
+                    alert("Successfully registered! Please login.");
+                    this.$router.push("/auth");
+                })
+                .catch(error => {
+                    alert(error.message);
+                })
+                e.preventDefault();
+            
+        }
+        
+    },
+
+}
+</script>
+
+<style scoped>
+#formlogin{
+    display: inline-block;
+    background: rgb(160, 203, 216) ;
+    width: 500px;
+    height: 350px;
+    border-radius: 15px;
+    position: relative;
+}
+
+
+#pagecontent{
+    height: 100px;
+    font-size: larger;
+    font-weight: bolder;
+    text-align: center;
+    margin-top: 100px;
+    /* font-style: italic; */
+    
+}
+#credential {
+    margin-top: 30px;
+}
+#label {
+    margin-right: 30px;
+}
+
+#inputfield{
+    height: 20px;
+    width: 150px;
+}
+
+#buttons {
+
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+#login{
+    display: inline-block;
+    text-align: right;
+}
+
+#role-select{
+    margin-left: 10px;
+    height: 25px;
+    width:155px;
+}
+
+#mainHead{
+    text-align: center;
+    background: cadetblue;
+    font-size: 40px;
+    /* height: 100px; */
+    text-shadow: 2px 2px grey;
+}
+
+#bg{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+
+h5{
+    text-align: center;
+    background-color:rgb(194, 202, 188) ;
+}
+
+#backbutton{
+    margin-top: 30px;
+    border-radius: 15px;
+    background:rgb(187, 187, 187);
+    width:100px;
+}
+
+#signupbutton{
+    margin-top: 30px;
+    border-radius: 15px;
+    background:cadetblue;
+    width:100px;
+}
+</style>
+
+
