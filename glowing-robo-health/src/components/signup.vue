@@ -17,10 +17,10 @@
 
                 <div id= "credential">
                     <label class="white-text" for="role" id = "role"> Select User Type </label>
-                    <select name="roles" id="role-select">
-                        <option value = ""> User Type </option>
-                        <option value = "clinic"> Clinic </option>
-                        <option value = "supplier"> Supplier </option>
+                    <select v-model = "selected_role" id="role-select">
+                        <option disabled value =""> User Type </option>
+                        <option> Clinic </option>
+                        <option> Supplier </option>
                     </select>
                 </div>
 
@@ -48,8 +48,9 @@ import 'firebaseui/dist/firebaseui.css'
 import router from "../router/routes.js"
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore"
-import { collection, getDocs, setDoc, query} from "firebase/firestore";
+import { doc, collection, getDocs, setDoc, query} from "firebase/firestore";
 
+const db = getFirestore(firebaseApp);
 
 export default {
     name:"signup",
@@ -57,7 +58,7 @@ export default {
         return {
             email: '',
             password: '',
-            role: '',
+            selected_role: '',
         };
     },
     methods: {
@@ -65,9 +66,17 @@ export default {
             this.$router.push('/auth');
         },
         signup: function(e){
+            var roleSelected = this.selected_role
+            console.log(roleSelected)
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(this.email, this.password)
+                .then(function(user) {
+                    console.log('uid', user.user.uid)
+                    var uid = user.user.uid
+                    const docRef = setDoc(doc(db, "users", uid), {
+                    UID: uid, role: roleSelected })
+                })
                 .then(() => {
                     alert("Successfully registered! Please login.");
                     this.$router.push("/auth");
@@ -76,6 +85,7 @@ export default {
                     alert(error.message);
                 })
                 e.preventDefault();
+            
         }
         
     },
