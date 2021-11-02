@@ -1,27 +1,34 @@
 <template>
   <!-- <form v-on:submit.prevent> -->
-  <form>
-    <h1>Create Order</h1>
-
-    <label>Clinic:</label>
-    <input type="text" id="clinic" required v-model="clinic" />
-
-    <label>Supplier:</label>
-    <input type="text" id="supplier" required v-model="supplier" />
-
-    <label>Manufacturer:</label>
-    <input type="text" id="manufacturer" required v-model="manufacturer" />
-
-    <label>Product Name:</label>
-    <input type="text" id="name" required v-model="name" />
-
-    <label>Quantity:</label>
-    <input type="number" id="stock_level" required v-model="stock_level" />
-
-    <div class="buttonHolder">
-      <button type="button" v-on:click="submitOrder()">Submit Order</button>
+  <div>
+    <div>
+      <h1 class="header">Order Form</h1>
     </div>
-  </form>
+    <div class="form_divider">
+      <form>
+        <h1>Create Order</h1>
+
+        <label>Clinic:</label>
+        <input type="text" id="clinic" required v-model="clinic" />
+
+        <label>Supplier:</label>
+        <input type="text" id="supplier" required v-model="supplier" />
+
+        <label>Manufacturer:</label>
+        <input type="text" id="manufacturer" required v-model="manufacturer" />
+
+        <label>Product Name:</label>
+        <input type="text" id="name" required v-model="name" />
+
+        <label>Quantity:</label>
+        <input type="number" id="stock_level" required v-model="stock_level" />
+
+        <div class="buttonHolder">
+          <button type="button" v-on:click="submitOrder()">Submit Order</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -75,19 +82,45 @@ export default {
 </script>
 
 <style scoped>
+.header {
+  width: 70%;
+  height: 20%;
+  color: black;
+  background-color: rgb(237, 245, 252);
+  position: relative;
+  text-align: left;
+  top: 70px;
+  /* left: 80px; */
+}
+
+.form_divider {
+  border-radius: 25px;
+  border: 2px solid white;
+  padding: 10px;
+  background-color: white;
+  width: 37%;
+  height: 517px;
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  overflow: auto;
+}
+
 form {
   max-width: 570px;
-  margin: 30px auto;
-  background: rgb(131, 200, 247);
+  margin: 10px auto;
+  background: white;
   text-align: left;
-  padding: 40px;
+  padding: 23px;
   border-radius: 15px;
 }
 h1 {
-  font-size: 2.5em;
+  font-size: 2em;
   text-transform: uppercase;
-  background: rgb(131, 200, 247);
-  color: azure;
+  background: white;
+  color: black;
   text-align: center;
 }
 label {
