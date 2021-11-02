@@ -5,7 +5,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import SupplierOrders from "@/views/SupplierOrders.vue";
 import OrderFormTemp from "@/views/OrderFormTemp.vue";
 import ViewSupplier from "@/views/ViewSupplier.vue";
-
+import SupplierStockFull from "@/components/SupplierStockFull.vue";
 
 const routes = [
   // {
@@ -37,7 +37,7 @@ const routes = [
     path: "/ViewSupplier",
     name: "ViewSupplier",
     component: ViewSupplier,
-  },
+  }
 ];
 
 const router = createRouter({

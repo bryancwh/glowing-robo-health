@@ -1,22 +1,18 @@
 <template>
     <div>    
         <h1> Clinic Stockpile for clinic 1</h1>
-        <ClinicStock/> 
-        <!-- :key="refreshComp"/> -->
-        <ClinicAddStock/>
-        <!-- @added="change()"/> -->
+        <ClinicStockFull/> 
     </div>
 </template>
 
 <script>
-import ClinicStock from "../components/ClinicStock.vue";
-import ClinicAddStock from "../components/ClinicAddStock.vue"
+import ClinicStockFull from "../components/ClinicStockFull.vue";
+// import ClinicAddStock from "../components/ClinicAddStock.vue"
 
 export default {
     name: "Appointment",
     components: {
-        ClinicStock,
-        ClinicAddStock
+        ClinicStockFull
     },
     // data() {
     //     return {
