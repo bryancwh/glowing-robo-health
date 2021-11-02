@@ -1,4 +1,3 @@
-import Appointment from "@/views/Appointment.vue";
 import ClinicStockpile from "@/views/ClinicStockpile.vue";
 import SupplierStockpile from "@/views/SupplierStockpile.vue";
 import { createRouter, createWebHistory } from "vue-router";
