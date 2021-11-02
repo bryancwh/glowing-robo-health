@@ -15,8 +15,9 @@
                 </div>
 
                 <div id = "buttons">
+                    <button v-on:click="gotosignup" class = "btn" id ="signuppage"> Sign Up </button>
                     <button v-on:click="login" class = "btn" id ="loginbutton"> Login </button>
-                    <button v-on:click="signup" class = "btn" id ="loginbutton"> Sign Up </button>
+                    
                 </div>
             </form>
 
@@ -59,7 +60,7 @@ export default {
                 );
                 e.preventDefault();
         },
-        signup: function(e) {
+        gotosignup: function(e) {
             this.$router.push('/signup');
         }
         
@@ -95,20 +96,22 @@ export default {
 <style scoped>
 #formlogin{
     display: inline-block;
+    background: rgb(160, 203, 216) ;
+    width: 500px;
+    height: 350px;
+    border-radius: 15px;
+    
 }
 #firebaseui-auth-container{
+    display: inline-block;
     width: 300px;
     margin-top:80px;
-    margin-bottom: 50px;
 }
 
 #pagecontent{
-    height: 100px;
     font-size: larger;
     font-weight: bolder;
     text-align: center;
-    position: fixed;
-    bottom:0;
     
     /* font-style: italic; */
 }
@@ -158,10 +161,16 @@ h5{
 #loginbutton{
     margin-top: 30px;
     border-radius: 15px;
-    background:aliceblue;
+    background:cadetblue;
     width:100px;
 }
 
+#signuppage{
+    margin-top: 30px;
+    border-radius: 15px;
+    background:rgb(187, 187, 187);
+    width:100px;
+}
 </style>
 
 

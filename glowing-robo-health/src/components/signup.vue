@@ -25,15 +25,16 @@
                 </div>
 
                 <div id = "buttons">
-                    <button v-on:click="back" class = "btn" id ="backbutton"> Back </button>
+                    <button v-on:click="back()" class = "btn" id ="backbutton"> Back </button>
                     <button v-on:click="signup" class = "btn" id ="signupbutton"> Sign Up </button>
                 </div>
 
             </form>
-
+            
             <div id="pagecontent">
                 Glowing Robo Health Systems™
             </div>
+            
         </div>
         
     </div>   
@@ -45,21 +46,36 @@ import 'firebase/compat/auth';
 import * as firebaseui from 'firebaseui'
 import 'firebaseui/dist/firebaseui.css'
 import router from "../router/routes.js"
+import firebaseApp from '../firebase.js';
+import { getFirestore } from "firebase/firestore"
+import { collection, getDocs, setDoc, query} from "firebase/firestore";
+
 
 export default {
     name:"signup",
     data: function() {
         return {
-            email: "",
-            password: ""
+            email: '',
+            password: '',
+            role: '',
         };
     },
     methods: {
-        back: function(e) {
+        back() {
             this.$router.push('/auth');
         },
-        signup: function(e) {
-            console.log("asdfasfd");
+        signup: function(e){
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(this.email, this.password)
+                .then(() => {
+                    alert("Successfully registered! Please login.");
+                    this.$router.push("/auth");
+                })
+                .catch(error => {
+                    alert(error.message);
+                })
+                e.preventDefault();
         }
         
     },
@@ -70,21 +86,20 @@ export default {
 <style scoped>
 #formlogin{
     display: inline-block;
+    background: rgb(160, 203, 216) ;
+    width: 500px;
+    height: 350px;
+    border-radius: 15px;
+    position: relative;
 }
-#firebaseui-auth-container{
-    width: 300px;
-    margin-top:80px;
-    margin-bottom: 50px;
-}
+
 
 #pagecontent{
     height: 100px;
     font-size: larger;
     font-weight: bolder;
     text-align: center;
-    position: fixed;
-    bottom:0;
-    
+    margin-top: 100px;
     /* font-style: italic; */
     
 }
@@ -101,8 +116,10 @@ export default {
 }
 
 #buttons {
+
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    
 }
 
 #login{
@@ -139,14 +156,14 @@ h5{
 #backbutton{
     margin-top: 30px;
     border-radius: 15px;
-    background:aliceblue;
+    background:rgb(187, 187, 187);
     width:100px;
 }
 
 #signupbutton{
     margin-top: 30px;
     border-radius: 15px;
-    background:aliceblue;
+    background:cadetblue;
     width:100px;
 }
 </style>
