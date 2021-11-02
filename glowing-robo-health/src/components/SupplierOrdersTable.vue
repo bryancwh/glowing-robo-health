@@ -212,14 +212,17 @@ tr:hover {
 tr {
   background-color: white;
 }
-tr:nth-child(even) {
-  background-color: white;
-}
 tr:nth-child(even):hover {
   background-color: rgb(218, 218, 218);
 }
 th {
   background-color: rgb(223, 223, 223);
+}
+th,
+td {
+  text-align: center;
+  padding: 8px;
+  /* color: blue; */
 }
 
 .edt {
@@ -231,5 +234,16 @@ th {
 .edt:hover {
   background-color: black;
   color: white;
+}
+
+table {
+  border-radius: 10px;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  /* min-width: 400px; */
+  width: 100%;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
 }
 </style>

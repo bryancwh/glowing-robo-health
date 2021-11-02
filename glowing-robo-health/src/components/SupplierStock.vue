@@ -23,10 +23,10 @@
           <td v-else:>Out of Stock</td>
           <!-- <td v-bind:style="[medicine.stock_level > 0 ? {'color': 'red'} : { 'color': 'green'}]">{{ medicine.Status }}</td> -->
           <td>
-            <button @click="deleteProduct()" class="btn">Delete</button>
+            <button @click="deleteProduct()" class="edt">Delete</button>
           </td>
           <td>
-            <button class="btn">Update</button>
+            <button class="edt">Update</button>
           </td>
         </tr>
       </table>
