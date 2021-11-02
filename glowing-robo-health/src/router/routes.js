@@ -7,8 +7,14 @@ import OrderFormTemp from "@/views/OrderFormTemp.vue";
 import ViewSupplier from "@/views/ViewSupplier.vue";
 import SupplierStockFull from "@/components/SupplierStockFull.vue";
 import Auth from "@/components/auth.vue";
+import Signup from "@/components/signup.vue";
 
 const routes = [
+  {
+    path: "/Signup",
+    name: "Signup",
+    component: Signup,
+  },
   {
     path: "/auth",
     name: "Auth",

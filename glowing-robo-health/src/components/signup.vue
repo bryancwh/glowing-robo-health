@@ -1,6 +1,6 @@
 <template>
     <div style="text-align:center;">    
-        <h1  id = "mainHead"> Glowing Robo Health Systems </h1>
+        <h1  id = "mainHead"> SIGN UP PAGE </h1>
         <div id ="formlogin"> 
             <form id="login" method='post'>
 
@@ -9,18 +9,28 @@
                     <input type="email" id="inputfield" v-model= "email">
                 </div>
 
+
                 <div id= "credential">
                     <label class="white-text" for="password" id = "label"> password</label>
                     <input type="password" id="inputfield" v-model= "password">
                 </div>
 
-                <div id = "buttons">
-                    <button v-on:click="login" class = "btn" id ="loginbutton"> Login </button>
-                    <button v-on:click="signup" class = "btn" id ="loginbutton"> Sign Up </button>
+                <div id= "credential">
+                    <label class="white-text" for="role" id = "role"> Select User Type </label>
+                    <select name="roles" id="role-select">
+                        <option value = ""> User Type </option>
+                        <option value = "clinic"> Clinic </option>
+                        <option value = "supplier"> Supplier </option>
+                    </select>
                 </div>
+
+                <div id = "buttons">
+                    <button v-on:click="back" class = "btn" id ="backbutton"> Back </button>
+                    <button v-on:click="signup" class = "btn" id ="signupbutton"> Sign Up </button>
+                </div>
+
             </form>
 
-            <div id= "firebaseui-auth-container"> </div>
             <div id="pagecontent">
                 Glowing Robo Health Systems™
             </div>
@@ -37,7 +47,7 @@ import 'firebaseui/dist/firebaseui.css'
 import router from "../router/routes.js"
 
 export default {
-    name:"Login",
+    name:"signup",
     data: function() {
         return {
             email: "",
@@ -45,50 +55,15 @@ export default {
         };
     },
     methods: {
-        login: function(e) {
-            firebase
-                .auth()
-                .signInWithEmailAndPassword(this.email, this.password)
-                .then(
-                    user => {
-                        alert(`You are logged in as ${this.email}`);
-                    },
-                    err => {
-                        alert(err.message);
-                    }
-                );
-                e.preventDefault();
+        back: function(e) {
+            this.$router.push('/auth');
         },
         signup: function(e) {
-            this.$router.push('/signup');
+            console.log("asdfasfd");
         }
         
     },
 
-    mounted() {
-        var ui = firebaseui.auth.AuthUI.getInstance();
-        console.log("first ui is",ui)
-        if (!ui){
-        ui = new firebaseui.auth.AuthUI(firebase.auth());
-        console.log("Inside !ui is ", ui)
-        }      
-
-        var uiConfig = {
-            signInSuccessUrl: '/home',
-            // signInSuccessUrl: this.$router.replace("/profile"),
-            signInOptions: [
-            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-            // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-            // firebase.auth.GithubAuthProvider.PROVIDER_ID,
-            //firebase.auth.EmailAuthProvider.PROVIDER_ID,
-            // firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-            // firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
-            ]
-            
-        };
-        ui.start("#firebaseui-auth-container", uiConfig)    
-    }
 }
 </script>
 
@@ -111,8 +86,8 @@ export default {
     bottom:0;
     
     /* font-style: italic; */
+    
 }
-
 #credential {
     margin-top: 30px;
 }
@@ -135,6 +110,12 @@ export default {
     text-align: right;
 }
 
+#role-select{
+    margin-left: 10px;
+    height: 25px;
+    width:155px;
+}
+
 #mainHead{
     text-align: center;
     background: cadetblue;
@@ -155,13 +136,19 @@ h5{
     background-color:rgb(194, 202, 188) ;
 }
 
-#loginbutton{
+#backbutton{
     margin-top: 30px;
     border-radius: 15px;
     background:aliceblue;
     width:100px;
 }
 
+#signupbutton{
+    margin-top: 30px;
+    border-radius: 15px;
+    background:aliceblue;
+    width:100px;
+}
 </style>
 
 
