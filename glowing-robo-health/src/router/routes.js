@@ -4,6 +4,8 @@ import SupplierStockpile from "@/views/SupplierStockpile.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import SupplierOrders from "@/views/SupplierOrders.vue";
 import OrderFormTemp from "@/views/OrderFormTemp.vue";
+import ViewSupplier from "@/views/ViewSupplier.vue";
+
 
 const routes = [
   // {
@@ -30,6 +32,11 @@ const routes = [
     path: "/OrderFormTemp",
     name: "OrderFormTemp",
     component: OrderFormTemp,
+  },
+  {
+    path: "/ViewSupplier",
+    name: "ViewSupplier",
+    component: ViewSupplier,
   },
 ];
 
