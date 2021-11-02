@@ -1,65 +1,70 @@
 <template>
   <div>
-    <table id="table" class="auto-index" :key="count">
-      <tr>
-        <th>Clinic</th>
-        <th>Name</th>
-        <th>Manufacturer</th>
-        <th>Product ID</th>
-        <th>Quantity Ordered</th>
-        <th>Purchase Date</th>
-        <th>Delivery Date</th>
-        <th>Status</th>
-        <th>Update Status</th>
-      </tr>
-      <tr v-for="order in orders" :key="order.name">
-        <td>{{ order.clinic }}</td>
-        <td>{{ order.name }}</td>
-        <td>{{ order.manufacturer }}</td>
-        <td>{{ order.product_id }}</td>
-        <td>{{ order.quantity_ordered }}</td>
-        <td>
-          {{
-            order.purchase_date
-              .toDate()
-              .toString()
-              .substring(3, 25)
-          }}
-        </td>
-        <td v-if="order.delivery_date === null">
-          Not delivered
-        </td>
-        <td v-else>
-          {{
-            order.delivery_date
-              .toDate()
-              .toString()
-              .substring(4, 24)
-          }}
-        </td>
+    <div>
+      <h1 class="header">Orders for all clinics</h1>
+    </div>
+    <div class="table_div">
+      <table id="table" :key="count">
+        <tr>
+          <th>Clinic</th>
+          <th>Name</th>
+          <th>Manufacturer</th>
+          <th>Product ID</th>
+          <th>Quantity</th>
+          <th>Purchase Date</th>
+          <th>Delivery Date</th>
+          <th>Status</th>
+          <th>Update Status</th>
+        </tr>
+        <tr v-for="order in orders" :key="order.name">
+          <td>{{ order.clinic }}</td>
+          <td>{{ order.name }}</td>
+          <td>{{ order.manufacturer }}</td>
+          <td>{{ order.product_id }}</td>
+          <td>{{ order.quantity_ordered }}</td>
+          <td>
+            {{
+              order.purchase_date
+                .toDate()
+                .toString()
+                .substring(3, 25)
+            }}
+          </td>
+          <td v-if="order.delivery_date === null">
+            Not delivered
+          </td>
+          <td v-else>
+            {{
+              order.delivery_date
+                .toDate()
+                .toString()
+                .substring(4, 24)
+            }}
+          </td>
 
-        <td>{{ order.status }}</td>
+          <td>{{ order.status }}</td>
 
-        <td>
-          <button
-            class="edt"
-            id="order.id"
-            @click="handleStatusChange(order.id)"
-            v-if="order.status === 'pending'"
-          >
-            Deliver
-          </button>
-          <button
-            class="edt"
-            id="order.id"
-            @click="handleStatusChange(order.id)"
-            v-else
-          >
-            Undo Delivery
-          </button>
-        </td>
-      </tr>
-    </table>
+          <td>
+            <button
+              class="edt"
+              id="order.id"
+              @click="handleStatusChange(order.id)"
+              v-if="order.status === 'pending'"
+            >
+              Deliver
+            </button>
+            <button
+              class="edt"
+              id="order.id"
+              @click="handleStatusChange(order.id)"
+              v-else
+            >
+              Undo Delivery
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -160,51 +165,71 @@ export default {
 </script>
 
 <style>
+html,
+body {
+  /* Height and width fallback for older browsers. */
+  height: 100%;
+  width: 100%;
+  background-color: rgb(237, 245, 252);
+}
+
 h1,
 h2 {
   text-align: left;
   padding-left: 30px;
-  background-color: #a9c1fd;
-  color: #ffffff;
+  color: black;
   font: 700;
   display: block;
   font-size: 2em;
-  margin-block-start: 0.67em;
-  margin-block-end: 0.67em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
   font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
+}
+.header {
+  width: 70%;
+  height: 20%;
+  color: black;
+  background-color: rgb(237, 245, 252);
+  position: relative;
+  top: 70px;
+  left: 80px;
+}
+.table_div {
+  border-radius: 25px;
+  border: 2px solid white;
+  padding: 20px;
+  background-color: white;
+  position: relative;
+  top: 70px;
+  width: 85%;
+  height: 500px;
+  left: 80px;
+  overflow: auto;
 }
 
-#Current {
-  background-color: #1f58e7;
-  color: #ffffff;
+tr:hover {
+  background-color: rgb(218, 218, 218);
 }
-#Rooms {
-  background-color: #a9c1fd;
-  color: #ffffff;
-  text-align: center;
+tr {
+  background-color: white;
+}
+tr:nth-child(even) {
+  background-color: white;
+}
+tr:nth-child(even):hover {
+  background-color: rgb(218, 218, 218);
+}
+th {
+  background-color: rgb(223, 223, 223);
 }
 
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+.edt {
+  color: black;
+  background-color: #f1f1f1;
+  width: 70px;
 }
 
-td {
-  border: 1px solid #dddddd;
-  text-align: center;
-  padding: 8px;
-}
-.th_one {
-  color: #00bb3b;
-  text-align: center;
-  padding: 8px;
-}
-.th_two {
-  color: #bb0300;
-  text-align: center;
-  padding: 8px;
+.edt:hover {
+  background-color: black;
+  color: white;
 }
 </style>

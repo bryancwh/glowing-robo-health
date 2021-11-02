@@ -8,11 +8,6 @@ import ViewSupplier from "@/views/ViewSupplier.vue";
 
 
 const routes = [
-  // {
-  //   path: "/",
-  //   name: "Appointment",
-  //   component: Appointment,
-  // },
   {
     path: "/ClinicStockpile",
     name: "ClinicStockpile",
