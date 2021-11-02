@@ -19,7 +19,7 @@
             <td v-else:> Out of Stock</td>
             <!-- <td v-bind:style="[medicine.stock_level > 0 ? {'color': 'red'} : { 'color': 'green'}]">{{ medicine.Status }}</td> -->
             <td>
-                <button @click="deleteProduct()">Delete</button>
+                <button @click="deleteProduct(medicine.name)">Delete</button>
             </td>
             <td>
                 <button>Update</button>
@@ -54,7 +54,7 @@
 <script>
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore"
-import { doc, collection, getDocs, setDoc, query } from "firebase/firestore";
+import { doc, collection, deleteDoc, getDocs, setDoc, query } from "firebase/firestore";
 
 const db = getFirestore(firebaseApp);
 
@@ -95,15 +95,26 @@ export default {
                 console.error("Error adding document: ", error);
             }
         },
+
+        async deleteProduct(medicine_name){
+            alert("You are going to delete " + medicine_name)
+            const path = "clinic/clinic_1/" + medicine_name;
+            try {
+                await deleteDoc(doc(db,"stock",path))
+                this.display()
+                console.log('Deleted document: ' + medicine_name)
+            } catch (error) {
+                console.error("Error deleting document: ", error);
+            }
+        },
+
         async display(){
             const path = query(collection(db, "stock/clinic/clinic_1"));
             let stock = await getDocs(path);
             this.stocks = []
             stock.forEach((doc) => {
-                console.log("huehudehud", doc.data())
                 this.stocks.push(doc.data());
             })
-            console.log('this eMPLOYEES' , this.doc)
         },
         // updateProduct() {
 
