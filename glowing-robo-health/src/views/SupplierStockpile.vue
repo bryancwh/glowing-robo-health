@@ -1,22 +1,17 @@
 <template>
     <div>    
         <h1> Supplier Stockpile for supplier 1</h1>
-        <SupplierStock/> 
-        <!-- :key="refreshComp"/> -->
-        <SupplierAddStock/>
-        <!-- @added="change()"/> -->
+        <SupplierStockFull/> 
     </div>
 </template>
 
 <script>
-import SupplierStock from "../components/SupplierStock.vue";
-import SupplierAddStock from "../components/SupplierAddStock.vue"
+import SupplierStockFull from "../components/SupplierStockFull.vue";
 
 export default {
     name: "Appointment",
     components: {
-        SupplierStock,
-        SupplierAddStock
+        SupplierStockFull
     },
     // data() {
     //     return {
