@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div><h1 class="header">Clinic Stockpile for clinic 1</h1></div>
     <div class="table_divider">
       <table id="table" class="auto-index" :key="count">
         <tr>

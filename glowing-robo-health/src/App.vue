@@ -1,23 +1,24 @@
 <template>
   <div>
-      <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/ClinicStockpile">Clinic</router-link> |
-      <router-link to="/SupplierStockpile">Supplier</router-link> |
-      <router-link to="/SupplierOrders">Orders</router-link> |
-      <router-link to="/ViewSupplier">Supplier Info</router-link> |
-      <router-link to="/OrderFormTemp">Order Form</router-link> 
-    </div>
-    <router-view/>
+    <header class="app-header">
+      <NavBar />
+    </header>
+    <router-view/>    
   </div>
 </template>
 
 <script>
+import NavBar from './components/NavBar.vue'
 console.log("in App");
 
 export default {
+  components: { NavBar },
   name: "App",
 };
 </script>
 
-<style></style>
+<style>
+.app-header {
+  margin-top: 5px;
+}
+</style>
