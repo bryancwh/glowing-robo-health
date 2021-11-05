@@ -70,12 +70,25 @@ import {
   setDoc,
   query,
 } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 const db = getFirestore(firebaseApp);
 
 export default {
   mounted() {
-    this.display();
+    const auth = getAuth();
+    this.user = auth.currentUser
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.user = auth.currentUser;
+        console.log(this.user);
+        console.log(this.user.email);
+        this.display();
+      } else {
+        console.log("not logged in");
+      }
+    });
   },
   data() {
     return {
@@ -84,6 +97,11 @@ export default {
       manufacturer: "",
       product_id: "",
       stocks: [],
+      user : {
+        email: "",
+        displayName: "",
+        uid: ""
+      }
     };
   },
   methods: {
@@ -94,7 +112,8 @@ export default {
       var quantity = document.getElementById("quantity").value;
 
       var type = "clinic";
-      var user_name = "clinic1";
+      var email = this.user.email;
+      var user_name = email.slice(0,email.indexOf("@"));
       var document_id = user_name + "_" + product_name;
       const path = document_id + "/";
       try {
@@ -116,8 +135,11 @@ export default {
     },
 
     async deleteProduct(medicine_name) {
+      var email = this.user.email;
+      var user_name = email.slice(0,email.indexOf("@"));
+      var document_id = user_name + "_" + medicine_name;
+      const path = document_id + "/";
       alert("You are going to delete " + medicine_name);
-      const path = "clinic1_" + medicine_name + "/";
       try {
         await deleteDoc(doc(db, "stocks", path));
         this.display();
@@ -129,12 +151,14 @@ export default {
 
     async display() {
       const path = query(collection(db, "stocks/"));
+      var email = this.user.email;
+      var user_name = email.slice(0,email.indexOf("@"));
 
       let stocks = await getDocs(path);
 
       stocks.forEach((doc) => {
         let data = doc.data();
-        if (data.type === "clinic") {
+        if ((data.type == "clinic") && (data.user_name == user_name)) {
           this.stocks.push({
             type: data.type,
             user_name: data.user_name,
