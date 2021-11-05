@@ -1,8 +1,9 @@
 <template>
   <div style="text-align:center;">
-    <h1 id="mainHead">Sign Up Page</h1>
+    <h1 id="mainHead">Glowing Robo Health Systems</h1>
     <div id="formlogin">
       <form id="login" method="post">
+        <h1 id="login-header">Signup Page</h1>
         <div id="credential">
           <label class="white-text" for="email" id="label">
             Email Address</label
@@ -16,7 +17,9 @@
         </div>
 
         <div id="credential">
-          <label class="white-text" for="displayName" id="label"> Display Name</label>
+          <label class="white-text" for="displayName" id="label">
+            Display Name</label
+          >
           <input type="text" id="inputfield" v-model="display_name" />
         </div>
 
@@ -65,7 +68,7 @@ export default {
       email: "",
       password: "",
       selected_role: "",
-      displayName: ""
+      displayName: "",
     };
   },
   methods: {
@@ -74,7 +77,7 @@ export default {
     },
     signup: function(e) {
       var roleSelected = this.selected_role;
-      var displayName = this.display_name
+      var displayName = this.display_name;
 
       console.log(displayName);
       firebase
@@ -86,10 +89,10 @@ export default {
           // user.user.updateProfile({
           //   displayName: displayName
           // });
-          console.log(displayName)
+          console.log(displayName);
           user.user.updateProfile({
-            displayName: displayName
-          })
+            displayName: displayName,
+          });
           const docRef = setDoc(doc(db, "users", uid), {
             UID: uid,
             role: roleSelected,
@@ -109,11 +112,16 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
 #formlogin {
   display: inline-block;
   background: rgb(160, 203, 216);
   width: 500px;
-  height: 350px;
+  height: 450px;
   border-radius: 15px;
   position: relative;
 }
@@ -124,7 +132,7 @@ export default {
   font-weight: bolder;
   text-align: center;
   position: relative;
-  top: 310px;
+  top: 200px;
   /* font-style: italic; */
 }
 #credential {
@@ -145,7 +153,7 @@ export default {
   display: flex;
   justify-content: space-between;
   position: relative;
-  top: 80px;
+  top: 70px;
 }
 
 #login {
