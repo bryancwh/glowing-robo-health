@@ -35,7 +35,7 @@
     <!-- <form v-on:submit.prevent> -->
     <div class="form_divider">
       <form>
-        <h1>Add Stocks</h1>
+        <h2>Add/Update Stock</h2>
 
         <label>Medicine Name:</label>
         <input type="text" id="product_name" required v-model="product_name" />
@@ -140,6 +140,7 @@ export default {
         alert("Successfully added stock: " + this.product_name);
         this.product_name = this.quantity = this.product_manufacturer = this.product_id =
           "";
+
       } catch (error) {
         console.error("Error adding document: ", error);
       }
@@ -153,11 +154,12 @@ export default {
       alert("You are going to delete " + medicine_name);
       try {
         await deleteDoc(doc(db, "stocks", path));
-
         console.log("Deleted document: " + medicine_name);
+        console.log("hello")
       } catch (error) {
         console.error("Error deleting document: ", error);
       }
+
       let tb = document.getElementById("table");
       while (tb.rows.length > 1) {
         tb.deleteRow(1);
@@ -168,12 +170,16 @@ export default {
     async display() {
       const path = query(collection(db, "stocks/"));
       var email = this.user.email;
-      var user_name = email.slice(0, email.indexOf("@"));
 
-      let stocks = await getDocs(path);
+      var user_name = email.slice(0,email.indexOf("@"));
+      
+      let stocks_from_db = await getDocs(path);
 
-      stocks.forEach((doc) => {
+
+      stocks_from_db.forEach((doc) => {
+        
         let data = doc.data();
+
         if (data.type == "clinic" && data.user_name == user_name) {
           this.stocks.push({
             type: data.type,
