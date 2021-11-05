@@ -40,7 +40,7 @@ import router from "../router/routes.js";
 import firebaseApp from "../firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { doc, collection, getDoc, setDoc, query } from "firebase/firestore";
-
+import { getAuth, setPersistence, signInWithEmailAndPassword, browserSessionPersistence } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 export default {
@@ -53,10 +53,11 @@ export default {
   },
   methods: {
     login: function(e) {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(
+      const auth = getAuth();
+      setPersistence(auth, browserSessionPersistence)
+        .then( () => {
+          signInWithEmailAndPassword(auth, this.email, this.password)
+          .then(
           async (user) => {
             alert(`You are logged in as ${this.email}`);
             var id = user.user.uid;
@@ -73,6 +74,8 @@ export default {
             alert(err.message);
           }
         );
+        })
+        
       e.preventDefault();
     },
     gotosignup: function(e) {
