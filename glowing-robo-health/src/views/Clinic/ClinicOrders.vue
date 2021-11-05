@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import SupplierOrdersTable from "@/components/ClinicOrdersTable.vue";
+import ClinicOrdersTable from "@/components/ClinicOrdersTable.vue";
 
 export default {
   name: "ClinicOrders",
