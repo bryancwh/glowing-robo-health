@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="topnav">
-      <b class="app_name">Glowing Robo Health</b>
+      <b class="app_name">Glowing Robo Health Clinic</b>
       <a class="active" href="/">Home</a>
       <a href="/ClinicStockpile">Clinic</a>
-      <a href="/SupplierStockpile">Supplier</a>
-      <a href="/SupplierOrders">Orders</a>
-      <a href="/ViewSupplier">Inventory</a>
+      <!-- <a href="/SupplierStockpile">Supplier</a> -->
+      <!-- <a href="/SupplierOrders">Orders</a> -->
+      <!-- <a href="/ViewSupplier">Inventory</a> -->
       <a href="/OrderFormTemp">Request</a>
       <a>Logout</a>
     </div>

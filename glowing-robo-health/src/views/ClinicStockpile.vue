@@ -4,9 +4,9 @@
       <b class="app_name">Glowing Robo Health</b>
       <a href="/">Home</a>
       <a class="active" href="/ClinicStockpile">Clinic</a>
-      <a href="/SupplierStockpile">Supplier</a>
+      <!-- <a href="/SupplierStockpile">Supplier</a>
       <a href="/SupplierOrders">Orders</a>
-      <a href="/ViewSupplier">Inventory</a>
+      <a href="/ViewSupplier">Inventory</a> -->
       <a href="/OrderFormTemp">Request</a>
       <a>Logout</a>
     </div>
