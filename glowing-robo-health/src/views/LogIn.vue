@@ -10,7 +10,7 @@
                 </div>
 
                 <div id= "credential">
-                    <label class="white-text" for="password" id = "label"> password</label>
+                    <label class="white-text" for="password" id = "label"> Password</label>
                     <input type="password" id="inputfield" v-model= "password">
                 </div>
 
