@@ -8,6 +8,7 @@ import SupplierStockFull from "@/components/SupplierStockFull.vue";
 import Auth from "@/components/auth.vue";
 import Signup from "@/components/signup.vue";
 import Home from "@/views/Home.vue";
+import SupplierHome from "@/views/SupplierHome.vue";
 
 const routes = [
   {
@@ -25,6 +26,12 @@ const routes = [
     name: "Home",
     component: Home,
   },
+  {
+    path: "/SupplierHome",
+    name: "SupplierHome",
+    component: SupplierHome,
+  },
+
   {
     path: "/ClinicStockpile",
     name: "ClinicStockpile",

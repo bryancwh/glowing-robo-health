@@ -36,6 +36,12 @@ import 'firebase/compat/auth';
 import * as firebaseui from 'firebaseui'
 import 'firebaseui/dist/firebaseui.css'
 import router from "../router/routes.js"
+import firebaseApp from '../firebase.js';
+import { getFirestore } from "firebase/firestore"
+import { doc, collection, getDocs, setDoc, query} from "firebase/firestore";
+
+const uid = ""
+const db = getFirestore(firebaseApp);
 
 export default {
     name:"Login",
@@ -47,6 +53,7 @@ export default {
     },
     methods: {
         login: function(e) {
+            
             firebase
                 .auth()
                 .signInWithEmailAndPassword(this.email, this.password)
