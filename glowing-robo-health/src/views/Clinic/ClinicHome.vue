@@ -4,6 +4,7 @@
     <div class="topnav">
       <b class="app_name">Glowing Robo Health Clinic</b>
       <a class="active" href="/clinichome">Home</a>
+      <a href="/clinicorders">Your Orders</a>
       <a href="/clinicstockview">Your Stocks</a>
       <a href="/clinicsupplierview">View Suppliers</a>
       <a href="/clinicorderformpage">Request</a>

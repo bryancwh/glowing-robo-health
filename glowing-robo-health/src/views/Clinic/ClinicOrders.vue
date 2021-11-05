@@ -3,23 +3,23 @@
     <div class="topnav">
       <b class="app_name">Glowing Robo Health Supplier</b>
       <a href="/clinichome">Home</a>
-      <a href="/clinicorders">Your Orders</a>
+      <a class="active" href="/clinicorders">Your Orders</a>
       <a href="/clinicstockview">Your Stocks</a>
-      <a class="active" href="/clinicsupplierview">View Suppliers</a>
+      <a href="/clinicsupplierview">View Suppliers</a>
       <a href="/clinicorderformpage">Request</a>
-      <a> <LogOut/> </a>
-
+      <a href="/"> Logout </a>
     </div>
-    <AllSupplierStock />
+    <ClinicOrdersTable />
   </div>
 </template>
 
 <script>
-import AllSupplierStock from "../../components/AllSupplierStock.vue";
+import ClinicOrdersTable from "@/components/ClinicOrdersTable.vue";
 
 export default {
+  name: "ClinicOrders",
   components: {
-    AllSupplierStock,
+    ClinicOrdersTable,
   },
 };
 </script>
