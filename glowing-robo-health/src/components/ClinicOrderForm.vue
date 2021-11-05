@@ -8,8 +8,8 @@
       <form>
         <h1>Create Order</h1>
 
-        <label>Clinic:</label>
-        <input type="text" id="clinic" required v-model="clinic" />
+        <!-- <label>Clinic:</label>
+        <input type="text" id="clinic" required v-model="clinic" /> -->
 
         <label>Supplier:</label>
         <input type="text" id="supplier" required v-model="supplier" />
@@ -37,18 +37,39 @@
 import firebaseApp from "../firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDocs, setDoc, query, collection } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const db = getFirestore(firebaseApp);
 export default {
+  mounted() {
+    const auth = getAuth();
+    this.user = auth.currentUser;
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.user = auth.currentUser;
+        console.log(this.user);
+        console.log(this.user.email);
+      } else {
+        console.log("not logged in");
+      }
+    });
+  },
   data() {
     return {
       name: "",
       quantity: "",
+      user: {
+        email: "",
+        displayName: "",
+        uid: "",
+      },
     };
   },
   methods: {
     async submitOrder() {
-      var clinic = document.getElementById("clinic").value;
+      // var clinic = document.getElementById("clinic").value;
+      var email = this.user.email;
+      var user_name = email.slice(0, email.indexOf("@"));
       var supplier = document.getElementById("supplier").value;
       var manufacturer = document.getElementById("manufacturer").value;
       var name = document.getElementById("name").value;
@@ -58,13 +79,17 @@ export default {
       var purchase_date = new Date();
       //   const path = this.name;
       const path =
-        clinic + "_" + purchase_date.toString().substring(4, 24) + "_" + name;
+        user_name +
+        "_" +
+        purchase_date.toString().substring(4, 24) +
+        "_" +
+        name;
 
       console.log(db);
       // console.log(path)
       try {
         const docRef = await setDoc(doc(db, "orders", path), {
-          clinic: clinic,
+          clinic: user_name,
           supplier: supplier,
           manufacturer: manufacturer,
           name: name,
@@ -75,6 +100,7 @@ export default {
           delivery_date: null,
         });
         console.log("Updated document for: " + String(name));
+        alert("Order submitted!");
       } catch (error) {
         console.error("Error adding document: ", error);
       }
