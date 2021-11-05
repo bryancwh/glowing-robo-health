@@ -1,8 +1,9 @@
 <template>
   <div style="text-align:center;">
-    <h1 id="mainHead">Sign Up Page</h1>
+    <h1 id="mainHead">Glowing Robo Health Systems</h1>
     <div id="formlogin">
       <form id="login" method="post">
+        <h1 id="login-header">Sign Up Page</h1>
         <div id="credential">
           <label class="white-text" for="email" id="label">
             Email Address</label
@@ -94,6 +95,11 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
 #formlogin {
   display: inline-block;
   background: rgb(160, 203, 216);
@@ -109,12 +115,12 @@ export default {
   font-weight: bolder;
   text-align: center;
   position: relative;
-  top: 310px;
+  top: 260px;
   /* font-style: italic; */
 }
 #credential {
   position: relative;
-  top: 50px;
+  top: 30px;
   margin: 30px 10px 30px 10px;
 }
 #label {
@@ -130,7 +136,7 @@ export default {
   display: flex;
   justify-content: space-between;
   position: relative;
-  top: 80px;
+  top: 30px;
 }
 
 #login {
