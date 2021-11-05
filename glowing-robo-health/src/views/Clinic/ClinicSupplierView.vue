@@ -7,19 +7,20 @@
       <a href="/clinicstockview">Your Stocks</a>
       <a class="active" href="/clinicsupplierview">View Suppliers</a>
       <a href="/clinicorderformpage">Request</a>
-      <a> <LogOut/> </a>
-
+      <LogOut />
     </div>
     <AllSupplierStock />
   </div>
 </template>
 
 <script>
+import LogOut from "../../components/LogOut.vue";
 import AllSupplierStock from "../../components/AllSupplierStock.vue";
 
 export default {
   components: {
     AllSupplierStock,
+    LogOut,
   },
 };
 </script>

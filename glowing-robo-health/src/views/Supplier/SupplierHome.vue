@@ -5,13 +5,19 @@
       <a class="active" href="/supplierhome">Home</a>
       <a href="/supplierstockview">Your Stocks</a>
       <a href="/supplierorders">Orders</a>
-      <a> <LogOut/> </a>
+      <LogOut />
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import LogOut from "../../components/LogOut.vue";
+
+export default {
+  components: {
+    LogOut,
+  },
+};
 </script>
 
 <style></style>

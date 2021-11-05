@@ -7,19 +7,21 @@
       <a href="/clinicstockview">Your Stocks</a>
       <a href="/clinicsupplierview">View Suppliers</a>
       <a class="active" href="/clinicorderformpage">Request</a>
-      <a> <LogOut/> </a>
+      <LogOut />
     </div>
-    <ClinicOrderForm/>
+    <ClinicOrderForm />
   </div>
 </template>
 
 <script>
+import LogOut from "../../components/LogOut.vue";
 import ClinicOrderForm from "@/components/ClinicOrderForm.vue";
 
 export default {
   name: "Appointment",
   components: {
     ClinicOrderForm,
+    LogOut,
   },
 };
 </script>
@@ -27,7 +29,7 @@ export default {
 <style>
 /* Add a black background color to the top navigation */
 .app_name {
-  margin: 7px 350px 0px 0px;
+  margin: 7px 250px 0px 0px;
   font-family: New Century Schoolbook, TeX Gyre Schola, serif;
   font-weight: normal;
 }

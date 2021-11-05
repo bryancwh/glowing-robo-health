@@ -5,19 +5,21 @@
       <a href="/supplierhome">Home</a>
       <a class="active" href="/supplierstockview">Your Stocks</a>
       <a href="/supplierorders">Orders</a>
-      <a> <LogOut/> </a>
+      <LogOut />
     </div>
     <SupplierStockFull />
   </div>
 </template>
 
 <script>
+import LogOut from "../../components/LogOut.vue";
 import SupplierStockFull from "@/components/SupplierStockFull.vue";
 
 export default {
   name: "Appointment",
   components: {
     SupplierStockFull,
+    LogOut,
   },
   // data() {
   //     return {

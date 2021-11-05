@@ -7,19 +7,21 @@
       <a class="active" href="/clinicstockview">Your Stocks</a>
       <a href="/clinicsupplierview">View Suppliers</a>
       <a href="/clinicorderformpage">Request</a>
-      <a> <LogOut/> </a>
+      <LogOut />
     </div>
     <ClinicStockFull />
   </div>
 </template>
 
 <script>
+import LogOut from "../../components/LogOut.vue";
 import ClinicStockFull from "../../components/ClinicStockFull.vue";
 
 export default {
   name: "Appointment",
   components: {
     ClinicStockFull,
+    LogOut,
   },
   // data() {
   //     return {

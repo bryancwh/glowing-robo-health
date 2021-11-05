@@ -7,19 +7,21 @@
       <a href="/clinicstockview">Your Stocks</a>
       <a href="/clinicsupplierview">View Suppliers</a>
       <a href="/clinicorderformpage">Request</a>
-      <a href="/"> Logout </a>
+      <LogOut />
     </div>
     <ClinicOrdersTable />
   </div>
 </template>
 
 <script>
+import LogOut from "../../components/LogOut.vue";
 import ClinicOrdersTable from "@/components/ClinicOrdersTable.vue";
 
 export default {
   name: "ClinicOrders",
   components: {
     ClinicOrdersTable,
+    LogOut,
   },
 };
 </script>
