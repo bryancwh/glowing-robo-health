@@ -5,7 +5,7 @@
       <a href="/supplierhome">Home</a>
       <a class="active" href="/supplierstockview">Your Stocks</a>
       <a href="/supplierorders">Orders</a>
-      <a href="/">Logout</a>
+      <a> <LogOut/> </a>
     </div>
     <SupplierStockFull />
   </div>

@@ -7,8 +7,9 @@
       <a href="/clinicstockview">Your Stocks</a>
       <a href="/clinicsupplierview">View Suppliers</a>
       <a href="/clinicorderformpage">Request</a>
-      <a href="/"> Logout </a>
+      <a> <LogOut/> </a>
     </div>
+    
   </div>
 
   <!-- <h1>Welcome to glowing robo health!</h1>
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-
+import LogOut from "../../components/LogOut.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default {
@@ -31,11 +32,15 @@ export default {
         user: null,
     };
   },
+  components: {
+    LogOut,
+  },
   mounted() {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        this.user = user;      
+        this.user = user;
+        console.log(this.user); 
       } else {
         console.log('not logged in')
       }
@@ -46,4 +51,6 @@ export default {
 
 </script>
 
-<style></style>
+<style>
+
+</style>

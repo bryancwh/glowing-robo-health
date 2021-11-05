@@ -14,52 +14,86 @@ import SupplierStockView from '@/views/Supplier/SupplierStockView.vue'
 // Authentication pages
 import LogIn from "@/views/LogIn.vue";
 import SignUp from "@/views/SignUp.vue";
+// import LogOut from "@/components/LogOut.vue";
+
 
 const routes = [
   {
     path: "/",
     name: "LogIn",
     component: LogIn,
+    meta: {
+      requiresAuth: true
+    }
   },
+  // {
+  //   path: "/logout",
+  //   name: "LogOut",
+  //   component: LogOut,
+  // },
   {
     path: "/signup",
     name: "SignUp",
     component: SignUp,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/clinichome",
     name: "ClinicHome",
     component: ClinicHome,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/clinicorderformpage",
     name: "ClinicOrderFormPage",
     component: ClinicOrderFormPage,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/clinicstockview",
     name: "ClinicStockView",
     component: ClinicStockView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/clinicsupplierview",
     name: "ClinicSupplierView",
     component: ClinicSupplierView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/supplierhome",
     name: "SupplierHome",
     component: SupplierHome,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/supplierorders",
     name: "SupplierOrders",
     component: SupplierOrders,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/supplierstockview",
     name: "SupplierStockView",
     component: SupplierStockView,
+    meta: {
+      requiresAuth: true
+    }
   }
 ];
 

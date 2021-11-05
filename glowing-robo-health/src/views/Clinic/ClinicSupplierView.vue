@@ -6,7 +6,7 @@
       <a href="/clinicstockview">Your Stocks</a>
       <a class="active" href="/clinicsupplierview">View Suppliers</a>
       <a href="/clinicorderformpage">Request</a>
-      <a href="/"> Logout </a>
+      <a> <LogOut/> </a>
 
     </div>
     <AllSupplierStock />
