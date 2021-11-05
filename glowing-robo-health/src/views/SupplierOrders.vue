@@ -8,7 +8,7 @@
       <a class="active" href="/SupplierOrders">Orders</a>
       <a href="/ViewSupplier">Inventory</a>
       <!-- <a href="/OrderFormTemp">Request</a> -->
-      <a>Logout</a>
+      <a href="/auth">Logout</a>
     </div>
     <SupplierOrders />
   </div>
