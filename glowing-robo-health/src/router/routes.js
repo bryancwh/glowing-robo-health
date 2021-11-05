@@ -1,22 +1,21 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 // Clinic pages
-import ClinicHome from '@/views/Clinic/ClinicHome.vue'
-import ClinicOrderFormPage from '@/views/Clinic/ClinicOrderFormPage.vue'
-import ClinicStockView from '@/views/Clinic/ClinicStockView.vue'
-import ClinicSupplierView from '@/views/Clinic/ClinicSupplierView.vue'
-import ClinicOrders from '@/views/Clinic/ClinicOrders.vue'
+import ClinicHome from "@/views/Clinic/ClinicHome.vue";
+import ClinicOrderFormPage from "@/views/Clinic/ClinicOrderFormPage.vue";
+import ClinicStockView from "@/views/Clinic/ClinicStockView.vue";
+import ClinicSupplierView from "@/views/Clinic/ClinicSupplierView.vue";
+import ClinicOrders from "@/views/Clinic/ClinicOrders.vue";
 
 // Supplier pages
-import SupplierHome from '@/views/Supplier/SupplierHome.vue'
-import SupplierOrders from '@/views/Supplier/SupplierOrders.vue'
-import SupplierStockView from '@/views/Supplier/SupplierStockView.vue'
+import SupplierHome from "@/views/Supplier/SupplierHome.vue";
+import SupplierOrders from "@/views/Supplier/SupplierOrders.vue";
+import SupplierStockView from "@/views/Supplier/SupplierStockView.vue";
 
 // Authentication pages
 import LogIn from "@/views/LogIn.vue";
 import SignUp from "@/views/SignUp.vue";
 // import LogOut from "@/components/LogOut.vue";
-
 
 const routes = [
   {
@@ -24,8 +23,8 @@ const routes = [
     name: "LogIn",
     component: LogIn,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   // {
   //   path: "/logout",
@@ -37,40 +36,40 @@ const routes = [
     name: "SignUp",
     component: SignUp,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: "/clinichome",
     name: "ClinicHome",
     component: ClinicHome,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: "/clinicorderformpage",
     name: "ClinicOrderFormPage",
     component: ClinicOrderFormPage,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: "/clinicstockview",
     name: "ClinicStockView",
     component: ClinicStockView,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: "/clinicsupplierview",
     name: "ClinicSupplierView",
     component: ClinicSupplierView,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: "/clinicorders",
@@ -82,25 +81,25 @@ const routes = [
     name: "SupplierHome",
     component: SupplierHome,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: "/supplierorders",
     name: "SupplierOrders",
     component: SupplierOrders,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: "/supplierstockview",
     name: "SupplierStockView",
     component: SupplierStockView,
     meta: {
-      requiresAuth: true
-    }
-  }
+      requiresAuth: true,
+    },
+  },
 ];
 
 const router = createRouter({
@@ -109,4 +108,3 @@ const router = createRouter({
 });
 
 export default router;
-

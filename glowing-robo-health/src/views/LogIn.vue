@@ -3,6 +3,7 @@
     <h1 id="mainHead">Glowing Robo Health Systems</h1>
     <div id="formlogin">
       <form id="login" method="post">
+        <h1 id="login-header">Login Page</h1>
         <div id="credential">
           <label class="white-text" for="email" id="label">
             Email Address</label
@@ -23,7 +24,7 @@
         </div>
       </form>
 
-      <!-- <div id="firebaseui-auth-container"></div> -->
+      <div id="firebaseui-auth-container"></div>
       <div id="pagecontent">
         Glowing Robo Health Systems™
       </div>
@@ -89,7 +90,7 @@ export default {
     }
 
     var uiConfig = {
-      signInSuccessUrl: "/home",
+      signInSuccessUrl: "/clinichome",
       // signInSuccessUrl: this.$router.replace("/profile"),
       signInOptions: [
         // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -107,6 +108,11 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
 #formlogin {
   display: inline-block;
   background: rgb(160, 203, 216);
@@ -121,7 +127,7 @@ export default {
   font-weight: bolder;
   text-align: center;
   position: relative;
-  top: 330px;
+  top: 280px;
 
   /* font-style: italic; */
 }
@@ -129,7 +135,7 @@ export default {
 #credential {
   /* margin-top: 30px; */
   position: relative;
-  top: 50px;
+  top: 30px;
   margin: 40px 10px 40px 10px;
 }
 #label {
@@ -145,7 +151,7 @@ export default {
   display: flex;
   justify-content: space-around;
   position: relative;
-  top: 100px;
+  top: 50px;
 }
 
 #login {

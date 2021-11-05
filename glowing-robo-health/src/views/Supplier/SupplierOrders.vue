@@ -14,12 +14,32 @@
 <script>
 import LogOut from "../../components/LogOut.vue";
 import SupplierOrdersTable from "@/components/SupplierOrdersTable.vue";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import firebaseApp from "../../firebase";
 
 export default {
   name: "SupplierOrders",
+  data() {
+    return {
+      user: null,
+    };
+  },
   components: {
     SupplierOrdersTable,
     LogOut,
+  },
+  mounted() {
+    const auth = getAuth();
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        this.user = user;
+        console.log("hi");
+        console.log(this.user);
+      } else {
+        console.log("not logged in");
+      }
+    });
   },
 };
 </script>
