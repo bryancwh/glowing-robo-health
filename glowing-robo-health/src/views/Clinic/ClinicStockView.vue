@@ -16,6 +16,7 @@
 <script>
 import LogOut from "../../components/LogOut.vue";
 import ClinicStockFull from "../../components/ClinicStockFull.vue";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default {
   name: "Appointment",
@@ -23,15 +24,28 @@ export default {
     ClinicStockFull,
     LogOut,
   },
-  // data() {
-  //     return {
-  //         refreshComp: 0
-  //     }
-  // },
-  // change(){
-  //     console.log('Changed')
-  //     this.refreshComp += 1
-  // }
+  data() {
+    return {
+      user : {
+        email: "",
+        displayName: "",
+        uid: ""
+      }
+    };
+  },
+  mounted() {
+    const auth = getAuth();
+    this.user = auth.currentUser
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.user = auth.currentUser;
+        console.log(this.user);
+        console.log(this.user.email);
+      } else {
+        console.log("not logged in");
+      }
+    });
+  },
 };
 </script>
 
