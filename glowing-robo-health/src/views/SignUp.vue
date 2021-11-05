@@ -1,9 +1,8 @@
 <template>
   <div style="text-align:center;">
-    <h1 id="mainHead">Glowing Robo Health Systems</h1>
+    <h1 id="mainHead">Sign Up Page</h1>
     <div id="formlogin">
       <form id="login" method="post">
-        <h1 id="login-header">Sign Up Page</h1>
         <div id="credential">
           <label class="white-text" for="email" id="label">
             Email Address</label
@@ -14,6 +13,11 @@
         <div id="credential">
           <label class="white-text" for="password" id="label"> Password</label>
           <input type="password" id="inputfield" v-model="password" />
+        </div>
+
+        <div id="credential">
+          <label class="white-text" for="displayName" id="label"> Display Name</label>
+          <input type="text" id="inputfield" v-model="display_name" />
         </div>
 
         <div id="credential">
@@ -61,6 +65,7 @@ export default {
       email: "",
       password: "",
       selected_role: "",
+      displayName: ""
     };
   },
   methods: {
@@ -69,13 +74,22 @@ export default {
     },
     signup: function(e) {
       var roleSelected = this.selected_role;
-      console.log(roleSelected);
+      var displayName = this.display_name
+
+      console.log(displayName);
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(function(user) {
           console.log("uid", user.user.uid);
           var uid = user.user.uid;
+          // user.user.updateProfile({
+          //   displayName: displayName
+          // });
+          console.log(displayName)
+          user.user.updateProfile({
+            displayName: displayName
+          })
           const docRef = setDoc(doc(db, "users", uid), {
             UID: uid,
             role: roleSelected,
@@ -83,7 +97,7 @@ export default {
         })
         .then(() => {
           alert("Successfully registered! Please login.");
-          this.$router.push("/auth");
+          this.$router.push("/");
         })
         .catch((error) => {
           alert(error.message);
@@ -95,11 +109,6 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
 #formlogin {
   display: inline-block;
   background: rgb(160, 203, 216);
@@ -115,12 +124,12 @@ h1 {
   font-weight: bolder;
   text-align: center;
   position: relative;
-  top: 260px;
+  top: 310px;
   /* font-style: italic; */
 }
 #credential {
   position: relative;
-  top: 30px;
+  top: 50px;
   margin: 30px 10px 30px 10px;
 }
 #label {
@@ -136,7 +145,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   position: relative;
-  top: 30px;
+  top: 80px;
 }
 
 #login {
