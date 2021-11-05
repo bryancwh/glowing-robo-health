@@ -7,6 +7,7 @@ import ViewSupplier from "@/views/ViewSupplier.vue";
 import SupplierStockFull from "@/components/SupplierStockFull.vue";
 import Auth from "@/components/auth.vue";
 import Signup from "@/components/signup.vue";
+import Home from "@/views/Home.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: "/auth",
     name: "Auth",
     component: Auth,
+  },
+  {
+    path: "/",
+    name: "Home",
+    component: Home,
   },
   {
     path: "/ClinicStockpile",
