@@ -23,7 +23,7 @@
         </div>
       </form>
 
-      <div id="firebaseui-auth-container"></div>
+      <!-- <div id="firebaseui-auth-container"></div> -->
       <div id="pagecontent">
         Glowing Robo Health Systems™
       </div>
@@ -92,7 +92,7 @@ export default {
       signInSuccessUrl: "/home",
       // signInSuccessUrl: this.$router.replace("/profile"),
       signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
         // firebase.auth.GithubAuthProvider.PROVIDER_ID,
@@ -113,23 +113,24 @@ export default {
   width: 500px;
   height: 350px;
   border-radius: 15px;
-}
-#firebaseui-auth-container {
-  display: inline-block;
-  width: 300px;
-  margin-top: 80px;
+  position: relative;
 }
 
 #pagecontent {
   font-size: larger;
   font-weight: bolder;
   text-align: center;
+  position: relative;
+  top: 330px;
 
   /* font-style: italic; */
 }
 
 #credential {
-  margin-top: 30px;
+  /* margin-top: 30px; */
+  position: relative;
+  top: 50px;
+  margin: 40px 10px 40px 10px;
 }
 #label {
   margin-right: 30px;
@@ -143,6 +144,8 @@ export default {
 #buttons {
   display: flex;
   justify-content: space-around;
+  position: relative;
+  top: 100px;
 }
 
 #login {
@@ -152,10 +155,17 @@ export default {
 
 #mainHead {
   text-align: center;
-  background: cadetblue;
-  font-size: 40px;
+  background: rgb(26, 83, 105);
+  font-size: 35px;
+  color: white;
   /* height: 100px; */
-  text-shadow: 2px 2px grey;
+  /* text-shadow: 2px 2px grey; */
+  font-family: New Century Schoolbook, TeX Gyre Schola, serif;
+  text-decoration: none;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #bg {
