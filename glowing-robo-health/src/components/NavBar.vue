@@ -1,25 +1,32 @@
 <template>
   <div class="topnav">
-    <b>Glowing Robo Health</b>
+    <b class="app_name">Glowing Robo Health</b>
     <a class="active" href="/">Home</a>
     <a href="/ClinicStockpile">Clinic</a>
     <a href="/SupplierStockpile">Supplier</a>
     <a href="/SupplierOrders">Orders</a>
     <a href="/ViewSupplier">Inventory</a>
     <a href="/OrderFormTemp">Request</a>
-</div>
+    <a>Logout</a>
+  </div>
 </template>
 
 <script>
-export default {
-};
+export default {};
 </script>
 
 <style>
 /* Add a black background color to the top navigation */
+.app_name {
+  margin: 7px 350px 0px 0px;
+  font-family: New Century Schoolbook, TeX Gyre Schola, serif;
+  font-weight: normal;
+}
+
 .topnav {
-  background-color: skyblue;
+  background-color: rgb(26, 83, 105);
   overflow: hidden;
+  height: 70px;
 }
 
 /* Style the links inside the navigation bar */
@@ -30,6 +37,8 @@ export default {
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  margin: 10px 10px 0px 10px;
+  font-family: Comic Sans MS, Comic Sans, cursive;
 }
 
 .topnav b {
@@ -38,9 +47,8 @@ export default {
   text-align: right;
   padding: 14px 20px;
   text-decoration: none;
-  font-size: 19px;
+  font-size: 29px;
 }
-
 
 /* Change the color of links on hover */
 .topnav a:hover {
@@ -57,4 +65,5 @@ export default {
 .currentLink {
   background-color: #ddd;
   color: black;
-}</style>
+}
+</style>

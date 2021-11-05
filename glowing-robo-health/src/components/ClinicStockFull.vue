@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div>
+      <h1 class="header">Clinic Stockpile</h1>
+    </div>
     <div class="table_divider">
       <table id="table" class="auto-index" :key="count">
         <tr>
@@ -143,7 +146,7 @@ export default {
   padding: 20px;
   background-color: white;
   position: relative;
-  top: 70px;
+  top: 20px;
   width: 65%;
   height: 500px;
   left: 10px;
@@ -154,9 +157,9 @@ export default {
   width: 70%;
   height: 20%;
   color: black;
-  background-color: rgb(237, 245, 252);
+  background-color: None;
   position: relative;
-  top: 70px;
+  top: 20px;
   left: 80px;
   text-align: left;
 }
@@ -167,7 +170,7 @@ export default {
   padding: 10px;
   background-color: white;
   position: relative;
-  top: 70px;
+  top: 20px;
   width: 25%;
   height: 517px;
   left: 10px;
@@ -185,8 +188,8 @@ form {
 }
 h1 {
   font-size: 2em;
-  text-transform: uppercase;
-  background: white;
+  /* text-transform: uppercase; */
+  /* background: white; */
   color: black;
   text-align: center;
 }
@@ -225,104 +228,4 @@ input {
   background-color: black;
   color: white;
 }
-/* form {
-  max-width: 570px;
-  margin: 30px auto;
-  background: rgb(131, 200, 247);
-  text-align: left;
-  padding: 40px;
-  border-radius: 15px;
-}
-#form_header {
-  font-size: 2.5em;
-  text-transform: uppercase;
-  background: rgb(131, 200, 247);
-  color: azure;
-  text-align: center;
-}
-label {
-  color: rgb(0, 0, 0);
-  display: inline-block;
-  margin: 10px 0 10px;
-  font-size: 0.8em;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
-}
-input {
-  display: block;
-  padding: 10px 6px;
-  width: 100%;
-  box-sizing: ;
-  border: none;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  border-top: 1px solid #ddd;
-  border-bottom: 2px solid #ddd;
-  color: #555;
-  border-radius: 8px;
-}
-.buttonHolder {
-  padding: 20px;
-  text-align: center;
-}
-
-.update {
-  background-color: rgb(34, 191, 34);
-  margin-right: 10px;
-  width: 100px;
-}
-.add {
-  background-color: rgb(34, 191, 34);
-  margin-left: 10px;
-  width: 100px;
-}
-
-h1,
-h2 {
-  text-align: left;
-  padding-left: 30px;
-  background-color: #a9c1fd;
-  color: #ffffff;
-  font: 700;
-  display: block;
-  font-size: 2em;
-  margin-block-start: 0.67em;
-  margin-block-end: 0.67em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-weight: bold;
-}
-
-#Current {
-  background-color: #1f58e7;
-  color: #ffffff;
-}
-#Rooms {
-  background-color: #a9c1fd;
-  color: #ffffff;
-  text-align: center;
-}
-
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td {
-  border: 1px solid #dddddd;
-  text-align: center;
-  padding: 8px;
-}
-.th_one {
-  color: #00bb3b;
-  text-align: center;
-  padding: 8px;
-}
-.th_two {
-  color: #bb0300;
-  text-align: center;
-  padding: 8px;
-} */
 </style>

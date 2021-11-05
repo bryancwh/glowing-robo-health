@@ -59,13 +59,16 @@ body {
   height: 100%;
   width: 100%;
   background-color: rgb(237, 245, 252);
+  background-image: url("../../public/background.jpg");
+  image-rendering: -webkit-optimize-contrast;
+  background-size: cover;
 }
 
 h1,
 h2 {
   text-align: left;
   padding-left: 30px;
-  color: black;
+  color: rgb(206, 201, 201);
   font: 700;
   display: block;
   font-size: 2em;
@@ -76,10 +79,13 @@ h2 {
   width: 70%;
   height: 20%;
   color: black;
-  background-color: rgb(237, 245, 252);
+  /* background-color: rgb(237, 245, 252); */
+  background-color: None;
   position: relative;
-  top: 70px;
+  top: 20px;
   left: 80px;
+  font-family: New Century Schoolbook, TeX Gyre Schola, serif;
+  font-weight: bold;
 }
 .table_div {
   border-radius: 25px;
@@ -87,7 +93,7 @@ h2 {
   padding: 20px;
   background-color: white;
   position: relative;
-  top: 70px;
+  top: 20px;
   width: 85%;
   height: 500px;
   left: 80px;
@@ -95,7 +101,7 @@ h2 {
 }
 
 tr:hover {
-  background-color: rgb(218, 218, 218);
+  background-color: rgb(237, 245, 252);
 }
 tr {
   background-color: white;
@@ -105,7 +111,7 @@ tr:nth-child(even) {
   background-color: white;
 }
 tr:nth-child(even):hover {
-  background-color: rgb(218, 218, 218);
+  background-color: rgb(237, 245, 252);
 }
 th {
   background-color: rgb(223, 223, 223);

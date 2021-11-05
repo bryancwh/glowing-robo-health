@@ -1,9 +1,9 @@
 <template>
   <!-- <form v-on:submit.prevent> -->
   <div>
-    <div>
+    <!-- <div>
       <h1 class="header">Order Form</h1>
-    </div>
+    </div> -->
     <div class="form_divider">
       <form>
         <h1>Create Order</h1>
@@ -24,7 +24,9 @@
         <input type="number" id="stock_level" required v-model="stock_level" />
 
         <div class="buttonHolder">
-          <button type="button" v-on:click="submitOrder()">Submit Order</button>
+          <button type="button" v-on:click="submitOrder()" class="btn">
+            Submit Order
+          </button>
         </div>
       </form>
     </div>
@@ -86,7 +88,7 @@ export default {
   width: 70%;
   height: 20%;
   color: black;
-  background-color: rgb(237, 245, 252);
+  background-color: None;
   position: relative;
   text-align: left;
   top: 70px;
@@ -101,7 +103,7 @@ export default {
   width: 37%;
   height: 517px;
   position: fixed;
-  top: 60%;
+  top: 55%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -148,5 +150,14 @@ input {
 .buttonHolder {
   padding: 20px;
   text-align: center;
+}
+.btn {
+  color: black;
+  background-color: #f1f1f1;
+  width: 100px;
+}
+.btn:hover {
+  background-color: black;
+  color: white;
 }
 </style>
