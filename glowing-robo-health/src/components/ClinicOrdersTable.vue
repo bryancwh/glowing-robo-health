@@ -6,7 +6,7 @@
     <div class="table_div">
       <table id="table" :key="count">
         <tr>
-          <th>Clinic</th>
+          <th>Supplier</th>
           <th>Name</th>
           <th>Manufacturer</th>
           <th>Product ID</th>
@@ -17,7 +17,7 @@
           <!-- <th>Update Status</th> -->
         </tr>
         <tr v-for="order in orders" :key="order.name">
-          <td>{{ order.clinic }}</td>
+          <td>{{ order.supplier }}</td>
           <td>{{ order.name }}</td>
           <td>{{ order.manufacturer }}</td>
           <td>{{ order.product_id }}</td>
@@ -137,6 +137,7 @@ export default {
             purchase_date: data.purchase_date,
             status: data.status,
             delivery_date: data.delivery_date,
+            supplier: data.supplier,
           });
         }
         // console.log(this.orders);
