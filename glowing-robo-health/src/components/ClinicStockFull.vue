@@ -26,9 +26,9 @@
               Delete
             </button>
           </td>
-          <td>
+          <!-- <td>
             <button class="edt">Update</button>
-          </td>
+          </td> -->
         </tr>
       </table>
     </div>
@@ -140,7 +140,6 @@ export default {
         alert("Successfully added stock: " + this.product_name);
         this.product_name = this.quantity = this.product_manufacturer = this.product_id =
           "";
-
       } catch (error) {
         console.error("Error adding document: ", error);
       }
@@ -155,7 +154,7 @@ export default {
       try {
         await deleteDoc(doc(db, "stocks", path));
         console.log("Deleted document: " + medicine_name);
-        console.log("hello")
+        console.log("hello");
       } catch (error) {
         console.error("Error deleting document: ", error);
       }
@@ -171,13 +170,11 @@ export default {
       const path = query(collection(db, "stocks/"));
       var email = this.user.email;
 
-      var user_name = email.slice(0,email.indexOf("@"));
-      
+      var user_name = email.slice(0, email.indexOf("@"));
+
       let stocks_from_db = await getDocs(path);
 
-
       stocks_from_db.forEach((doc) => {
-        
         let data = doc.data();
 
         if (data.type == "clinic" && data.user_name == user_name) {
