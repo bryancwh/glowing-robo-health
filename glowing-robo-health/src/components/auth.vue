@@ -38,9 +38,9 @@ import 'firebaseui/dist/firebaseui.css'
 import router from "../router/routes.js"
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore"
-import { doc, collection, getDocs, setDoc, query} from "firebase/firestore";
+import { doc, collection, getDoc, setDoc, query} from "firebase/firestore";
 
-const uid = ""
+
 const db = getFirestore(firebaseApp);
 
 export default {
@@ -53,18 +53,26 @@ export default {
     },
     methods: {
         login: function(e) {
-            
             firebase
                 .auth()
                 .signInWithEmailAndPassword(this.email, this.password)
                 .then(
-                    user => {
+                    async user => {
                         alert(`You are logged in as ${this.email}`);
+                        var id = user.user.uid;
+                        console.log(id);
+                        const docRef = await getDoc(doc(db, "users", id))
+                        const role = docRef.data().role
+                        if (role == "Clinic") {
+                            this.$router.push("/ClinicStockpile")
+                        } else if (role == "Supplier") {
+                            this.$router.push("/OrderFormTemp")
+                        }
+                        
                     },
                     err => {
                         alert(err.message);
-                    }
-                );
+                    });
                 e.preventDefault();
         },
         gotosignup: function(e) {
