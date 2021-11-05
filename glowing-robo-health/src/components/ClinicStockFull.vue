@@ -41,7 +41,12 @@
         <input type="text" id="product_name" required v-model="product_name" />
 
         <label>Manufacturer:</label>
-        <input type="text" id="product_manufacturer" required v-model="product_manufacturer" />
+        <input
+          type="text"
+          id="product_manufacturer"
+          required
+          v-model="product_manufacturer"
+        />
 
         <label>Product ID:</label>
         <input type="text" id="product_id" required v-model="product_id" />
@@ -72,13 +77,12 @@ import {
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-
 const db = getFirestore(firebaseApp);
 
 export default {
   mounted() {
     const auth = getAuth();
-    this.user = auth.currentUser
+    this.user = auth.currentUser;
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.user = auth.currentUser;
@@ -97,23 +101,24 @@ export default {
       manufacturer: "",
       product_id: "",
       stocks: [],
-      user : {
+      user: {
         email: "",
         displayName: "",
-        uid: ""
-      }
+        uid: "",
+      },
     };
   },
   methods: {
     async updateQuantity() {
       var product_name = document.getElementById("product_name").value;
-      var product_manufacturer = document.getElementById("product_manufacturer").value;
+      var product_manufacturer = document.getElementById("product_manufacturer")
+        .value;
       var product_id = document.getElementById("product_id").value;
       var quantity = document.getElementById("quantity").value;
 
       var type = "clinic";
       var email = this.user.email;
-      var user_name = email.slice(0,email.indexOf("@"));
+      var user_name = email.slice(0, email.indexOf("@"));
       var document_id = user_name + "_" + product_name;
       const path = document_id + "/";
       try {
@@ -123,13 +128,19 @@ export default {
           product_name: product_name,
           product_manufacturer: product_manufacturer,
           product_id: product_id,
-          quantity: quantity
+          quantity: quantity,
         });
         console.log("Updated document for: " + String(user_name));
-        
-        alert("Successfully added stock: " + this.product_name);
+        let tb = document.getElementById("table");
+        while (tb.rows.length > 1) {
+          tb.deleteRow(1);
+        }
+
         this.display();
-        this.product_name = this.quantity = this.product_manufacturer = this.product_id = "";
+        alert("Successfully added stock: " + this.product_name);
+        this.product_name = this.quantity = this.product_manufacturer = this.product_id =
+          "";
+
       } catch (error) {
         console.error("Error adding document: ", error);
       }
@@ -137,7 +148,7 @@ export default {
 
     async deleteProduct(medicine_name) {
       var email = this.user.email;
-      var user_name = email.slice(0,email.indexOf("@"));
+      var user_name = email.slice(0, email.indexOf("@"));
       var document_id = user_name + "_" + medicine_name;
       const path = document_id + "/";
       alert("You are going to delete " + medicine_name);
@@ -148,30 +159,35 @@ export default {
       } catch (error) {
         console.error("Error deleting document: ", error);
       }
+
+      let tb = document.getElementById("table");
+      while (tb.rows.length > 1) {
+        tb.deleteRow(1);
+      }
       this.display();
     },
 
     async display() {
       const path = query(collection(db, "stocks/"));
       var email = this.user.email;
+
       var user_name = email.slice(0,email.indexOf("@"));
       
       let stocks_from_db = await getDocs(path);
-      console.log("here1")
+
 
       stocks_from_db.forEach((doc) => {
         
         let data = doc.data();
-        console.log("here2")
-        if ((data.type == "clinic") && (data.user_name == user_name)) {
-          console.log("found it!")
+
+        if (data.type == "clinic" && data.user_name == user_name) {
           this.stocks.push({
             type: data.type,
             user_name: data.user_name,
             product_id: data.product_id,
             product_name: data.product_name,
             product_manufacturer: data.product_manufacturer,
-            quantity: data.quantity
+            quantity: data.quantity,
           });
         }
       });
