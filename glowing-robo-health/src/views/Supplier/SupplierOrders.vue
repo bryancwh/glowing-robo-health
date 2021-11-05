@@ -2,13 +2,10 @@
   <div>
     <div class="topnav">
       <b class="app_name">Glowing Robo Health Supplier</b>
-      <a href="/SupplierHome">Home</a>
-      <!-- <a href="/ClinicStockpile">Clinic</a> -->
-      <a href="/SupplierStockpile">Supplier</a>
-      <a class="active" href="/SupplierOrders">Orders</a>
-      <a href="/ViewSupplier">Inventory</a>
-      <!-- <a href="/OrderFormTemp">Request</a> -->
-      <a href="/auth">Logout</a>
+      <a href="/supplierhome">Home</a>
+      <a href="/supplierstockview">Your Stocks</a>
+      <a class="active" href="/supplierorders">Orders</a>
+      <a href="/">Logout</a>
     </div>
     <SupplierOrdersTable />
   </div>
