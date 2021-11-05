@@ -4,33 +4,24 @@
       <b class="app_name">Glowing Robo Health Supplier</b>
       <a href="/SupplierHome">Home</a>
       <!-- <a href="/ClinicStockpile">Clinic</a> -->
-      <a class="active" href="/SupplierStockpile">Supplier</a>
-      <a href="/SupplierOrders">Orders</a>
+      <a href="/SupplierStockpile">Supplier</a>
+      <a class="active" href="/SupplierOrders">Orders</a>
       <a href="/ViewSupplier">Inventory</a>
       <!-- <a href="/OrderFormTemp">Request</a> -->
       <a href="/auth">Logout</a>
     </div>
-    <SupplierStockFull />
+    <SupplierOrdersTable />
   </div>
 </template>
 
 <script>
-import SupplierStockFull from "../components/SupplierStockFull.vue";
+import SupplierOrdersTable from "@/components/SupplierOrdersTable.vue";
 
 export default {
-  name: "Appointment",
+  name: "SupplierOrders",
   components: {
-    SupplierStockFull,
+    SupplierOrdersTable,
   },
-  // data() {
-  //     return {
-  //         refreshComp: 0
-  //     }
-  // },
-  // change(){
-  //     console.log('Changed')
-  //     this.refreshComp += 1
-  // }
 };
 </script>
 

@@ -1,23 +1,22 @@
 <template>
-
+<div>
   <div>
     <div class="topnav">
       <b class="app_name">Glowing Robo Health Clinic</b>
-      <a class="active" href="/">Home</a>
-      <a href="/ClinicStockpile">Clinic</a>
+      <a class="active" href="/clinichome">Home</a>
+      <a href="/clinicstockview">Clinic</a>
       <!-- <a href="/SupplierStockpile">Supplier</a> -->
       <!-- <a href="/SupplierOrders">Orders</a> -->
       <!-- <a href="/ViewSupplier">Inventory</a> -->
-      <a href="/OrderFormTemp">Request</a>
-      <a href="/auth"> Logout </a>
+      <a href="/clinicorderformpage">Request</a>
+      <a href="/"> Logout </a>
     </div>
-
   </div>
 
-  <h1>Welcome to glowing robo health!</h1>
+  <!-- <h1>Welcome to glowing robo health!</h1>
   <h1> Email: <strong>{{user.email}}</strong></h1>
   <h1> Name: <strong>{{user.displayName}}</strong></h1>
-  <h1> Uid: <strong>{{user.uid}}</strong></h1>
+  <h1> Uid: <strong>{{user.uid}}</strong></h1> -->
 </div>
 
 
