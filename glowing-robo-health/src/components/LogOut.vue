@@ -36,16 +36,30 @@ export default {
 
 <style scoped>
 #btn {
-  position: relative;
+  /* position: relative;
   top: 25px;
   left: 15px;
   text-align: center;
-  margin: auto;
+  margin: auto; */
+  text-decoration: none;
+  float: left;
+  padding: 10px;
+  margin: 15px;
+  color: white;
+  width: 75px;
+  /* background-color: black; */
+  background-color: rgb(26, 83, 105);
+  transition: width 0.35s;
+  -webkit-transition: width 0.35s;
+  overflow: hidden;
+  font-family: Comic Sans MS, Comic Sans, cursive;
+  font-size: 16px;
+  border: none;
 }
 
 #btn:hover {
-  color: rg(243, 236, 236);
-  background-color: rgb(255, 94, 0);
-  box-shadow: 3px 3px grey;
+  color: black;
+  background-color: rgb(245, 127, 127);
+  /* box-shadow: 3px 3px grey; */
 }
 </style>
