@@ -5,17 +5,17 @@
       <table id="table" :key="count">
         <tr>
           <th>Supplier</th>
-          <th>Name</th>
+          <th>Product</th>
           <th>Manufacturer</th>
           <th>Product ID</th>
-          <th>Stock Availability</th>
+          <th>Availability</th>
         </tr>
-        <tr v-for="medicine in stocks" :key="medicine.firstName">
-          <td>Supplier 1</td>
-          <td>{{ medicine.name }}</td>
-          <td>{{ medicine.manufacturer }}</td>
-          <td>{{ medicine.product_id }}</td>
-          <td v-if="medicine.stock_level > 0">Available</td>
+        <tr v-for="stock in stocks" :key="stock.user_name">
+          <td>{{ stock.user_name }}</td>
+          <td>{{ stock.product_name }}</td>
+          <td>{{ stock.product_manufacturer }}</td>
+          <td>{{ stock.product_id }}</td>
+          <td v-if="stock.quantity > 0">Available</td>
           <td v-else:>Out of Stock</td>
         </tr>
       </table>
@@ -41,12 +41,23 @@ export default {
   },
   methods: {
     async display() {
-      const path = query(collection(db, "stock/supplier/supplier_1"));
-      let supplier = await getDocs(path);
-      supplier.forEach((doc) => {
-        this.stocks.push(doc.data());
+      const path = query(collection(db, "stocks/"));
+
+      let stocks = await getDocs(path);
+
+      stocks.forEach((doc) => {
+        let data = doc.data();
+        if (data.type === "supplier") {
+          this.stocks.push({
+            type: data.type,
+            user_name: data.user_name,
+            product_id: data.product_id,
+            product_name: data.product_name,
+            product_manufacturer: data.product_manufacturer,
+            quantity: data.quantity
+          });
+        }
       });
-      console.log("this eMPLOYEES", this.doc);
     },
   },
 };
