@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h1 class="header">Orders for all clinics</h1>
+      <h1 class="header">Orders</h1>
     </div>
     <div class="table_div">
       <table id="table" :key="count">
@@ -184,22 +184,22 @@ h2 {
   font-weight: bold;
   font-family: "Times New Roman", Times, serif;
 }
-.header {
+/* .header {
   width: 70%;
   height: 20%;
-  color: black;
-  background-color: rgb(237, 245, 252);
-  position: relative;
+  color: black; */
+/* background-color: rgb(237, 245, 252); */
+/* position: relative;
   top: 70px;
   left: 80px;
-}
+} */
 .table_div {
   border-radius: 25px;
   border: 2px solid white;
   padding: 20px;
   background-color: white;
   position: relative;
-  top: 70px;
+  top: 40px;
   width: 85%;
   height: 500px;
   left: 80px;
