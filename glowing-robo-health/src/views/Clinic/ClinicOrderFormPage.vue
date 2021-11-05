@@ -2,25 +2,23 @@
   <div>
     <div class="topnav">
       <b class="app_name">Glowing Robo Health</b>
-      <a href="/">Home</a>
-      <a href="/ClinicStockpile">Clinic</a>
-      <!-- <a href="/SupplierStockpile">Supplier</a>
-      <a href="/SupplierOrders">Orders</a>
-      <a href="/ViewSupplier">Inventory</a> -->
-      <a class="active" href="/OrderFormTemp">Request</a>
-      <a href="/auth">Logout</a>
+      <a href="/clinichome">Home</a>
+      <a href="/clinicstockview">Your Stocks</a>
+      <a href="/clinicsupplierview">View Suppliers</a>
+      <a class="active" href="/clinicorderformpage">Request</a>
+      <a href="/"> Logout </a>
     </div>
-    <OrderForm />
+    <ClinicOrderForm/>
   </div>
 </template>
 
 <script>
-import OrderForm from "../components/OrderForm.vue";
+import ClinicOrderForm from "@/components/ClinicOrderForm.vue";
 
 export default {
   name: "Appointment",
   components: {
-    OrderForm,
+    ClinicOrderForm,
   },
 };
 </script>

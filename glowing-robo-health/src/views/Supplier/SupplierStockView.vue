@@ -2,20 +2,17 @@
   <div>
     <div class="topnav">
       <b class="app_name">Glowing Robo Health Supplier</b>
-      <a href="/SupplierHome">Home</a>
-      <!-- <a href="/ClinicStockpile">Clinic</a> -->
-      <a class="active" href="/SupplierStockpile">Supplier</a>
-      <a href="/SupplierOrders">Orders</a>
-      <a href="/ViewSupplier">Inventory</a>
-      <!-- <a href="/OrderFormTemp">Request</a> -->
-      <a href="/auth">Logout</a>
+      <a href="/supplierhome">Home</a>
+      <a class="active" href="/supplierstockview">Your Stocks</a>
+      <a href="/supplierorders">Orders</a>
+      <a href="/">Logout</a>
     </div>
     <SupplierStockFull />
   </div>
 </template>
 
 <script>
-import SupplierStockFull from "../components/SupplierStockFull.vue";
+import SupplierStockFull from "@/components/SupplierStockFull.vue";
 
 export default {
   name: "Appointment",
