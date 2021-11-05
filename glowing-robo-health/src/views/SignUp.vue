@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     back() {
-      this.$router.push("/auth");
+      this.$router.push("/");
     },
     signup: function(e) {
       var roleSelected = this.selected_role;
