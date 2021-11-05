@@ -6,7 +6,7 @@
     <div class="table_divider">
       <table id="table" class="auto-index" :key="count">
         <tr>
-          <th>Name</th>
+          <th>Product</th>
           <th>Manufacturer</th>
           <th>Product ID</th>
           <th>Stock Level</th>
@@ -14,16 +14,15 @@
           <th></th>
           <th></th>
         </tr>
-        <tr v-for="medicine in stocks" :key="medicine.firstName">
-          <td>{{ medicine.name }}</td>
-          <td>{{ medicine.manufacturer }}</td>
-          <td>{{ medicine.product_id }}</td>
-          <td>{{ medicine.stock_level }}</td>
-          <td v-if="medicine.stock_level > 0">Available</td>
+        <tr v-for="stock in stocks" :key="stock.user_name">
+          <td>{{ stock.product_name }}</td>
+          <td>{{ stock.product_manufacturer }}</td>
+          <td>{{ stock.product_id }}</td>
+          <td>{{ stock.quantity }}</td>
+          <td v-if="stock.quantity > 0">Available</td>
           <td v-else:>Out of Stock</td>
-          <!-- <td v-bind:style="[medicine.stock_level > 0 ? {'color': 'red'} : { 'color': 'green'}]">{{ medicine.Status }}</td> -->
           <td>
-            <button @click="deleteProduct(medicine.name)" class="edt">
+            <button @click="deleteProduct(stock.product_name)" class="edt">
               Delete
             </button>
           </td>
@@ -39,16 +38,16 @@
         <h1>Add Stocks</h1>
 
         <label>Medicine Name:</label>
-        <input type="text" id="name" required v-model="name" />
+        <input type="text" id="product_name" required v-model="product_name" />
 
         <label>Manufacturer:</label>
-        <input type="text" id="manufacturer" required v-model="manufacturer" />
+        <input type="text" id="product_manufacturer" required v-model="product_manufacturer" />
 
         <label>Product ID:</label>
         <input type="text" id="product_id" required v-model="product_id" />
 
         <label>Quantity:</label>
-        <input type="number" id="stock_level" required v-model="stock_level" />
+        <input type="number" id="quantity" required v-model="quantity" />
 
         <div class="buttonHolder">
           <button type="button" v-on:click="updateQuantity()" class="btn">
@@ -89,24 +88,28 @@ export default {
   },
   methods: {
     async updateQuantity() {
-      var name = document.getElementById("name").value;
-      var stock_level = document.getElementById("stock_level").value;
-      var manufacturer = document.getElementById("manufacturer").value;
+      var product_name = document.getElementById("product_name").value;
+      var product_manufacturer = document.getElementById("product_manufacturer").value;
       var product_id = document.getElementById("product_id").value;
-      const path = "clinic/clinic_1/" + this.name;
-      console.log(db);
-      console.log(path);
+      var quantity = document.getElementById("quantity").value;
+
+      var type = "clinic";
+      var user_name = "clinic1";
+      var document_id = user_name + "_" + product_name;
+      const path = document_id + "/";
       try {
-        const docRef = await setDoc(doc(db, "stock", path), {
-          stock_level: stock_level,
-          manufacturer: manufacturer,
-          name: name,
+        const docRef = await setDoc(doc(db, "stocks", path), {
+          type: type,
+          user_name: user_name,
+          product_name: product_name,
+          product_manufacturer: product_manufacturer,
           product_id: product_id,
+          quantity: quantity
         });
-        console.log("Updated document for: " + String(name));
+        console.log("Updated document for: " + String(user_name));
         this.display();
-        alert("Successfully added stock: " + this.name);
-        this.name = this.stock_level = this.manufacturer = this.product_id = "";
+        alert("Successfully added stock: " + this.product_name);
+        this.product_name = this.quantity = this.product_manufacturer = this.product_id = "";
       } catch (error) {
         console.error("Error adding document: ", error);
       }
@@ -114,9 +117,9 @@ export default {
 
     async deleteProduct(medicine_name) {
       alert("You are going to delete " + medicine_name);
-      const path = "clinic/clinic_1/" + medicine_name;
+      const path = "clinic1_" + medicine_name + "/";
       try {
-        await deleteDoc(doc(db, "stock", path));
+        await deleteDoc(doc(db, "stocks", path));
         this.display();
         console.log("Deleted document: " + medicine_name);
       } catch (error) {
@@ -125,16 +128,24 @@ export default {
     },
 
     async display() {
-      const path = query(collection(db, "stock/clinic/clinic_1"));
-      let stock = await getDocs(path);
-      this.stocks = [];
-      stock.forEach((doc) => {
-        this.stocks.push(doc.data());
+      const path = query(collection(db, "stocks/"));
+
+      let stocks = await getDocs(path);
+
+      stocks.forEach((doc) => {
+        let data = doc.data();
+        if (data.type === "clinic") {
+          this.stocks.push({
+            type: data.type,
+            user_name: data.user_name,
+            product_id: data.product_id,
+            product_name: data.product_name,
+            product_manufacturer: data.product_manufacturer,
+            quantity: data.quantity
+          });
+        }
       });
     },
-    // updateProduct() {
-
-    // }
   },
 };
 </script>
