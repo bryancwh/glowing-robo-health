@@ -5,6 +5,7 @@ import ClinicHome from '@/views/Clinic/ClinicHome.vue'
 import ClinicOrderFormPage from '@/views/Clinic/ClinicOrderFormPage.vue'
 import ClinicStockView from '@/views/Clinic/ClinicStockView.vue'
 import ClinicSupplierView from '@/views/Clinic/ClinicSupplierView.vue'
+import ClinicOrders from '@/views/Clinic/ClinicOrders.vue'
 
 // Supplier pages
 import SupplierHome from '@/views/Supplier/SupplierHome.vue'
@@ -45,6 +46,11 @@ const routes = [
     path: "/clinicsupplierview",
     name: "ClinicSupplierView",
     component: ClinicSupplierView,
+  },
+  {
+    path: "/clinicorders",
+    name: "ClinicOrders",
+    component: ClinicOrders,
   },
   {
     path: "/supplierhome",
