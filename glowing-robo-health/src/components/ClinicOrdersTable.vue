@@ -14,7 +14,7 @@
           <th>Purchase Date</th>
           <th>Delivery Date</th>
           <th>Status</th>
-          <th>Update Status</th>
+          <!-- <th>Update Status</th> -->
         </tr>
         <tr v-for="order in orders" :key="order.name">
           <td>{{ order.clinic }}</td>
@@ -44,7 +44,7 @@
 
           <td>{{ order.status }}</td>
 
-          <td>
+          <!-- <td>
             <button
               class="edt"
               id="order.id"
@@ -61,7 +61,7 @@
             >
               Undo Delivery
             </button>
-          </td>
+          </td> -->
         </tr>
       </table>
     </div>
@@ -79,12 +79,24 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const db = getFirestore(firebaseApp);
 
 export default {
   mounted() {
-    this.display();
+    const auth = getAuth();
+    this.user = auth.currentUser;
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.user = auth.currentUser;
+        console.log(this.user);
+        console.log(this.user.email);
+        this.display();
+      } else {
+        console.log("not logged in");
+      }
+    });
   },
   data() {
     return {
@@ -105,12 +117,16 @@ export default {
         collection(db, "orders/")
         // where("clinic", "==", this.clinic)
       );
+
+      var email = this.user.email;
+      var user_name = email.slice(0, email.indexOf("@"));
+
       let orders = await getDocs(path);
 
       orders.forEach((doc) => {
         console.log(doc.data());
         let data = doc.data();
-        if (data.supplier === "supplier_1") {
+        if (data.clinic === user_name) {
           this.orders.push({
             id: doc.id,
             clinic: data.clinic,
