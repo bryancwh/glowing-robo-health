@@ -11,7 +11,7 @@
   </div>
   <h1>Welcome to glowing robo health!</h1>
   <h1> Email: <strong>{{user.email}}</strong></h1>
-  <!-- <h1> Name: <strong>{{user.displayName}}</strong></h1> -->
+  <h1> Name: <strong>{{user.displayName}}</strong></h1>
   <h1> UID: <strong>{{user.uid}}</strong></h1>
 </div>
 </template>

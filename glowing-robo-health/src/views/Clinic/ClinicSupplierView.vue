@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="topnav">
-      <b class="app_name">Glowing Robo Health Supplier</b>
+      <b class="app_name">Glowing Robo Health Clinic</b>
       <a href="/clinichome">Home</a>
       <a href="/clinicorders">Your Orders</a>
       <a href="/clinicstockview">Your Stocks</a>
