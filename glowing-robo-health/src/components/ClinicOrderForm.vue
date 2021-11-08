@@ -102,7 +102,7 @@ export default {
           purchase_date: purchase_date,
           delivery_date: null,
         });
-        this.name = this.quantity = this.supplier = this.manufacturer = ""
+        this.name = this.stock_level = this.supplier = this.manufacturer = ""
         console.log("Updated document for: " + String(name));
         alert("Order submitted!");
       } catch (error) {
