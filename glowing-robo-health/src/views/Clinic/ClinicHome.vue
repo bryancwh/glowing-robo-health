@@ -1,22 +1,12 @@
 <template>
   <div>
-    <div>
-      <div class="topnav">
-        <b class="app_name">Glowing Robo Health Clinic</b>
-        <a class="active" href="/clinichome">Home</a>
-        <a href="/clinicorders">Your Orders</a>
-        <a href="/clinicstockview">Your Stocks</a>
-        <a href="/clinicsupplierview">View Suppliers</a>
-        <a href="/clinicorderformpage">Request</a>
-        <LogOut />
-      </div>
-    </div>
+    <Navbar />
     <div id = "container">
       <div id = "left">
         <img src="@/assets/medicine.png" alt="" width="200" height="200">
       </div>
       <div id = "right">
-        <h1>Welcome to Glowing Robo Health, {{user.displayName}}! </h1>
+        <h1>Welcome, {{user.displayName}}! </h1>
         <h4>One-stop platform to track and manage all your medical supplies.</h4>
         <p>
           <br>Click on "Your Orders" to check your pending orders.
@@ -30,13 +20,13 @@
 </template>
 
 <script>
-import LogOut from "../../components/LogOut.vue";
+import Navbar from '@/components/Navbar.vue';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default {
   name: "Profile",
   components: {
-    LogOut,
+    Navbar,
   },
   data() {
     return {
@@ -66,17 +56,10 @@ export default {
 <style scoped>
 #container {
   border-radius: 25px;
-  /* border: 2px solid white; */
   padding: 20px;
   background-color: white;
   position: relative;
   justify-content: center;
-  top: 90px;
-  width: 70%;
-  height: 300px;
-  left: 190px;
-  /* overflow: auto; */
-  text-align: left;
   display: flex;
 }
 #left {
@@ -87,11 +70,5 @@ export default {
 }
 #right {
   width: 70%;
-}
-h4 {
-  padding-left:30px;
-}
-p {
-  padding-left:30px;
 }
 </style>

@@ -1,60 +1,64 @@
 <template>
-  <div style="text-align:center;">
-    <h1 id="mainHead">Glowing Robo Health Systems</h1>
-    <div id="formlogin">
-      <form id="login" method="post">
-        <h1 id="login-header">Signup Page</h1>
-        <div id="credential">
-          <label class="white-text" for="email" id="label">
-            Email Address</label
-          >
-          <input type="email" id="inputfield" v-model="email" />
-        </div>
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <img src="../assets/logov2.png" style="height: 75px; margin-bottom: 40px;" alt="">
 
-        <div id="credential">
-          <label class="white-text" for="password" id="label"> Password</label>
-          <input type="password" id="inputfield" v-model="password" />
-        </div>
+    <a-form id="login-box" method="post">
+        <h1 style="margin-bottom: 48px;"><b>Create your account</b></h1>
+        <a-alert v-if="this.error == 'emailtaken'" message="This email address has already been registered." type="error" style="width: 100%; margin-bottom: 20px;" show-icon />
 
-        <div id="credential">
-          <label class="white-text" for="displayName" id="label">
-            Display Name</label
-          >
-          <input type="text" id="inputfield" v-model="display_name" />
-        </div>
+        <a-alert v-if="this.error == 'weakpw'" message="Password should be at least 6 characters!" type="error" style="width: 100%; margin-bottom: 20px;" show-icon />
 
-        <div id="credential">
-          <label class="white-text" for="role" id="role">
-            Select User Type
-          </label>
-          <select v-model="selected_role" id="role-select">
-            <option disabled value=""> User Type </option>
-            <option> Clinic </option>
-            <option> Supplier </option>
-          </select>
-        </div>
 
-        <div id="buttons">
-          <button v-on:click="back()" class="btn" id="backbutton">Back</button>
-          <button v-on:click="signup" class="btn" id="signupbutton">
-            Sign Up
-          </button>
-        </div>
-      </form>
+        <input 
+          type="email" 
+          v-model="email" 
+          style="width: 320px; margin-bottom: 20px;" 
+          placeholder="Enter your email" 
+        />
+        <input 
+          type="password" 
+          v-model="password"  
+          style="width: 320px; margin-bottom: 20px;" placeholder="Password" 
+        />
+        <input 
+          v-model="displayName" 
+          style="width: 320px; margin-bottom: 20px;" 
+          placeholder="Enter your name" 
+        />
 
-      <div id="pagecontent">
-        Glowing Robo Health Systems™
-      </div>
-    </div>
+        <select v-model="selected_role" style="width: 100%; margin-bottom: 48px;">
+          <option disabled value=""> User Type </option>
+          <option> Clinic </option>
+          <option> Supplier </option>
+        </select>
+
+        <a-button 
+          v-if="!this.loading"
+          v-on:click="signup"
+          size="large" 
+          type="primary" 
+          style="margin-bottom: 48px; width: 100%;"
+        >Sign up</a-button>
+        <a-button 
+          v-if="this.loading"
+          size="large" 
+          type="primary" 
+          style="margin-bottom: 48px; width: 100%;"
+        >Sign up</a-button>
+
+        <span>Already have an account?</span>
+        <a v-on:click="back()">Log in</a>
+    </a-form>
+
+    <aside id="left-pic"><img src="../assets/leftpic.svg"/></aside>
+    <aside id="right-pic"><img src="../assets/rightpic.svg"/></aside>
   </div>
 </template>
 
 <script>
 import firebase from "@/uifire.js";
 import "firebase/compat/auth";
-import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
-import router from "../router/routes.js";
 import firebaseApp from "../firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { doc, collection, getDocs, setDoc, query } from "firebase/firestore";
@@ -69,6 +73,8 @@ export default {
       password: "",
       selected_role: "",
       displayName: "",
+      loading: false,
+      error: "",
     };
   },
   methods: {
@@ -76,20 +82,15 @@ export default {
       this.$router.push("/");
     },
     signup: function(e) {
+      this.loading = true;
       var roleSelected = this.selected_role;
-      var displayName = this.display_name;
+      var displayName = this.displayName;
 
-      console.log(displayName);
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(function(user) {
-          console.log("uid", user.user.uid);
           var uid = user.user.uid;
-          // user.user.updateProfile({
-          //   displayName: displayName
-          // });
-          console.log(displayName);
           user.user.updateProfile({
             displayName: displayName,
           });
@@ -99,112 +100,52 @@ export default {
           });
         })
         .then(() => {
-          alert("Successfully registered! Please login.");
-          this.$router.push("/");
+          if (roleSelected == "Clinic") {
+            this.$router.push("/clinichome");
+          } else if (roleSelected == "Supplier") {
+            this.$router.push("/supplierhome");
+          }
         })
         .catch((error) => {
-          alert(error.message);
+          console.log('err code', error.code);
+          console.log('err msg', error.message);
+          if (error.code == 'auth/email-already-in-use') {
+            this.error = "emailtaken";
+          } else if (error.code == 'auth/weak-password') {
+            this.error = "weakpw";
+          }
         });
       e.preventDefault();
     },
+    gotologin() {
+      this.$router.push("/");
+    }
   },
 };
 </script>
 
 <style scoped>
-h1 {
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
-#formlogin {
-  display: inline-block;
-  background: rgb(160, 203, 216);
-  width: 500px;
-  height: 450px;
-  border-radius: 15px;
-  position: relative;
-}
-
-#pagecontent {
-  height: 100px;
-  font-size: larger;
-  font-weight: bolder;
-  text-align: center;
-  position: relative;
-  top: 200px;
-  /* font-style: italic; */
-}
-#credential {
-  position: relative;
-  top: 50px;
-  margin: 30px 10px 30px 10px;
-}
-#label {
-  margin-right: 30px;
-}
-
-#inputfield {
-  height: 20px;
-  width: 150px;
-}
-
-#buttons {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  top: 70px;
-}
-
-#login {
-  display: inline-block;
-  text-align: right;
-}
-
-#role-select {
-  margin-left: 10px;
-  height: 25px;
-  width: 155px;
-}
-
-#mainHead {
-  text-align: center;
-  background: rgb(26, 83, 105);
-  font-size: 35px;
-  color: white;
-  font-family: New Century Schoolbook, TeX Gyre Schola, serif;
-  text-decoration: none;
-  height: 70px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* height: 100px; */
-  /* text-shadow: 2px 2px grey; */
-}
-
-#bg {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 60%;
-}
-
-h5 {
-  text-align: center;
-  background-color: rgb(194, 202, 188);
-}
-
-#backbutton {
-  margin-top: 30px;
-  border-radius: 15px;
-  background: rgb(187, 187, 187);
-  width: 100px;
-}
-
-#signupbutton {
-  margin-top: 30px;
-  border-radius: 15px;
-  background: cadetblue;
-  width: 100px;
-}
+  #login-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 32px;
+    border-radius: 16px;
+    background-color: white;
+    box-shadow: 0 9px 28px rgba(0, 0, 0, 0.05);
+  }
+  #left-pic {
+    left: 2.5rem;
+    display: flex;
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+  }
+  #right-pic {
+    right: 2.5rem;
+    display: flex;
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+  }
 </style>

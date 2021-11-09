@@ -1,66 +1,44 @@
 <template>
-  <div>
-    <div>
-      <h1 class="header">Supplier Stockpile</h1>
-    </div>
-    <div class="table_divider">
-      <table id="table" class="auto-index" :key="count">
-        <tr>
-          <th>Product</th>
-          <th>Manufacturer</th>
-          <th>Product ID</th>
-          <th>Stock Level</th>
-          <th>Stock Availability</th>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr v-for="stock in stocks" :key="stock.user_name">
-          <td>{{ stock.product_name }}</td>
-          <td>{{ stock.product_manufacturer }}</td>
-          <td>{{ stock.product_id }}</td>
-          <td>{{ stock.quantity }}</td>
-          <td v-if="stock.quantity > 0">Available</td>
-          <td v-else:>Out of Stock</td>
-          <td>
-            <button @click="deleteProduct(stock.product_name)" class="edt">
-              Delete
-            </button>
-          </td>
-          <!-- <td>
-            <button class="edt">Update</button>
-          </td> -->
-        </tr>
-      </table>
-    </div>
-    <!-- <form v-on:submit.prevent> -->
-    <div class="form_divider">
-      <form>
-        <h1>Add Stocks</h1>
+  <div style="padding: 40px;">
+    <h1><b>Supplier Stockpile</b></h1>
+    <a-row type="flex" :gutter="32">
+      <a-col :flex="3">
+        <a-alert v-if="this.successAdded" message="Successfully added!" type="success" />
+        <a-alert v-if="this.successDeleted" message="Successfully deleted!" type="success" />
+        <a-table id="table" :columns="columns" :data-source="stocks" bordered >          
+          <template #action="{ record }">
+            <a-popconfirm
+              title="Confirm delete?"
+              @confirm="deleteProduct(record.product_name)"
+            >
+              <a>Delete</a>
+            </a-popconfirm>
+          </template>
+        </a-table>
+      </a-col>
 
-        <label>Medicine Name:</label>
-        <input type="text" id="product_name" required v-model="product_name" />
-
-        <label>Manufacturer:</label>
-        <input
-          type="text"
-          id="product_manufacturer"
-          required
-          v-model="product_manufacturer"
-        />
-
-        <label>Product ID:</label>
-        <input type="text" id="product_id" required v-model="product_id" />
-
-        <label>Quantity:</label>
-        <input type="number" id="quantity" required v-model="quantity" />
-
-        <div class="buttonHolder">
-          <button type="button" v-on:click="updateQuantity()" class="btn">
-            Add Stock
-          </button>
-        </div>
-      </form>
-    </div>
+      <a-col :flex="2">
+        <form>
+          <h2><b>Add New Stock</b></h2>
+          <label>Medicine Name:</label>
+          <input style="margin-bottom: 12px" type="text" id="product_name" required v-model="form_product_name" />
+          <label>Manufacturer:</label>
+          <input
+            type="text"
+            style="margin-bottom: 12px"
+            id="product_manufacturer"
+            required
+            v-model="form_product_manufacturer"
+          />
+          <label>Product ID:</label>
+          <input type="text" style="margin-bottom: 12px" id="product_id" required v-model="form_product_id" />
+          <label>Quantity:</label>
+          <input style="margin-bottom: 28px" type="number" id="quantity" required v-model="form_quantity" />
+          <a-button type="primary" v-on:click="updateQuantity()">Add Stock</a-button>
+        </form>
+      </a-col>
+    </a-row>
+    
   </div>
 </template>
 
@@ -78,6 +56,16 @@ import {
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const db = getFirestore(firebaseApp);
+
+const columns = [
+  { dataIndex: 'product_name', key: 'product_name', title: 'Product' },
+  { title: 'Manufacturer', dataIndex: 'product_manufacturer', key: 'product_manufacturer' },
+  { title: 'Product ID', key: 'product_id', dataIndex: 'product_id', },
+  { title: 'Stock Quantity', key: 'quantity', dataIndex: 'quantity' },
+  { title: 'Availability', key: 'availability', dataIndex: 'availability'},
+  { title: 'Action', key: 'action', slots: { customRender: 'action' }, },
+];
+
 
 export default {
   mounted() {
@@ -97,6 +85,7 @@ export default {
   data() {
     return {
       name: "",
+      columns,
       stock_level: "",
       manufacturer: "",
       product_id: "",
@@ -106,15 +95,20 @@ export default {
         displayName: "",
         uid: "",
       },
+      form_product_name: "",
+      form_product_manufacturer: "",
+      form_product_id: "",
+      form_quantity: "",
+      successAdded: false,
+      successDeleted: false,
     };
   },
   methods: {
     async updateQuantity() {
-      var product_name = document.getElementById("product_name").value;
-      var product_manufacturer = document.getElementById("product_manufacturer")
-        .value;
-      var product_id = document.getElementById("product_id").value;
-      var quantity = document.getElementById("quantity").value;
+      var product_name = this.form_product_name;
+      var product_manufacturer = this.form_product_manufacturer;
+      var product_id = this.form_product_id;
+      var quantity = this.form_quantity;
 
       var type = "supplier";
       var email = this.user.email;
@@ -132,13 +126,14 @@ export default {
         });
         console.log("Updated document for: " + String(user_name));
 
-        alert("Successfully added stock: " + this.product_name);
-        this.product_name = this.quantity = this.product_manufacturer = this.product_id =
-          "";
+        this.product_name = this.quantity = this.product_manufacturer = this.product_id = "";
+        this.successAdded = true;
+
       } catch (error) {
         console.error("Error adding document: ", error);
       }
-      let tb = document.getElementById("table");
+      let tb = document.getElementsByTagName("table")[0];
+
       while (tb.rows.length > 1) {
         tb.deleteRow(1);
       }
@@ -150,11 +145,13 @@ export default {
       var user_name = email.slice(0, email.indexOf("@"));
       var document_id = user_name + "_" + medicine_name;
       const path = document_id + "/";
-      alert("You are going to delete " + medicine_name);
+      // alert("You are going to delete " + medicine_name);
       try {
         await deleteDoc(doc(db, "stocks", path));
 
         console.log("Deleted document: " + medicine_name);
+        this.successDeleted = true;
+
       } catch (error) {
         console.error("Error deleting document: ", error);
       }
@@ -181,6 +178,8 @@ export default {
             product_name: data.product_name,
             product_manufacturer: data.product_manufacturer,
             quantity: data.quantity,
+            availability: data.quantity > 0 ? 'Available' : 'Out of stock',
+
           });
         }
       });
@@ -190,92 +189,11 @@ export default {
 </script>
 
 <style scoped>
-.table_divider {
-  border-radius: 25px;
-  border: 2px solid white;
-  padding: 20px;
-  background-color: white;
-  position: relative;
-  top: 20px;
-  width: 65%;
-  height: 500px;
-  left: 10px;
-  overflow: auto;
-  float: left;
-}
-.header {
-  width: 70%;
-  height: 20%;
-  color: black;
-  /* background-color: rgb(237, 245, 252); */
-  background-color: None;
-  position: relative;
-  top: 20px;
-  left: 80px;
-  text-align: left;
-}
-.form_divider {
-  border-radius: 25px;
-  border: 2px solid white;
-  padding: 10px;
-  background-color: white;
-  position: relative;
-  top: 20px;
-  width: 25%;
-  height: 517px;
-  left: 10px;
-  overflow: auto;
-  float: left;
-  margin: 0px 0px 0px 20px;
-}
 form {
-  max-width: 570px;
-  margin: 10px auto;
-  background: white;
-  text-align: left;
-  padding: 23px;
-  border-radius: 15px;
-}
-h1 {
-  font-size: 2em;
-  /* text-transform: uppercase; */
-  /* background: white; */
-  color: black;
-  text-align: center;
-}
-label {
-  color: rgb(0, 0, 0);
-  display: inline-block;
-  margin: 10px 0 10px;
-  font-size: 0.8em;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
-}
-input {
-  display: block;
-  padding: 10px 6px;
-  width: 100%;
-  box-sizing: ;
-  border: none;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  border-top: 1px solid #ddd;
-  border-bottom: 2px solid #ddd;
-  color: #555;
-  border-radius: 8px;
-}
-.buttonHolder {
-  padding: 20px;
-  text-align: center;
-}
-.btn {
-  color: black;
-  background-color: #f1f1f1;
-  width: 90px;
-}
-.btn:hover {
-  background-color: black;
-  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
 }
 </style>

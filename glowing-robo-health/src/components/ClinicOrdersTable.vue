@@ -1,70 +1,12 @@
 <template>
-  <div>
-    <div>
-      <h1 class="header">Orders</h1>
-    </div>
-    <div class="table_div">
-      <table id="table" :key="count">
-        <tr>
-          <th>Supplier</th>
-          <th>Name</th>
-          <th>Manufacturer</th>
-          <th>Product ID</th>
-          <th>Quantity</th>
-          <th>Purchase Date</th>
-          <th>Delivery Date</th>
-          <th>Status</th>
-          <!-- <th>Update Status</th> -->
-        </tr>
-        <tr v-for="order in orders" :key="order.name">
-          <td>{{ order.supplier }}</td>
-          <td>{{ order.name }}</td>
-          <td>{{ order.manufacturer }}</td>
-          <td>{{ order.product_id }}</td>
-          <td>{{ order.quantity_ordered }}</td>
-          <td>
-            {{
-              order.purchase_date
-                .toDate()
-                .toString()
-                .substring(3, 25)
-            }}
-          </td>
-          <td v-if="order.delivery_date === null">
-            Not delivered
-          </td>
-          <td v-else>
-            {{
-              order.delivery_date
-                .toDate()
-                .toString()
-                .substring(4, 24)
-            }}
-          </td>
-
-          <td>{{ order.status }}</td>
-
-          <!-- <td>
-            <button
-              class="edt"
-              id="order.id"
-              @click="handleStatusChange(order.id)"
-              v-if="order.status === 'pending'"
-            >
-              Deliver
-            </button>
-            <button
-              class="edt"
-              id="order.id"
-              @click="handleStatusChange(order.id)"
-              v-else
-            >
-              Undo Delivery
-            </button>
-          </td> -->
-        </tr>
-      </table>
-    </div>
+  <div style="padding: 40px">
+    <h1><b>Orders</b></h1>
+    <a-table
+      :columns="columns"
+      :data-source="orders"
+      bordered
+    >
+    </a-table>
   </div>
 </template>
 
@@ -75,15 +17,52 @@ import {
   collection,
   getDocs,
   query,
-  where,
-  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const db = getFirestore(firebaseApp);
 
+const columns = [
+  {
+    dataIndex: 'supplier',
+    key: 'supplier',
+    title: 'Supplier',
+  },
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: 'Manufacturer',
+    dataIndex: 'manufacturer',
+    key: 'manufacturer',
+  },
+  {
+    title: 'Product ID',
+    key: 'product_id',
+    dataIndex: 'product_id',
+  },
+  {
+    title: 'Purchase Date',
+    key: 'purchase_date',
+    dataIndex: 'purchase_date'
+  },
+  {
+    title: 'Delivery Date',
+    key: 'delivery_date',
+    dataIndex: 'delivery_date'
+  },
+  {
+    title: 'Status',
+    key: 'status',
+    dataIndex: 'status'
+  },
+];
+
 export default {
+
   mounted() {
     const auth = getAuth();
     this.user = auth.currentUser;
@@ -102,7 +81,7 @@ export default {
     return {
       orders: [],
       emits: ["changeData"],
-      //   clinic: "clinic_1",
+      columns,
     };
   },
   methods: {
@@ -134,13 +113,12 @@ export default {
             manufacturer: data.manufacturer,
             product_id: data.product_id,
             quantity_ordered: data.quantity_ordered,
-            purchase_date: data.purchase_date,
+            purchase_date: data.purchase_date.toDate().toString().substring(3, 25),
             status: data.status,
-            delivery_date: data.delivery_date,
+            delivery_date: data.delivery_date ? data.delivery_date.toDate().toString().substring(4, 24) : 'Not delivered',
             supplier: data.supplier,
           });
         }
-        // console.log(this.orders);
       });
     },
     async handleStatusChange(input) {
@@ -171,7 +149,7 @@ export default {
         console.error("Error adding document : ", err);
       }
 
-      let tb = document.getElementById("table");
+      let tb = document.getElementsByTagName("table")[0];
       while (tb.rows.length > 1) {
         tb.deleteRow(1);
       }
@@ -182,85 +160,15 @@ export default {
 </script>
 
 <style>
-html,
-body {
-  /* Height and width fallback for older browsers. */
-  height: 100%;
-  width: 100%;
-  background-color: rgb(237, 245, 252);
-}
-
-h1,
-h2 {
-  text-align: left;
-  padding-left: 30px;
-  color: black;
-  font: 700;
-  display: block;
-  font-size: 2em;
-  font-weight: bold;
-  font-family: "Times New Roman", Times, serif;
-}
-/* .header {
-  width: 70%;
-  height: 20%;
-  color: black; */
-/* background-color: rgb(237, 245, 252); */
-/* position: relative;
-  top: 70px;
-  left: 80px;
-} */
-.table_div {
-  border-radius: 25px;
-  border: 2px solid white;
-  padding: 20px;
-  background-color: white;
-  position: relative;
-  top: 40px;
-  width: 85%;
-  height: 500px;
-  left: 80px;
-  overflow: auto;
-}
-
-tr:hover {
-  background-color: rgb(218, 218, 218);
-}
-tr {
-  background-color: white;
-}
-tr:nth-child(even):hover {
-  background-color: rgb(218, 218, 218);
-}
-th {
-  background-color: rgb(223, 223, 223);
-}
-th,
-td {
-  text-align: center;
-  padding: 8px;
-  /* color: blue; */
-}
-
-.edt {
-  color: black;
-  background-color: #f1f1f1;
-  width: 70px;
-}
-
-.edt:hover {
-  background-color: black;
-  color: white;
-}
-
 table {
-  border-radius: 10px;
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
-  /* min-width: 400px; */
-  width: 100%;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
+  box-shadow: none !important;
 }
+
+th span, td {
+  font-size: 14px;
+}
+th span {
+  font-weight: bold !important;
+}
+
 </style>

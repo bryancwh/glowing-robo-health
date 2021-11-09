@@ -1,18 +1,12 @@
 <template>
   <div>
-    <div class="topnav">
-      <b class="app_name">Glowing Robo Health Supplier</b>
-      <a href="/supplierhome">Home</a>
-      <a href="/supplierstockview">Your Stocks</a>
-      <a class="active" href="/supplierorders">Orders</a>
-      <LogOut />
-    </div>
+    <SupplierNavbar />
     <SupplierOrdersTable />
   </div>
 </template>
 
 <script>
-import LogOut from "../../components/LogOut.vue";
+import SupplierNavbar from "../../components/SupplierNavbar.vue";
 import SupplierOrdersTable from "@/components/SupplierOrdersTable.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -20,7 +14,7 @@ export default {
   name: "SupplierOrders",
   components: {
     SupplierOrdersTable,
-    LogOut,
+    SupplierNavbar,
   },
   data() {
     return {
