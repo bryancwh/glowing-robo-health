@@ -1,35 +1,23 @@
 <template>
   <!-- <form v-on:submit.prevent> -->
-  <div>
-    <!-- <div>
-      <h1 class="header">Order Form</h1>
-    </div> -->
-    <div class="form_divider">
-      <form>
-        <h1>Create Order</h1>
+  <div style="padding: 40px">
+   <h1><b>Order Form</b></h1>
 
-        <!-- <label>Clinic:</label>
-        <input type="text" id="clinic" required v-model="clinic" /> -->
+  <form>
+    <h2><b>Add New Stock</b></h2>
+    <label>Supplier:</label>
+    <input style="margin-bottom: 12px" type="text" required v-model="supplier" />
+    <label>Manufacturer:</label>
+    <input style="margin-bottom: 12px" type="text" id="manufacturer" required v-model="manufacturer" />
+    <label>Product Name:</label>
+    <input style="margin-bottom: 12px" type="text" id="name" required v-model="name" />
 
-        <label>Supplier:</label>
-        <input type="text" id="supplier" required v-model="supplier" />
+    <label>Quantity:</label>
+    <input style="margin-bottom: 28px" type="number" id="stock_level" required v-model="stock_level" />
 
-        <label>Manufacturer:</label>
-        <input type="text" id="manufacturer" required v-model="manufacturer" />
+    <a-button type="primary" v-on:click="submitOrder()">Submit Order</a-button>
+  </form>
 
-        <label>Product Name:</label>
-        <input type="text" id="name" required v-model="name" />
-
-        <label>Quantity:</label>
-        <input type="number" id="stock_level" required v-model="stock_level" />
-
-        <div class="buttonHolder">
-          <button type="button" v-on:click="submitOrder()" class="btn">
-            Submit Order
-          </button>
-        </div>
-      </form>
-    </div>
   </div>
 </template>
 
@@ -73,10 +61,10 @@ export default {
       // var clinic = document.getElementById("clinic").value;
       var email = this.user.email;
       var user_name = email.slice(0, email.indexOf("@"));
-      var supplier = document.getElementById("supplier").value;
-      var manufacturer = document.getElementById("manufacturer").value;
-      var name = document.getElementById("name").value;
-      var quantity_ordered = document.getElementById("stock_level").value;
+      var supplier = this.supplier;
+      var manufacturer = this.manufacturer;
+      var name = this.name;
+      var quantity_ordered = this.stock_level;
       var product_id = 1;
       var status = "pending";
       var purchase_date = new Date();
@@ -88,8 +76,6 @@ export default {
         "_" +
         name;
 
-      console.log(db);
-      // console.log(path)
       try {
         const docRef = await setDoc(doc(db, "orders", path), {
           clinic: user_name,
@@ -114,80 +100,13 @@ export default {
 </script>
 
 <style scoped>
-.header {
-  width: 70%;
-  height: 20%;
-  color: black;
-  background-color: None;
-  position: relative;
-  text-align: left;
-  top: 70px;
-  /* left: 80px; */
-}
-
-.form_divider {
-  border-radius: 25px;
-  border: 2px solid white;
-  padding: 10px;
-  background-color: white;
-  width: 37%;
-  height: 517px;
-  position: fixed;
-  top: 55%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  overflow: auto;
-}
 
 form {
-  max-width: 570px;
-  margin: 10px auto;
-  background: white;
-  text-align: left;
-  padding: 23px;
-  border-radius: 15px;
-}
-h1 {
-  font-size: 2em;
-  text-transform: uppercase;
-  background: white;
-  color: black;
-  text-align: center;
-}
-label {
-  color: rgb(0, 0, 0);
-  display: inline-block;
-  margin: 10px 0 10px;
-  font-size: 0.8em;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
-}
-input {
-  display: block;
-  padding: 10px 6px;
-  width: 100%;
-  box-sizing: ;
-  border: none;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  border-top: 1px solid #ddd;
-  border-bottom: 2px solid #ddd;
-  color: #555;
-  border-radius: 8px;
-}
-.buttonHolder {
-  padding: 20px;
-  text-align: center;
-}
-.btn {
-  color: black;
-  background-color: #f1f1f1;
-  width: 100px;
-}
-.btn:hover {
-  background-color: black;
-  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  width: 350px;
 }
 </style>

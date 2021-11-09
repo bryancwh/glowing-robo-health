@@ -1,19 +1,13 @@
 <template>
 <div>
   <div>
-    <div class="topnav">
-      <b class="app_name">Glowing Robo Health Supplier</b>
-      <a class="active" href="/supplierhome">Home</a>
-      <a href="/supplierstockview">Your Stocks</a>
-      <a href="/supplierorders">Orders</a>
-      <LogOut />
-    </div>
+  <SupplierNavbar />
   <div id = "container">
       <div id = "left">
         <img src="@/assets/medicine.png" alt="" width="200" height="200">
       </div>
       <div id = "right">
-        <h1>Welcome to Glowing Robo Health, {{user.displayName}}! </h1>
+        <h1>Welcome to Glowing Robo Health, {{this.user.displayName}}! </h1>
         <h4>One-stop platform to track and manage all your medical supplies.</h4>
         <p>
           <br>Click on "Your Stocks" to track your current medical stocks.
@@ -27,12 +21,12 @@
 </template>
 
 <script>
-import LogOut from "../../components/LogOut.vue";
+import SupplierNavbar from '../../components/SupplierNavbar.vue';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default {
   components: {
-    LogOut,
+    SupplierNavbar,
   },
   data() {
     return {
@@ -49,8 +43,6 @@ export default {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.user = auth.currentUser;
-        console.log(this.user);
-        console.log(this.user.email);
       } else {
         console.log("not logged in");
       }

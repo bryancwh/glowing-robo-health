@@ -1,27 +1,19 @@
 <template>
   <div>
-    <div class="topnav">
-      <b class="app_name">Glowing Robo Health Clinic</b>
-      <a href="/clinichome">Home</a>
-      <a href="/clinicorders">Your Orders</a>
-      <a href="/clinicstockview">Your Stocks</a>
-      <a class="active" href="/clinicsupplierview">View Suppliers</a>
-      <a href="/clinicorderformpage">Request</a>
-      <LogOut />
-    </div>
+    <Navbar />
     <AllSupplierStock />
   </div>
 </template>
 
 <script>
-import LogOut from "../../components/LogOut.vue";
+import Navbar from '@/components/Navbar.vue';
 import AllSupplierStock from "../../components/AllSupplierStock.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default {
   components: {
     AllSupplierStock,
-    LogOut,
+    Navbar,
   },
   data() {
     return {
