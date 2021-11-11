@@ -2,6 +2,7 @@
   <div>
     <SupplierNavbar />
     <div style="padding: 40px;">
+      <h1>Welcome, {{this.user.displayName}}!</h1>
       <a-row>
           <a-col :xs="24" :lg="8">
               <div class="stat-box">
@@ -72,6 +73,7 @@ export default {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.user = auth.currentUser;
+        console.log(this.user, "this.user")
       } else {
         console.log("not logged in");
       }

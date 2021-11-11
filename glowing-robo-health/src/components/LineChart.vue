@@ -1,6 +1,6 @@
 <template>
   <div>
-    <canvas id="planet-chart"></canvas>
+    <canvas id="order-chart"></canvas>
   </div>
 </template>
 
@@ -11,15 +11,14 @@ export default {
   name: 'LineChart',
   data() {
     return {
-      planetChartData: {
+      orderChartData: {
         type: "line",
         data: {
-          labels: ["2019-07-01", "2019-07-02", "2019-07-03", "2019-07-04", "2019-07-05", "2019-07-06", "2019-07-07", "2019-07-08"],
+          labels: ["2021-07-01", "2021-07-02", "2021-07-03", "2021-07-04", "2021-07-05", "2021-07-06", "2021-07-07", "2021-07-08"],
           datasets: [
             {
               label: "Number of orders",
               data: [2, 5, 7, 1, 23, 12, 10, 5],
-              // data: [0.166, 2.081, 3.003, 0.323, 954.792, 285.886, 43.662, 51.514],
               backgroundColor: "#1890ff30",
               borderColor: "#1890ff",
               borderWidth: 3
@@ -44,8 +43,8 @@ export default {
     }
   },
   mounted() {
-    const ctx = document.getElementById('planet-chart');
-    new Chart(ctx, this.planetChartData);
+    const ctx = document.getElementById('order-chart');
+    new Chart(ctx, this.orderChartData);
   }
 }
 </script>
