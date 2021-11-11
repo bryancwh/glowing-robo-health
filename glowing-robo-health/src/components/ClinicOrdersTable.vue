@@ -118,7 +118,6 @@ export default {
     async display() {
       const path = query(
         collection(db, "orders/")
-        // where("clinic", "==", this.clinic)
       );
 
       var email = this.user.email;

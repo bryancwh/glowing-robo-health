@@ -24,10 +24,9 @@ export default {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.user = auth.currentUser;
-        console.log(this.user);
-        console.log(this.user.email);
+        // console.log(this.user);
+        // console.log(this.user.email);
         this.getData();
-        console.log("getting data");
       } else {
         console.log("not logged in");
       }
@@ -59,7 +58,7 @@ export default {
       let stocks = await getDocs(path);
 
       stocks.forEach((doc) => {
-        console.log(doc.data());
+        // console.log(doc.data());
         let data = doc.data();
         if (data.user_name === user_name) {
           var name = data.product_name;
@@ -73,14 +72,10 @@ export default {
             this.chartData[0].data.push(arr);
             this.chartData[1].data.push(arr_1);
           }
-
-          console.log(this.chartData);
           this.loaded = true;
 
-          console.log("added 1 arr");
         }
       });
-      console.log("done adding data", this.chartData);
     },
   },
 };
