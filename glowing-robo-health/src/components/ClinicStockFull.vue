@@ -31,8 +31,8 @@
             required
             v-model="form_product_manufacturer"
           />
-          <label>Product ID:</label>
-          <input type="text" style="margin-bottom: 12px" id="product_id" required v-model="form_product_id" />
+          <!-- <label>Product ID:</label>
+          <input type="text" style="margin-bottom: 12px" id="product_id" required v-model="form_product_id" /> -->
           <label>Quantity:</label>
           <input style="margin-bottom: 28px" type="number" id="quantity" required v-model="form_quantity" />
           <a-button type="primary" v-on:click="updateQuantity()">Add Stock</a-button>
@@ -60,15 +60,33 @@ const db = getFirestore(firebaseApp);
 
 const columns = [
   { 
-    dataIndex: 'product_name', 
-    key: 'product_name', 
-    title: 'Product', 
-    sorter: (a, b) => a.product_name > b.product_name
+    dataIndex: 'product_name', key: 'product_name', title: 'Product',
+    sorter: (a, b) => { return a.product_name.localeCompare(b.product_name)},
   },
-  { title: 'Manufacturer', dataIndex: 'product_manufacturer', key: 'product_manufacturer', sorter: (a, b) => a.product_manufacturer > b.product_manufacturer },
-  { title: 'Product ID', key: 'product_id', dataIndex: 'product_id', },
-  { title: 'Stock Quantity', key: 'quantity', dataIndex: 'quantity' },
-  { title: 'Availability', key: 'availability', dataIndex: 'availability' },
+  { 
+    title: 'Manufacturer', dataIndex: 'product_manufacturer', key: 'product_manufacturer' ,
+    sorter: (a, b) => { return a.product_manufacturer.localeCompare(b.product_manufacturer)},
+  },
+  // { title: 'Product ID', key: 'product_id', dataIndex: 'product_id', },
+  { 
+    title: 'Stock Quantity', key: 'quantity', dataIndex: 'quantity',
+    sorter: (a, b) => a.quantity - b.quantity,
+  },
+  { 
+    title: 'Availability', key: 'availability', dataIndex: 'availability',
+    filters: [
+      {
+        text: 'Available',
+        value: 'Available'
+      },
+      {
+        text: 'Out of stock',
+        value: 'Out of stock'
+      }
+    ],
+    onFilter: (value, record) => record.availability.indexOf(value) === 0,
+    sorter: (a, b) => { return a.availability.localeCompare(b.availability)},
+  },
   { title: 'Action', key: 'action', slots: { customRender: 'action' }, },
 ];
 
@@ -93,7 +111,7 @@ export default {
       name: "",
       stock_level: "",
       manufacturer: "",
-      product_id: "",
+      // product_id: "",
       stocks: [],
       user: {
         email: "",
@@ -102,7 +120,7 @@ export default {
       },
       form_product_name: "",
       form_product_manufacturer: "",
-      form_product_id: "",
+      // form_product_id: "",
       form_quantity: ""
     };
   },
@@ -110,7 +128,7 @@ export default {
     async updateQuantity() {
       var product_name = this.form_product_name;
       var product_manufacturer = this.form_product_manufacturer;
-      var product_id = this.form_product_id;
+      // var product_id = this.form_product_id;
       var quantity = this.form_quantity;
 
       var type = "clinic";
@@ -124,7 +142,7 @@ export default {
           user_name: user_name,
           product_name: product_name,
           product_manufacturer: product_manufacturer,
-          product_id: product_id,
+          // product_id: product_id,
           quantity: quantity,
         });
         let tb = document.getElementsByTagName("table")[0];
@@ -134,8 +152,7 @@ export default {
 
         this.display();
         this.successAdded = true;
-        this.product_name = this.quantity = this.product_manufacturer = this.product_id =
-          "";
+        this.product_name = this.quantity = this.product_manufacturer = ""; //this.product_id = "";
       } catch (error) {
         console.error("Error adding document: ", error);
       }
@@ -174,10 +191,10 @@ export default {
 
         if (data.type == "clinic" && data.user_name == user_name) {
           this.stocks.push({
-            key: data.product_id,
+            // key: data.product_id,
             type: data.type,
             user_name: data.user_name,
-            product_id: data.product_id,
+            // product_id: data.product_id,
             product_name: data.product_name,
             product_manufacturer: data.product_manufacturer,
             quantity: data.quantity,

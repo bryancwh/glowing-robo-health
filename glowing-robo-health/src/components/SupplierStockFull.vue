@@ -30,8 +30,8 @@
             required
             v-model="form_product_manufacturer"
           />
-          <label>Product ID:</label>
-          <input type="text" style="margin-bottom: 12px" id="product_id" required v-model="form_product_id" />
+          <!-- <label>Product ID:</label> -->
+          <!-- <input type="text" style="margin-bottom: 12px" id="product_id" required v-model="form_product_id" /> -->
           <label>Quantity:</label>
           <input style="margin-bottom: 28px" type="number" id="quantity" required v-model="form_quantity" />
           <a-button type="primary" v-on:click="updateQuantity()">Add Stock</a-button>
@@ -58,12 +58,46 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 const columns = [
-  { dataIndex: 'product_name', key: 'product_name', title: 'Product' },
-  { title: 'Manufacturer', dataIndex: 'product_manufacturer', key: 'product_manufacturer' },
-  { title: 'Product ID', key: 'product_id', dataIndex: 'product_id', },
-  { title: 'Stock Quantity', key: 'quantity', dataIndex: 'quantity' },
-  { title: 'Availability', key: 'availability', dataIndex: 'availability'},
-  { title: 'Action', key: 'action', slots: { customRender: 'action' }, },
+  { 
+    dataIndex: 'product_name', 
+    key: 'product_name', 
+    title: 'Product',
+    sorter: (a, b) => { return a.product_name.localeCompare(b.product_name)},
+  },
+  { 
+    title: 'Manufacturer', 
+    dataIndex: 'product_manufacturer', 
+    key: 'product_manufacturer',
+    sorter: (a, b) => { return a.product_manufacturer.localeCompare(b.product_manufacturer)},
+  },
+  { 
+    title: 'Stock Quantity', 
+    key: 'quantity', 
+    dataIndex: 'quantity',
+    sorter: (a, b) => a.quantity - b.quantity,
+  },
+  { 
+    title: 'Availability', 
+    key: 'availability', 
+    dataIndex: 'availability',
+    filters: [
+      {
+        text: 'Available',
+        value: 'Available'
+      },
+      {
+        text: 'Out of stock',
+        value: 'Out of stock'
+      }
+    ],
+    onFilter: (value, record) => record.availability.indexOf(value) === 0,
+    sorter: (a, b) => { return a.availability.localeCompare(b.availability)},
+  },
+  { 
+    title: 'Action', 
+    key: 'action', 
+    slots: { customRender: 'action' },
+  }
 ];
 
 
@@ -88,7 +122,7 @@ export default {
       columns,
       stock_level: "",
       manufacturer: "",
-      product_id: "",
+      // product_id: "",
       stocks: [],
       user: {
         email: "",
@@ -97,7 +131,7 @@ export default {
       },
       form_product_name: "",
       form_product_manufacturer: "",
-      form_product_id: "",
+      // form_product_id: "",
       form_quantity: "",
       successAdded: false,
       successDeleted: false,
@@ -107,7 +141,7 @@ export default {
     async updateQuantity() {
       var product_name = this.form_product_name;
       var product_manufacturer = this.form_product_manufacturer;
-      var product_id = this.form_product_id;
+      // var product_id = this.form_product_id;
       var quantity = this.form_quantity;
 
       var type = "supplier";
@@ -121,12 +155,12 @@ export default {
           user_name: user_name,
           product_name: product_name,
           product_manufacturer: product_manufacturer,
-          product_id: product_id,
+          // product_id: product_id,
           quantity: quantity,
         });
         console.log("Updated document for: " + String(user_name));
 
-        this.product_name = this.quantity = this.product_manufacturer = this.product_id = "";
+        this.product_name = this.quantity = this.product_manufacturer = "", //this.product_id = "";
         this.successAdded = true;
 
       } catch (error) {
@@ -174,12 +208,11 @@ export default {
           this.stocks.push({
             type: data.type,
             user_name: data.user_name,
-            product_id: data.product_id,
+            // product_id: data.product_id,
             product_name: data.product_name,
             product_manufacturer: data.product_manufacturer,
             quantity: data.quantity,
             availability: data.quantity > 0 ? 'Available' : 'Out of stock',
-
           });
         }
       });
