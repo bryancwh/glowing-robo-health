@@ -27,14 +27,28 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 const columns = [
-  { dataIndex: 'clinic', key: 'clinic', title: 'Clinic' },
-  { dataIndex: 'name', key: 'name', title: 'Name' },
-  { title: 'Manufacturer', dataIndex: 'manufacturer', key: 'manufacturer' },
-  { title: 'Product ID', key: 'product_id', dataIndex: 'product_id', },
-  { title: 'Quantity', key: 'quantity_ordered', dataIndex: 'quantity_ordered' },
-  { title: 'Purchase Date', key: 'purchase_date', dataIndex: 'purchase_date'},
-  { title: 'Delivery Date', key: 'delivery_date', dataIndex: 'delivery_date'},
-  { title: 'Status', key: 'status', dataIndex: 'status'},
+  { dataIndex: 'clinic', key: 'clinic', title: 'Clinic', sorter: (a, b) => { return a.clinic.localeCompare(b.clinic)}},
+  { dataIndex: 'name', key: 'name', title: 'Name', sorter: (a, b) => { return a.clinic.localeCompare(b.clinic)}},
+  { title: 'Manufacturer', dataIndex: 'manufacturer', key: 'manufacturer', sorter: (a, b) => { return a.manufacturer.localeCompare(b.manufacturer)}},
+  // { title: 'Product ID', key: 'product_id', dataIndex: 'product_id', },
+  { title: 'Quantity', key: 'quantity_ordered', dataIndex: 'quantity_ordered', sorter: (a, b) => a.quantity_ordered - b.quantity_ordered },
+  { title: 'Purchase Date', key: 'purchase_date', dataIndex: 'purchase_date', sorter: (a, b) => new Date(a.purchase_date) - new Date(b.purchase_date)},
+  { title: 'Delivery Date', key: 'delivery_date', dataIndex: 'delivery_date', sorter: (a, b) => new Date(a.purchase_date) - new Date(b.purchase_date)},
+  { 
+    title: 'Status', key: 'status', dataIndex: 'status',
+    sorter: (a, b) => { return a.status.localeCompare(b.status)},
+    filters: [
+      {
+        text: 'pending',
+        value: 'pending'
+      },
+      {
+        text: 'delivered',
+        value: 'delivered'
+      }
+    ],
+    onFilter: (value, record) => record.status.indexOf(value) === 0,
+  },
   { title: 'Update Status', key: 'action', slots: { customRender: 'action' }, },
 ];
 
@@ -88,7 +102,7 @@ export default {
             clinic: data.clinic,
             name: data.name,
             manufacturer: data.manufacturer,
-            product_id: data.product_id,
+            // product_id: data.product_id,
             quantity_ordered: data.quantity_ordered,
             purchase_date: data.purchase_date.toDate().toString().substring(3, 25),
             delivery_date: data.delivery_date ? data.delivery_date.toDate().toString().substring(4, 24) : 'Not delivered',

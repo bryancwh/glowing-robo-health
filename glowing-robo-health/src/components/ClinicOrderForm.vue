@@ -6,15 +6,19 @@
   <form>
     <h2><b>Add New Stock</b></h2>
     <label>Supplier:</label>
-    <input style="margin-bottom: 12px" type="text" required v-model="supplier" />
+    <select v-model="supplier" style="width: 100%; margin-bottom: 12px;">
+      <option v-for="supplier of this.suppliers" v-bind:key="supplier">{{supplier}} </option>
+    </select>
     <label>Manufacturer:</label>
-    <input style="margin-bottom: 12px" type="text" id="manufacturer" required v-model="manufacturer" />
+    <select v-model="manufacturer" style="width: 100%; margin-bottom: 12px;">
+      <option v-for="manufacturer of this.manufacturers" v-bind:key="manufacturer">{{manufacturer}} </option>
+    </select>
     <label>Product Name:</label>
     <input style="margin-bottom: 12px" type="text" id="name" required v-model="name" />
-
     <label>Quantity:</label>
     <input style="margin-bottom: 28px" type="number" id="stock_level" required v-model="stock_level" />
-
+    <label>Threshold:</label>
+    <input style="margin-bottom: 28px" type="number" id="threshold" required v-model="threshold" />
     <a-button type="primary" v-on:click="submitOrder()">Submit Order</a-button>
   </form>
 
@@ -37,10 +41,12 @@ export default {
         this.user = auth.currentUser;
         console.log(this.user);
         console.log(this.user.email);
+        this.getData();
       } else {
         console.log("not logged in");
       }
     });
+
   },
   data() {
     return {
@@ -54,9 +60,29 @@ export default {
         displayName: "",
         uid: "",
       },
+      suppliers:[],
+      manufacturers:[]
     };
   },
   methods: {
+    async getData() {
+      const path = query(collection(db, "stocks/"));
+      let stocks = await getDocs(path);
+
+      stocks.forEach((doc) => {
+        let data = doc.data();
+        if (data.type === "supplier") {
+          if (!this.suppliers.includes(data.user_name)) {
+            this.suppliers.push(data.user_name);
+          }
+          if (!this.manufacturers.includes(data.product_manufacturer)) {
+            this.manufacturers.push(data.product_manufacturer);
+          }
+        }
+      });
+      console.log(this.manufacturers)
+    },
+
     async submitOrder() {
       // var clinic = document.getElementById("clinic").value;
       var email = this.user.email;
@@ -65,7 +91,7 @@ export default {
       var manufacturer = this.manufacturer;
       var name = this.name;
       var quantity_ordered = this.stock_level;
-      var product_id = 1;
+      // var product_id = 1;
       var status = "pending";
       var purchase_date = new Date();
       //   const path = this.name;
@@ -83,7 +109,7 @@ export default {
           manufacturer: manufacturer,
           name: name,
           quantity_ordered: quantity_ordered,
-          product_id: product_id,
+          // product_id: product_id,
           status: status,
           purchase_date: purchase_date,
           delivery_date: null,
