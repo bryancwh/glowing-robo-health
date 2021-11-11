@@ -25,13 +25,11 @@
           style="width: 320px; margin-bottom: 20px;" 
           placeholder="Enter your name" 
         />
-
         <select v-model="selected_role" style="width: 100%; margin-bottom: 48px;">
           <option disabled value=""> User Type </option>
           <option> Clinic </option>
           <option> Supplier </option>
         </select>
-
         <a-button 
           v-if="!this.loading"
           v-on:click="signup"

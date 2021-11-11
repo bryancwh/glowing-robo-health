@@ -28,36 +28,60 @@ const columns = [
     dataIndex: 'supplier',
     key: 'supplier',
     title: 'Supplier',
+    sorter: (a, b) => { return a.supplier.localeCompare(b.supplier)},
   },
   {
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    sorter: (a, b) => { return a.name.localeCompare(b.name)},
   },
   {
     title: 'Manufacturer',
     dataIndex: 'manufacturer',
     key: 'manufacturer',
+    sorter: (a, b) => { return a.manufacturer.localeCompare(b.manufacturer)},
   },
-  {
-    title: 'Product ID',
-    key: 'product_id',
-    dataIndex: 'product_id',
-  },
+  // {
+  //   title: 'Product ID',
+  //   key: 'product_id',
+  //   dataIndex: 'product_id',
+  // },
   {
     title: 'Purchase Date',
     key: 'purchase_date',
-    dataIndex: 'purchase_date'
+    dataIndex: 'purchase_date',
+     sorter: (a, b) => new Date(a.purchase_date) - new Date(b.purchase_date)
   },
   {
     title: 'Delivery Date',
     key: 'delivery_date',
-    dataIndex: 'delivery_date'
+    dataIndex: 'delivery_date',
+    sorter: (a, b) => new Date(a.delivery_date) - new Date(b.delivery_date),
+    filters: [
+      {
+        text: 'Not delivered',
+        value: 'Not delivered'
+      }
+    ],
+    onFilter: (value, record) => record.delivery_date.indexOf(value) === 0,
   },
   {
     title: 'Status',
     key: 'status',
-    dataIndex: 'status'
+    dataIndex: 'status',
+    sorter: (a, b) => { return a.status.localeCompare(b.status)},
+    filters: [
+      {
+        text: 'pending',
+        value: 'pending'
+      },
+      {
+        text: 'delivered',
+        value: 'delivered'
+      }
+    ],
+    onFilter: (value, record) => record.status.indexOf(value) === 0,
   },
 ];
 
@@ -111,7 +135,7 @@ export default {
             clinic: data.clinic,
             name: data.name,
             manufacturer: data.manufacturer,
-            product_id: data.product_id,
+            // product_id: data.product_id,
             quantity_ordered: data.quantity_ordered,
             purchase_date: data.purchase_date.toDate().toString().substring(3, 25),
             status: data.status,
