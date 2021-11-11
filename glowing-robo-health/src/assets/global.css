@@ -2,6 +2,22 @@
     font-family: 'Source Sans Pro';
 }
 
+:root {
+    --black100: #000000;
+    --black95: #0D0D0D;
+    --black90: #1A1A1A;
+    --black80: #333333;
+    --black70: #4D4D4D;
+    --black60: #666666;
+    --black50: #7F7F7F;
+    --black40: #999999;
+    --black30: #B3B3B3;
+    --black20: #CCCCCC;
+    --black10: #E6E6E6;
+    --black5: #F2F2F2;
+    --shadow: 0px 10px 15px rgba(0, 0, 0, 0.03);
+}
+
 h1, h2, h3, h4, h5, h6, p {
     color: #0F172A;
 }

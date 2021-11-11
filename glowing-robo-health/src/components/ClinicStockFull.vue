@@ -59,11 +59,16 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 const columns = [
-  { dataIndex: 'product_name', key: 'product_name', title: 'Product' },
-  { title: 'Manufacturer', dataIndex: 'product_manufacturer', key: 'product_manufacturer' },
+  { 
+    dataIndex: 'product_name', 
+    key: 'product_name', 
+    title: 'Product', 
+    sorter: (a, b) => a.product_name > b.product_name
+  },
+  { title: 'Manufacturer', dataIndex: 'product_manufacturer', key: 'product_manufacturer', sorter: (a, b) => a.product_manufacturer > b.product_manufacturer },
   { title: 'Product ID', key: 'product_id', dataIndex: 'product_id', },
   { title: 'Stock Quantity', key: 'quantity', dataIndex: 'quantity' },
-  { title: 'Availability', key: 'availability', dataIndex: 'availability'},
+  { title: 'Availability', key: 'availability', dataIndex: 'availability' },
   { title: 'Action', key: 'action', slots: { customRender: 'action' }, },
 ];
 
