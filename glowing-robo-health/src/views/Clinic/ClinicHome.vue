@@ -16,8 +16,6 @@
 import Navbar from '@/components/Navbar.vue';
 import Calendar from "@/components/Calendar.vue";
 
-import Navbar from "@/components/Navbar.vue";
-
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import ClinicChart from "@/components/ClinicChart.vue";
 
