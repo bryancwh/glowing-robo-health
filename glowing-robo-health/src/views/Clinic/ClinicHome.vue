@@ -16,17 +16,22 @@
         </p>
       </div>
     </div>
+      <div id = "calendar">
+        <Calendar />
+      </div>    
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import Calendar from "@/components/Calendar.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default {
   name: "Profile",
   components: {
     Navbar,
+    Calendar
   },
   data() {
     return {
@@ -54,6 +59,14 @@ export default {
 </script>
 
 <style scoped>
+#calendar {
+  border-radius: 25px;
+  padding: 20px;
+  background-color: white;
+  position: relative;
+  justify-content: center;
+  display: flex;
+}
 #container {
   border-radius: 25px;
   padding: 20px;

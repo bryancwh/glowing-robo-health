@@ -17,8 +17,17 @@ import LogIn from "@/views/LogIn.vue";
 import SignUp from "@/views/SignUp.vue";
 // import LogOut from "@/components/LogOut.vue";
 
+import Calendar from"../components/Calendar.vue";
 
 const routes = [
+  {
+    path: "/calendar",
+    name: "calendar",
+    component: Calendar,
+    meta: {
+      requiresAuth: true
+    }
+  },
   {
     path: "/",
     name: "LogIn",
