@@ -1,35 +1,65 @@
 <template>
-<div>
   <div>
-  <SupplierNavbar />
-  <div id = "container">
-      <div id = "left">
-        <img src="@/assets/medicine.png" alt="" width="200" height="200">
+    <SupplierNavbar />
+    <div style="padding: 40px;">
+      <h1>Welcome, {{this.user.displayName}}!</h1>
+      <a-row>
+          <a-col :xs="24" :lg="8">
+              <div class="stat-box">
+                <MedicineBoxTwoTone twoToneColor="#eb2f96"/>
+                <div>
+                  <h3>Number of clinics</h3>
+                  <h2><b>{{this.numClinics}}</b></h2>
+                </div>
+              </div>
+          </a-col>
+          <a-col :xs="24" :lg="8">
+              <div class="stat-box">
+                <ContainerTwoTone/>
+                <div>
+                  <h3>Number of orders</h3>
+                  <h2><b>{{this.numOrders}}</b></h2>
+                </div>
+              </div>
+          </a-col>
+          <a-col :xs="24" :lg="8">
+              <div class="stat-box">
+                <CarTwoTone twoToneColor="#52c41a"/>
+                <div>
+                  <h3>Average delivery time</h3>
+                  <h2><b>{{this.avgDeliveryTime}}</b></h2>
+                </div>
+              </div>
+          </a-col>
+      </a-row>
+      <div class="card">
+        <h2><b>Number of Orders over time</b></h2>
+        <LineChart />
       </div>
-      <div id = "right">
-        <h1>Welcome to Glowing Robo Health, {{this.user.displayName}}! </h1>
-        <h4>One-stop platform to track and manage all your medical supplies.</h4>
-        <p>
-          <br>Click on "Your Stocks" to track your current medical stocks.
-          <br><br>Click on "Orders" to check your customers' pending orders.
-          <br><br>Click on "Log Out" to exit application.
-        </p>
-      </div>
+
     </div>
   </div>
-</div>
 </template>
 
 <script>
 import SupplierNavbar from '../../components/SupplierNavbar.vue';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { MedicineBoxTwoTone, ContainerTwoTone, CarTwoTone } from '@ant-design/icons-vue';
+import LineChart from '../../components/LineChart.vue';
 
 export default {
   components: {
     SupplierNavbar,
+    MedicineBoxTwoTone,
+    ContainerTwoTone,
+    CarTwoTone,
+    LineChart
   },
   data() {
     return {
+      numClinics: "499",
+      numOrders: "69",
+      avgDeliveryTime: "4 hours",
       user : {
         email: "",
         displayName: "",
@@ -43,6 +73,7 @@ export default {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.user = auth.currentUser;
+        console.log(this.user, "this.user")
       } else {
         console.log("not logged in");
       }
@@ -52,33 +83,41 @@ export default {
 </script>
 
 <style scoped>
-#container {
-  border-radius: 25px;
-  border: 2px solid white;
-  padding: 20px;
-  background-color: white;
-  position: relative;
-  top: 90px;
-  width: 70%;
-  height: 300px;
-  left: 130px;
-  /* overflow: auto; */
-  text-align: left;
+.stat-box {
+  border: 1px solid var(--black10);
+  padding: 20px 28px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px;
+  transition: 200ms;
+  border-radius: 16px;
+} 
+
+/* .stat-box:hover {
+  box-shadow: var(--shadow);
+} */
+
+.stat-box h3 {
+  color: var(--black50);
+  margin: 0;
 }
-#left {
-  width: 25%;
-  position: relative;
-  top:40px;
-  left:30px;
+.stat-box h2 {
+  color: var(--black70);
+  margin: 0;
 }
-#right {
-  width: 70%;
+
+.stat-box :deep(.anticon) {
+  font-size: 32px;
 }
-h4 {
-  padding-left:30px;
+
+.card {
+  border: 1px solid var(--black10);
+  padding: 20px 28px;
+  border-radius: 16px;
+  width: 100%; 
+  margin: 16px;
+  max-width: 800px;
 }
-p {
-  padding-left:30px;
-}
+
 </style>
