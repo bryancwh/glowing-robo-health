@@ -1,45 +1,36 @@
 <template>
   <div>
     <Navbar />
-    <div id = "container">
-      <div id = "left">
-        <img src="@/assets/medicine.png" alt="" width="200" height="200">
-      </div>
-      <div id = "right">
-        <h1>Welcome, {{user.displayName}}! </h1>
-        <h4>One-stop platform to track and manage all your medical supplies.</h4>
-        <p>
-          <br>Click on "Your Orders" to check your pending orders.
-          <br><br>Click on "Your Stocks" to track your current medical stocks.
-          <br><br>Click on "View Supplies" to view your suppliers' stocks for order.
-          <br><br>Click on "Log Out" to exit application.
-        </p>
-      </div>
+    <div style="padding: 40px;">
+      <h1><b>Stocks below threshold</b></h1>
+      <ClinicChart />
     </div>
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue';
+import Navbar from "@/components/Navbar.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import ClinicChart from "@/components/ClinicChart.vue";
 
 export default {
   name: "Profile",
   components: {
     Navbar,
+    ClinicChart,
   },
   data() {
     return {
-      user : {
+      user: {
         email: "",
         displayName: "",
-        uid: ""
-      }
+        uid: "",
+      },
     };
   },
   mounted() {
     const auth = getAuth();
-    this.user = auth.currentUser
+    this.user = auth.currentUser;
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.user = auth.currentUser;
@@ -61,14 +52,5 @@ export default {
   position: relative;
   justify-content: center;
   display: flex;
-}
-#left {
-  width: 25%;
-  position: relative;
-  top:40px;
-  left:30px;
-}
-#right {
-  width: 70%;
 }
 </style>
