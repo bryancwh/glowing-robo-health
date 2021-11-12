@@ -193,10 +193,10 @@ export default {
       } catch (error) {
         console.error("Error deleting document: ", error);
       }
-      let tb = document.getElementById("table");
-      while (tb.rows.length > 1) {
-        tb.deleteRow(1);
-      }
+      // let tb = document.getElementById("table");
+      // while (tb.rows.length > 1) {
+      //   tb.deleteRow(1);
+      // }
       this.display();
     },
     async display() {
