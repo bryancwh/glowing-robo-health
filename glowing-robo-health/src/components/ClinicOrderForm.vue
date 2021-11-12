@@ -1,25 +1,42 @@
 <template>
   <!-- <form v-on:submit.prevent> -->
   <div style="padding: 40px">
-   <h1><b>Order Form</b></h1>
-
-  <form>
-    <h2><b>Add New Stock</b></h2>
-    <label>Supplier:</label>
-    <select v-model="supplier" style="width: 100%; margin-bottom: 12px;">
-      <option v-for="supplier of this.suppliers" v-bind:key="supplier">{{supplier}} </option>
-    </select>
-    <label>Manufacturer:</label>
-    <select v-model="manufacturer" style="width: 100%; margin-bottom: 12px;">
-      <option v-for="manufacturer of this.manufacturers" v-bind:key="manufacturer">{{manufacturer}} </option>
-    </select>
-    <label>Product Name:</label>
-    <input style="margin-bottom: 12px" type="text" id="name" required v-model="name" />
-    <label>Quantity:</label>
-    <input style="margin-bottom: 28px" type="number" id="stock_level" required v-model="stock_level" />
-    <a-button type="primary" v-on:click="submitOrder()">Submit Order</a-button>
-  </form>
-
+    <form>
+      <h2><b>Add New Stock</b></h2>
+      <label>Supplier:</label>
+      <select v-model="supplier" style="width: 100%; margin-bottom: 12px;">
+        <option v-for="supplier of this.suppliers" v-bind:key="supplier"
+          >{{ supplier }}
+        </option>
+      </select>
+      <label>Manufacturer:</label>
+      <select v-model="manufacturer" style="width: 100%; margin-bottom: 12px;">
+        <option
+          v-for="manufacturer of this.manufacturers"
+          v-bind:key="manufacturer"
+          >{{ manufacturer }}
+        </option>
+      </select>
+      <label>Product Name:</label>
+      <input
+        style="margin-bottom: 12px"
+        type="text"
+        id="name"
+        required
+        v-model="name"
+      />
+      <label>Quantity:</label>
+      <input
+        style="margin-bottom: 28px"
+        type="number"
+        id="stock_level"
+        required
+        v-model="stock_level"
+      />
+      <a-button type="primary" v-on:click="submitOrder()"
+        >Submit Order</a-button
+      >
+    </form>
   </div>
 </template>
 
@@ -44,22 +61,21 @@ export default {
         console.log("not logged in");
       }
     });
-
   },
   data() {
     return {
       name: "",
       quantity: "",
-      supplier:"",
-      manufacturer:"",
-      stock_level:"",
+      supplier: "",
+      manufacturer: "",
+      stock_level: "",
       user: {
         email: "",
         displayName: "",
         uid: "",
       },
-      suppliers:[],
-      manufacturers:[]
+      suppliers: [],
+      manufacturers: [],
     };
   },
   methods: {
@@ -78,7 +94,7 @@ export default {
           }
         }
       });
-      console.log(this.manufacturers)
+      console.log(this.manufacturers);
     },
 
     async submitOrder() {
@@ -106,13 +122,13 @@ export default {
           supplier: supplier,
           manufacturer: manufacturer,
           name: name,
-          quantity_ordered: quantity_ordered,
+          quantity_ordered: parseInt(quantity_ordered),
           // product_id: product_id,
           status: status,
           purchase_date: purchase_date,
           delivery_date: null,
         });
-        this.name = this.stock_level = this.supplier = this.manufacturer = ""
+        this.name = this.stock_level = this.supplier = this.manufacturer = "";
         console.log("Updated document for: " + String(name));
         alert("Order submitted!");
       } catch (error) {
@@ -124,12 +140,11 @@ export default {
 </script>
 
 <style scoped>
-
 form {
   display: flex;
   flex-direction: column;
   padding: 32px;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   width: 350px;
 }
