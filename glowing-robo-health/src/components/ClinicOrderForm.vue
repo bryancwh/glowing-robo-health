@@ -1,8 +1,6 @@
 <template>
   <!-- <form v-on:submit.prevent> -->
   <div style="padding: 40px">
-    <h1><b>Order Form</b></h1>
-
     <form>
       <h2><b>Add New Stock</b></h2>
       <label>Supplier:</label>
@@ -34,14 +32,6 @@
         id="stock_level"
         required
         v-model="stock_level"
-      />
-      <label>Threshold:</label>
-      <input
-        style="margin-bottom: 28px"
-        type="number"
-        id="threshold"
-        required
-        v-model="threshold"
       />
       <a-button type="primary" v-on:click="submitOrder()"
         >Submit Order</a-button

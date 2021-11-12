@@ -2,7 +2,7 @@
   <div style="padding: 40px;">
     <h1><b>Clinic Stockpile</b></h1>
 
-    <a-row type="flex" :gutter="32">
+    <a-row v-if="this.loaded" type="flex" :gutter="32">
       <a-col :flex="3">
         <a-alert v-if="this.successAdded" message="Successfully added!" type="success" />
         <a-alert v-if="this.successDeleted" message="Successfully deleted!" type="success" />
@@ -34,7 +34,9 @@
           <!-- <label>Product ID:</label>
           <input type="text" style="margin-bottom: 12px" id="product_id" required v-model="form_product_id" /> -->
           <label>Quantity:</label>
-          <input style="margin-bottom: 28px" type="number" id="quantity" required v-model="form_quantity" />
+          <input style="margin-bottom: 12px" type="number" id="quantity" required v-model="form_quantity" />
+          <label>Threshold:</label>
+          <input style="margin-bottom: 28px" type="number" id="threshold" required v-model="form_threshold" />
           <a-button type="primary" v-on:click="updateQuantity()">Add Stock</a-button>
         </form>
       </a-col>
@@ -87,6 +89,10 @@ const columns = [
     onFilter: (value, record) => record.availability.indexOf(value) === 0,
     sorter: (a, b) => { return a.availability.localeCompare(b.availability)},
   },
+  {
+    title: 'Threshold', key: 'threshold', dataIndex: 'threshold',
+    sorter: (a, b) => a.threshold - b.threshold
+  },
   { title: 'Action', key: 'action', slots: { customRender: 'action' }, },
 ];
 
@@ -111,6 +117,7 @@ export default {
       name: "",
       stock_level: "",
       manufacturer: "",
+      threshold: "",
       // product_id: "",
       stocks: [],
       user: {
@@ -121,7 +128,9 @@ export default {
       form_product_name: "",
       form_product_manufacturer: "",
       // form_product_id: "",
-      form_quantity: ""
+      form_quantity: "",
+      form_threshold: "",
+      loaded: false
     };
   },
   methods: {
@@ -130,7 +139,7 @@ export default {
       var product_manufacturer = this.form_product_manufacturer;
       // var product_id = this.form_product_id;
       var quantity = this.form_quantity;
-
+      var threshold = this.form_threshold;
       var type = "clinic";
       var email = this.user.email;
       var user_name = email.slice(0, email.indexOf("@"));
@@ -144,6 +153,7 @@ export default {
           product_manufacturer: product_manufacturer,
           // product_id: product_id,
           quantity: quantity,
+          threshold: threshold
         });
         let tb = document.getElementsByTagName("table")[0];
         while (tb.rows.length > 1) {
@@ -152,7 +162,9 @@ export default {
 
         this.display();
         this.successAdded = true;
-        this.product_name = this.quantity = this.product_manufacturer = ""; //this.product_id = "";
+        this.successDeleted = false;
+        this.form_product_name = this.form_quantity = this.form_product_manufacturer = this.form_threshold = "";
+        this.product_name = this.quantity = this.product_manufacturer = this.threshold = ""; //this.product_id = "";
       } catch (error) {
         console.error("Error adding document: ", error);
       }
@@ -167,6 +179,7 @@ export default {
         await deleteDoc(doc(db, "stocks", path));
         // console.log("Deleted document: " + medicine_name);
         this.successDeleted = true;
+        this.successAdded = false;
       } catch (error) {
         console.error("Error deleting document: ", error);
       }
@@ -179,13 +192,15 @@ export default {
     },
 
     async display() {
+      this.loaded = false;
+      this.stocks = [];
       const path = query(collection(db, "stocks/"));
       var email = this.user.email;
 
       var user_name = email.slice(0, email.indexOf("@"));
 
       let stocks_from_db = await getDocs(path);
-
+      
       stocks_from_db.forEach((doc) => {
         let data = doc.data();
 
@@ -199,10 +214,11 @@ export default {
             product_manufacturer: data.product_manufacturer,
             quantity: data.quantity,
             availability: data.quantity > 0 ? 'Available' : 'Out of stock',
+            threshold: data.threshold > 0 ? data.threshold : 0
           });
-
         }
       });
+      this.loaded = true; // Resolve incomplete table render
     },
   },
 };
