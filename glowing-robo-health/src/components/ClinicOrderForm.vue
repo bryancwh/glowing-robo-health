@@ -17,8 +17,6 @@
     <input style="margin-bottom: 12px" type="text" id="name" required v-model="name" />
     <label>Quantity:</label>
     <input style="margin-bottom: 28px" type="number" id="stock_level" required v-model="stock_level" />
-    <label>Threshold:</label>
-    <input style="margin-bottom: 28px" type="number" id="threshold" required v-model="threshold" />
     <a-button type="primary" v-on:click="submitOrder()">Submit Order</a-button>
   </form>
 

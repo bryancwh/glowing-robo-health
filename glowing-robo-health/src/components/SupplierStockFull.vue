@@ -1,7 +1,7 @@
 <template>
   <div style="padding: 40px;">
     <h1><b>Supplier Stockpile</b></h1>
-    <a-row type="flex" :gutter="32">
+    <a-row v-if="this.loaded" type="flex" :gutter="32">
       <a-col :flex="3">
         <a-alert v-if="this.successAdded" message="Successfully added!" type="success" />
         <a-alert v-if="this.successDeleted" message="Successfully deleted!" type="success" />
@@ -135,6 +135,7 @@ export default {
       form_quantity: "",
       successAdded: false,
       successDeleted: false,
+      loaded: false
     };
   },
   methods: {
@@ -160,8 +161,10 @@ export default {
         });
         console.log("Updated document for: " + String(user_name));
 
-        this.product_name = this.quantity = this.product_manufacturer = "", //this.product_id = "";
+        this.form_product_name = this.form_product_manufacturer = this.form_quantity = "";
+        this.product_name = this.quantity = this.product_manufacturer = ""; //this.product_id = "";
         this.successAdded = true;
+        this.successDeleted = false;
 
       } catch (error) {
         console.error("Error adding document: ", error);
@@ -185,6 +188,7 @@ export default {
 
         console.log("Deleted document: " + medicine_name);
         this.successDeleted = true;
+        this.successAdded = false;
 
       } catch (error) {
         console.error("Error deleting document: ", error);
@@ -196,6 +200,8 @@ export default {
       this.display();
     },
     async display() {
+      this.loaded = false;
+      this.stocks = [];
       const path = query(collection(db, "stocks/"));
       var email = this.user.email;
       var user_name = email.slice(0, email.indexOf("@"));
@@ -216,6 +222,7 @@ export default {
           });
         }
       });
+      this.loaded = true; // Resolve incomplete table render
     },
   },
 };
