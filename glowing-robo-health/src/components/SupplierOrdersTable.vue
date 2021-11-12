@@ -1,13 +1,20 @@
 <template>
-  <div style="padding: 40px;"> 
+  <div style="padding: 40px;">
     <h1><b>Orders</b></h1>
-    <a-table :columns="columns" :data-source="orders" bordered >
+    <a-table :columns="columns" :data-source="orders" bordered>
       <template #action="{ record }">
-          <a v-if="record.status === 'pending'" v-on:click="handleStatusChange(record.id)" >Deliver</a>
-          <a v-if="record.status === 'delivered'" v-on:click="handleStatusChange(record.id)">Undo Delivery</a>
+        <a
+          v-if="record.status === 'pending'"
+          v-on:click="handleStatusChange(record.id)"
+          >Deliver</a
+        >
+        <a
+          v-if="record.status === 'delivered'"
+          v-on:click="handleStatusChange(record.id)"
+          >Undo Delivery</a
+        >
       </template>
     </a-table>
-
   </div>
 </template>
 
@@ -27,29 +34,69 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 const columns = [
-  { dataIndex: 'clinic', key: 'clinic', title: 'Clinic', sorter: (a, b) => { return a.clinic.localeCompare(b.clinic)}},
-  { dataIndex: 'name', key: 'name', title: 'Name', sorter: (a, b) => { return a.clinic.localeCompare(b.clinic)}},
-  { title: 'Manufacturer', dataIndex: 'manufacturer', key: 'manufacturer', sorter: (a, b) => { return a.manufacturer.localeCompare(b.manufacturer)}},
+  {
+    dataIndex: "clinic",
+    key: "clinic",
+    title: "Clinic",
+    sorter: (a, b) => {
+      return a.clinic.localeCompare(b.clinic);
+    },
+  },
+  {
+    dataIndex: "name",
+    key: "name",
+    title: "Name",
+    sorter: (a, b) => {
+      return a.clinic.localeCompare(b.clinic);
+    },
+  },
+  {
+    title: "Manufacturer",
+    dataIndex: "manufacturer",
+    key: "manufacturer",
+    sorter: (a, b) => {
+      return a.manufacturer.localeCompare(b.manufacturer);
+    },
+  },
   // { title: 'Product ID', key: 'product_id', dataIndex: 'product_id', },
-  { title: 'Quantity', key: 'quantity_ordered', dataIndex: 'quantity_ordered', sorter: (a, b) => a.quantity_ordered - b.quantity_ordered },
-  { title: 'Purchase Date', key: 'purchase_date', dataIndex: 'purchase_date', sorter: (a, b) => new Date(a.purchase_date) - new Date(b.purchase_date)},
-  { title: 'Delivery Date', key: 'delivery_date', dataIndex: 'delivery_date', sorter: (a, b) => new Date(a.purchase_date) - new Date(b.purchase_date)},
-  { 
-    title: 'Status', key: 'status', dataIndex: 'status',
-    sorter: (a, b) => { return a.status.localeCompare(b.status)},
+  {
+    title: "Quantity",
+    key: "quantity_ordered",
+    dataIndex: "quantity_ordered",
+    sorter: (a, b) => a.quantity_ordered - b.quantity_ordered,
+  },
+  {
+    title: "Purchase Date",
+    key: "purchase_date",
+    dataIndex: "purchase_date",
+    sorter: (a, b) => new Date(a.purchase_date) - new Date(b.purchase_date),
+  },
+  {
+    title: "Delivery Date",
+    key: "delivery_date",
+    dataIndex: "delivery_date",
+    sorter: (a, b) => new Date(a.purchase_date) - new Date(b.purchase_date),
+  },
+  {
+    title: "Status",
+    key: "status",
+    dataIndex: "status",
+    sorter: (a, b) => {
+      return a.status.localeCompare(b.status);
+    },
     filters: [
       {
-        text: 'pending',
-        value: 'pending'
+        text: "pending",
+        value: "pending",
       },
       {
-        text: 'delivered',
-        value: 'delivered'
-      }
+        text: "delivered",
+        value: "delivered",
+      },
     ],
     onFilter: (value, record) => record.status.indexOf(value) === 0,
   },
-  { title: 'Update Status', key: 'action', slots: { customRender: 'action' }, },
+  { title: "Update Status", key: "action", slots: { customRender: "action" } },
 ];
 
 export default {
@@ -104,8 +151,16 @@ export default {
             manufacturer: data.manufacturer,
             // product_id: data.product_id,
             quantity_ordered: data.quantity_ordered,
-            purchase_date: data.purchase_date.toDate().toString().substring(3, 25),
-            delivery_date: data.delivery_date ? data.delivery_date.toDate().toString().substring(4, 24) : 'Not delivered',
+            purchase_date: data.purchase_date
+              .toDate()
+              .toString()
+              .substring(3, 25),
+            delivery_date: data.delivery_date
+              ? data.delivery_date
+                  .toDate()
+                  .toString()
+                  .substring(4, 24)
+              : "Not delivered",
             status: data.status,
           });
         }
@@ -113,8 +168,6 @@ export default {
       });
     },
     async handleStatusChange(input) {
-      console.log("changed", input);
-
       let doc_ref = doc(db, "orders", input);
 
       let x = await getDoc(doc_ref);
@@ -129,7 +182,7 @@ export default {
         delivery_date = null;
       }
 
-      console.log(updated_status);
+    //   console.log(updated_status);
 
       try {
         const docRef = await updateDoc(doc_ref, {
@@ -140,11 +193,34 @@ export default {
         console.error("Error adding document : ", err);
       }
 
-      let tb = document.getElementsByTagName("table")[0];      
+      let tb = document.getElementsByTagName("table")[0];
       while (tb.rows.length > 1) {
         tb.deleteRow(1);
       }
       this.display();
+
+      let clinic = x.data().clinic;
+      let product = x.data().name;
+      let status = x.data().status;
+      let quantity_ordered = x.data().quantity_ordered;
+      let ref = clinic + "_" + product;
+
+      let stock_ref = doc(db, "stocks", ref);
+
+      let y = await getDoc(stock_ref);
+      let current_quantity = y.data().quantity;
+      let updated_quantity =
+        status == "pending"
+          ? current_quantity + quantity_ordered
+          : current_quantity - quantity_ordered;
+
+      try {
+        const docRef = await updateDoc(stock_ref, {
+          quantity: updated_quantity,
+        });
+      } catch (err) {
+        console.error("Error updating document : ", err);
+      }
     },
   },
 };
