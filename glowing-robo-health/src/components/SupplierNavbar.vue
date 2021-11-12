@@ -9,6 +9,7 @@
             <a-menu-item key="home"><a href="/supplierhome">Home</a></a-menu-item>
             <a-menu-item key="stock"><a href="/supplierstockview">Stocks</a></a-menu-item>
             <a-menu-item key="orders"><a href="/supplierorders">Orders</a></a-menu-item>
+            <a-menu-item key="chat"><a href="/supplierchat">Chat</a></a-menu-item>            
             <a-menu-item key="5"><LogOut /></a-menu-item>
         </a-menu>
     </div>

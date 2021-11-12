@@ -95,6 +95,7 @@ export default {
           const docRef = setDoc(doc(db, "users", uid), {
             UID: uid,
             role: roleSelected,
+            displayName: displayName
           });
         })
         .then(() => {

@@ -13,7 +13,7 @@
     "ant-design-vue": "^2.2.8",
     "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
-    "firebase": "^9.3.0",
+    "firebase": "^9.4.1",
     "firebaseui": "^0.600.0",
     "smart-webcomponents": "^10.0.0",
     "vue": "^3.2.21",
