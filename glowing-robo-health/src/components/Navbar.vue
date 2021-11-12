@@ -11,6 +11,7 @@
             <a-menu-item key="stock"><a href="/clinicstockview">Stocks</a></a-menu-item>
             <a-menu-item key="suppliers"><a href="/clinicsupplierview">Suppliers</a></a-menu-item>
             <a-menu-item key="request"><a href="/clinicorderformpage">Request</a></a-menu-item>
+            <a-menu-item key="chat"><a href="/clinicchat">Chat</a></a-menu-item>
             <a-menu-item key="5"><LogOut /></a-menu-item>
         </a-menu>
     </div>

@@ -6,11 +6,15 @@ import ClinicOrderFormPage from '@/views/Clinic/ClinicOrderFormPage.vue'
 import ClinicStockView from '@/views/Clinic/ClinicStockView.vue'
 import ClinicSupplierView from '@/views/Clinic/ClinicSupplierView.vue'
 import ClinicOrders from '@/views/Clinic/ClinicOrders.vue'
+import ClinicChat from '@/views/Clinic/ClinicChat.vue'
+
 
 // Supplier pages
 import SupplierHome from '@/views/Supplier/SupplierHome.vue'
 import SupplierOrders from '@/views/Supplier/SupplierOrders.vue'
 import SupplierStockView from '@/views/Supplier/SupplierStockView.vue'
+import SupplierChat from '@/views/Supplier/SupplierChat.vue'
+
 
 // Authentication pages
 import LogIn from "@/views/LogIn.vue";
@@ -87,6 +91,14 @@ const routes = [
     component: ClinicOrders,
   },
   {
+    path: "/clinicchat",
+    name: "ClinicChat",
+    component: ClinicChat,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: "/supplierhome",
     name: "SupplierHome",
     component: SupplierHome,
@@ -106,6 +118,14 @@ const routes = [
     path: "/supplierstockview",
     name: "SupplierStockView",
     component: SupplierStockView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/supplierchat",
+    name: "SupplierChat",
+    component: SupplierChat,
     meta: {
       requiresAuth: true
     }
