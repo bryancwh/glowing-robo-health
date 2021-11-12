@@ -16,7 +16,6 @@
     "firebase": "^9.4.1",
     "firebaseui": "^0.600.0",
     "smart-webcomponents": "^10.0.0",
-    "stream-chat": "^4.4.2",
     "vue": "^3.2.21",
     "vue-chartjs": "^3.5.1",
     "vue-chartkick": "^1.1.0",

@@ -1,13 +1,18 @@
 <template>
-  <div>
+  <div style="display: flex; flex-direction: column; align-items: center;">
     <Navbar />
-    <div style="padding: 40px;">
-      <h1><b>Stocks below threshold</b></h1>
-      <ClinicChart />
-    </div>
-      <div id = "calendar">
+   
+    <div style="max-width:1280px; width: 100%;">
+      <div style="padding: 40px;">
+        <h1 v-if="this.user">Welcome, {{this.user.displayName}}!</h1>
+        <h2><b>Stocks below threshold</b></h2>
+        <ClinicChart />
+
+        <h2 style="margin-top: 70px;"><b>Calendar of Events</b></h2>
         <Calendar />
-      </div>    
+      </div>
+ 
+    </div>
   </div>
 </template>
 
@@ -23,7 +28,7 @@ export default {
   name: "Profile",
   components: {
     Navbar,
-
+    Calendar,
     ClinicChart,
   },
   data() {
@@ -41,8 +46,6 @@ export default {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.user = auth.currentUser;
-        console.log(this.user);
-        console.log(this.user.email);
       } else {
         console.log("not logged in");
       }
@@ -52,20 +55,4 @@ export default {
 </script>
 
 <style scoped>
-#calendar {
-  border-radius: 25px;
-  padding: 20px;
-  background-color: white;
-  position: relative;
-  justify-content: center;
-  display: flex;
-}
-#container {
-  border-radius: 25px;
-  padding: 20px;
-  background-color: white;
-  position: relative;
-  justify-content: center;
-  display: flex;
-}
 </style>

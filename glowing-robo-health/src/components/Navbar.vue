@@ -1,36 +1,53 @@
 <template>
-    <div style="display: flex; justify-content: space-between; padding: 0 20px;">
+    <div style="display: flex; justify-content: space-between; padding: 0 20px; width: 100%;">
         <img src="../assets/logov2.png" style="height: 50px; margin-right: 16px;" />
         <a-menu
+            v-model="current"
             theme="light"
             mode="horizontal"
             :style="{ lineHeight: '64px', width: '100%', display: 'flex', justifyContent: 'end' }"
         >
             <a-menu-item key="home"><a href="/clinichome">Home</a></a-menu-item>
-            <a-menu-item key="orders"><a href="/clinicorders">Orders</a></a-menu-item>
-            <a-menu-item key="stock"><a href="/clinicstockview">Stocks</a></a-menu-item>
-            <a-menu-item key="suppliers"><a href="/clinicsupplierview">Suppliers</a></a-menu-item>
-            <a-menu-item key="request"><a href="/clinicorderformpage">Request</a></a-menu-item>
-            <a-menu-item key="chat"><a href="/clinicchat">Chat</a></a-menu-item>
+            <a-menu-item key="clinicorders"><a href="/clinicorders">Orders</a></a-menu-item>
+            <a-menu-item key="clinicstockview"><a href="/clinicstockview">Stocks</a></a-menu-item>
+            <a-menu-item key="clinicsupplierview"><a href="/clinicsupplierview">Suppliers</a></a-menu-item>
+            <a-menu-item key="clinicorderformpage"><a href="/clinicorderformpage">Request</a></a-menu-item>
+            <a-menu-item key="clinicchat"><a href="/clinicchat">Chat</a></a-menu-item>
             <a-menu-item key="5"><LogOut /></a-menu-item>
         </a-menu>
     </div>
 </template>
 
 <script>
+import { defineComponent, ref } from "vue";
 import LogOut from "../components/LogOut.vue";
 
-export default {
-    props: ['currTab'],
-    name: "Navbar",
-    components: {
-        LogOut,
-    },
-    data() {
+// export default {
+//     props: ['currTab'],
+//     name: "Navbar",
+//     components: {
+//         LogOut,
+//     },
+//     setup() {
+//         const current: ['home'];
+//         return {
+//             current
+//         };
+//     }
+// }
+export default defineComponent({
+    setup() {
+        var currUrl = window.location.pathname;
+        // console.log("eewefwwe",currUrl.substring(1))
+        const current = ref(['home']);
+        // const current = ref([currUrl.substring(1)]);
         return {
-            current: ['home'],
-        }
-    }
-}
+            current,
+        };
+    },
+    components: {
+        LogOut
+    },
+});
 </script>
 
