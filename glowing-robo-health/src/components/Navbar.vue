@@ -22,25 +22,11 @@
 import { defineComponent, ref } from "vue";
 import LogOut from "../components/LogOut.vue";
 
-// export default {
-//     props: ['currTab'],
-//     name: "Navbar",
-//     components: {
-//         LogOut,
-//     },
-//     setup() {
-//         const current: ['home'];
-//         return {
-//             current
-//         };
-//     }
-// }
 export default defineComponent({
     setup() {
         var currUrl = window.location.pathname;
-        // console.log("eewefwwe",currUrl.substring(1))
         const current = ref(['home']);
-        // const current = ref([currUrl.substring(1)]);
+
         return {
             current,
         };

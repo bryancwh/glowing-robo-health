@@ -8,7 +8,7 @@
         <h2><b>Stocks below threshold</b></h2>
         <ClinicChart />
 
-        <h2 style="margin-top: 70px;"><b>Calendar of Events</b></h2>
+        <h2 style="margin-top: 70px;"><b>Track your delivery</b></h2>
         <Calendar />
       </div>
  
