@@ -4,17 +4,9 @@
     <form>
       <h2><b>Add New Stock</b></h2>
       <label>Supplier:</label>
-      <select v-model="supplier" style="width: 100%; margin-bottom: 12px;">
+      <select v-model="supplier" style="height: 38px; width: 100%; margin-bottom: 12px;">
         <option v-for="supplier of this.suppliers" v-bind:key="supplier"
           >{{ supplier }}
-        </option>
-      </select>
-      <label>Manufacturer:</label>
-      <select v-model="manufacturer" style="width: 100%; margin-bottom: 12px;">
-        <option
-          v-for="manufacturer of this.manufacturers"
-          v-bind:key="manufacturer"
-          >{{ manufacturer }}
         </option>
       </select>
       <label>Product Name:</label>
@@ -25,6 +17,14 @@
         required
         v-model="name"
       />
+      <label>Manufacturer:</label>
+      <select v-model="manufacturer" style="height: 38px; width: 100%; margin-bottom: 12px;">
+        <option
+          v-for="manufacturer of this.manufacturers"
+          v-bind:key="manufacturer"
+          >{{ manufacturer }}
+        </option>
+      </select>
       <label>Quantity:</label>
       <input
         style="margin-bottom: 28px"

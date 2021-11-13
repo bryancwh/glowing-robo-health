@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="display: flex; flex-direction: column; align-items: center;">
     <Navbar />
     <ClinicOrderForm />
   </div>
