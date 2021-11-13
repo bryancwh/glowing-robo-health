@@ -1,6 +1,9 @@
 <template>
     <div>
         <Navbar />
+        <div style="padding: 40px;">    
+          <h1><b>Messaging</b></h1>
+        </div>
         <div class="container">
             <div class="messaging">
                 <div class="inbox_msg">
@@ -11,35 +14,41 @@
                         </div>
                     </div>
                     <div class="inbox_chat" >
-                        <div v-for="user in users" :key="user" class="chat_list">
+                        <div v-for="user in users" :key="user" class="chat_list" v-on:click="getChat(user.uid, user.name)">
                             <div class="chat_people">
                                 <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                                 <div class="chat_ib">
-                                <h5>{{user.name}} <span class="chat_date">Dec 25</span></h5>
-                                <p>Press chat to start conversation with {{user.role}}</p>
+                                <h5>{{user.name}}</h5>
+                                <p>Press to start conversation with this {{user.role}}</p>
                                 </div>
                             </div>
-                            <button class='chat_btn' v-on:click="getChat(user.uid)">chat</button>
                         </div>
                     </div>
                     </div>
                     <div class="mesgs">
-                    <div class="msg_history">
-                        <div v-for="item in messages" :key="item">
-                            <div :class="[item.uid==this.user.uid?'sent_msg':'received_msg']">
-                                <div class='received_withd_msg'>
-                                    <p>{{item.message}}</p>
-                                    <span class="time_date"> {{item.createdAt}} | {{item.author}} </span> <div></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="type_msg">
-                        <div class="input_msg_write">
-                        <input @keyup.enter="saveMessage" v-model="message" type="text" class="write_msg" placeholder="Type a message" />
-                        <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                        </div>
-                    </div>
+                      <div class="msg_heading">
+                        <h4>{{this.receiver_name}}</h4>
+                      </div>
+                      <div class="msg_history">
+                          <div v-if="!messages.length"> 
+                            <p class="no_msg">No messages here yet..</p>
+                          </div>
+                          <div v-else v-for="item in messages" :key="item">
+                              <div :class="[item.uid==this.user.uid?'sent_msg':'received_msg']">
+                                  <div class='received_withd_msg'>
+                                      <p>{{item.message}}</p>
+                                      <span class="time_date"> {{item.createdAt}} | {{item.author}} </span> <div></div>
+                                  </div>
+                              </div>
+                          </div>
+
+                      </div>
+                      <div class="type_msg">
+                          <div class="input_msg_write">
+                          <input @keyup.enter="saveMessage" v-model="message" type="text" class="write_msg" placeholder="Type a message" />
+                          <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                          </div>
+                      </div>
                     </div>
                 </div>                
             </div>
@@ -76,7 +85,6 @@ export default {
         if (user) {
             this.user = auth.currentUser;
             console.log(this.user, "this.user")
-            this.getChat(this.receiver);
             this.fetchUsers()
         } else {
             console.log("not logged in");
@@ -88,7 +96,8 @@ export default {
             message: null,
             messages: [],
             users: [],
-            receiver: null
+            receiver: null,
+            receiver_name: null
         }
     },
     methods: {
@@ -124,15 +133,16 @@ export default {
             });
             console.log("fetched messages", this.messages)
         },
-        async getChat(id){
+        async getChat(id, name){
             this.messages=[]
             this.receiver = id
+            this.receiver_name = name
             console.log(this.receiver)
             const path = query(collection(db, "chat/"), orderBy('createdAt'));
             let allChat = await getDocs(path);
             allChat.forEach((doc) => {
                 let data = doc.data();
-                if (data.receiver == this.receiver) {
+                if ((data.receiver == this.receiver && data.uid == this.user.uid) || (data.receiver == this.user.uid && data.uid == this.receiver)) {
                     this.messages.push({
                         message: data.message,
                         uid: data.uid,
@@ -149,7 +159,7 @@ export default {
 </script>
 
 <style>
-.container{max-width:1170px; margin:auto;}
+.container{max-width:90%; margin:auto;}
 img{ max-width:100%;}
 .inbox_people {
   background: #f8f8f8 none repeat scroll 0 0;
@@ -178,6 +188,7 @@ img{ max-width:100%;}
   font-size: 21px;
   margin: auto;
 }
+
 .srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none;}
 .srch_bar .input-group-addon button {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -201,15 +212,18 @@ img{ max-width:100%;}
   width: 88%;
 }
 
-.chat_people{ overflow:hidden; clear:both;}
+.chat_people{ overflow:hidden; clear:both; }
+
+.chat_list:hover, .chat_people:focus{
+  background:#ebebeb;   
+}
+
 .chat_list {
   border-bottom: 1px solid #c4c4c4;
   margin: 0;
   padding: 18px 16px 10px;
 }
 .inbox_chat { height: 550px; overflow-y: scroll;}
-
-.active_chat{ background:#ebebeb;}
 
 .incoming_msg_img {
   display: inline-block;
@@ -219,8 +233,18 @@ img{ max-width:100%;}
   display: inline-block;
   padding: 0 0 0 10px;
   vertical-align: top;
-  width: 92%;
+  width: 60%;
  }
+
+ .sent_msg {
+  float: right;
+  display: inline-block;
+  padding: 0 0 0 10px;
+  vertical-align: top;
+  position: relative;
+  width: 60%;
+}
+
  .received_withd_msg p {
   background: #ebebeb none repeat scroll 0 0;
   border-radius: 3px;
@@ -228,34 +252,34 @@ img{ max-width:100%;}
   font-size: 14px;
   margin: 0;
   padding: 5px 10px 5px 12px;
-  width: 100%;
+  width: 90%;
 }
+
+.sent_msg p {
+  background: #05728f none repeat scroll 0 0;
+  border-radius: 3px;
+  font-size: 14px;
+  margin: 0; color:#fff;
+  padding: 5px 10px 5px 12px;
+  width:90%;
+}
+
 .time_date {
   color: #747474;
   display: block;
   font-size: 12px;
   margin: 8px 0 0;
 }
-.received_withd_msg { width: 57%;}
+.received_withd_msg { width: 100%;}
+
 .mesgs {
   float: left;
   padding: 30px 15px 0 25px;
   width: 60%;
 }
 
- .sent_msg p {
-  background: #05728f none repeat scroll 0 0;
-  border-radius: 3px;
-  font-size: 14px;
-  margin: 0; color:#fff;
-  padding: 5px 10px 5px 12px;
-  width:100%;
-}
 .outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
-.sent_msg {
-  float: right;
-  width: 46%;
-}
+
 .input_msg_write input {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
   border: medium none;
@@ -263,6 +287,12 @@ img{ max-width:100%;}
   font-size: 15px;
   min-height: 48px;
   width: 100%;
+}
+.msg_heading {
+  border-bottom: 1px solid #c4c4c4;
+  position: relative; 
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .type_msg {border-top: 1px solid #c4c4c4;position: relative;}
@@ -280,8 +310,17 @@ img{ max-width:100%;}
   width: 33px;
 }
 .messaging { padding: 0 0 50px 0;}
+
 .msg_history {
   height: 516px;
   overflow-y: auto;
 }
+
+.no_msg{
+  font-size: 15px;
+  color: #4c4c4c;
+  text-align: center;
+  margin-top: 220px;
+}
+
 </style>
