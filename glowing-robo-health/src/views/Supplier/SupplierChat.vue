@@ -41,12 +41,11 @@
                                   </div>
                               </div>
                           </div>
-
                       </div>
                       <div class="type_msg">
                           <div class="input_msg_write">
-                          <input @keyup.enter="saveMessage" v-model="message" type="text" class="write_msg" placeholder="Type a message" />
-                          <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                            <input @keyup.enter="saveMessage" v-model="message" type="text" class="write_msg" placeholder="Type a message" />
+                            <button class="msg_send_btn" type="button" v-on:click="saveMessage()">></button>
                           </div>
                       </div>
                     </div>
@@ -102,7 +101,10 @@ export default {
     },
     methods: {
         async saveMessage(){
-            try {
+            if (this.message == null) {
+              console.log("No message")
+            } else {
+              try {
                 const docRef = await addDoc(collection(db, "chat"), {
                     message: this.message,
                     uid: this.user.uid,
@@ -114,8 +116,9 @@ export default {
                 this.messages=[]
                 this.message=''
                 this.getChat(this.receiver);
-            } catch (error) {
-                console.log("Error adding document: ", error);
+              } catch (error) {
+                  console.log("Error adding document: ", error);
+              }
             }
         },
         async fetchUsers(){
@@ -123,7 +126,7 @@ export default {
             let allUsers = await getDocs(path);
             allUsers.forEach((doc) => {
                 let data = doc.data();
-                if (data.UID != this.user.uid) {
+                if (data.UID != this.user.uid && data.role == 'Clinic') {
                     this.users.push({
                         uid: data.UID,
                         role: data.role,
