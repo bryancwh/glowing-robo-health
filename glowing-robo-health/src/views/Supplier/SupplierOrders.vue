@@ -18,28 +18,27 @@ export default {
   },
   data() {
     return {
-      user : {
+      user: {
         email: "",
         displayName: "",
-        uid: ""
-      }
+        uid: "",
+      },
     };
   },
   mounted() {
     const auth = getAuth();
-    this.user = auth.currentUser
+    this.user = auth.currentUser;
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.user = auth.currentUser;
-        console.log(this.user);
-        console.log(this.user.email);
+        // console.log(this.user);
+        // console.log(this.user.email);
       } else {
-        console.log("not logged in");
+        // console.log("not logged in");
       }
     });
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
